@@ -1,0 +1,312 @@
+.dashboard-select-course {
+  min-height: 198px;
+  background: #095950;
+  box-shadow: 0px 4px 15px rgba(120, 121, 121, 0.06);
+  border-radius: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+
+  .section-heading {
+    padding: 31px 43px 0px;
+
+    h2 {
+      font-style: normal;
+      font-weight: bold;
+      font-size: 30px;
+      line-height: 38px;
+      color: #FFFFFF;
+      margin: 0px 0px 15px;
+    }
+  }
+
+  .section-body {
+    padding: 0px 43px;
+
+    p {
+      max-width: 320px;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 21px;
+      letter-spacing: 0.0115em;
+      color: rgba(255, 255, 255, 0.8);
+      ;
+    }
+  }
+
+  .section-action {
+    padding: 0px 27px;
+
+    a {
+      background-color: transparent;
+      color: #FFFFFF;
+      text-decoration: none;
+      // padding-left: 13px;
+
+      .mat-icon {
+        margin-left: 20px;
+      }
+    }
+  }
+}
+
+.dashboard-activities {
+  min-height: 177px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 15px rgba(120, 121, 121, 0.06);
+  border-radius: 10px;
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+
+  .section-heading {
+    padding: 18px 43px 0px;
+
+    h2 {
+      font-style: normal;
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 28px;
+      color: #000000;
+      margin: 0px 0px 15px;
+    }
+  }
+
+  .section-body {
+    padding: 0px 43px;
+
+    .mat-list-base {
+      .mat-list-item {
+        height: 82px;
+
+        .mat-list-item-content {
+          padding: 0px;
+
+          .mat-list-avatar {
+            border-radius: 10px;
+            height: 50px;
+            width: auto;
+          }
+
+          h3.mat-line {
+            font-style: normal;
+            font-weight: 800;
+            font-size: 25px;
+            line-height: 28px;
+            color: #002B43;
+          }
+
+          p.mat-line {
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 21px;
+            letter-spacing: 0.0115em;
+            color: #000000;
+          }
+        }
+      }
+    }
+  }
+}
+
+.dashboard-continue-watching {
+  border-radius: 10px;
+  margin-bottom: 10px;
+
+  .section-heading {
+    h2 {
+      font-style: normal;
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 28px;
+      color: #000000;
+    }
+  }
+
+  mat-card.mat-card {
+    background-color: transparent;
+
+    img.mat-card-image {
+      border-radius: 10px;
+      height: 218px;
+      object-fit: cover;
+    }
+
+    .mat-card-header {
+      .mat-card-avatar {}
+
+      .mat-card-title {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.005em;
+        color: #1E1F20;
+        // margin-bottom: 3px;
+      }
+
+      .mat-card-subtitle {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 18px;
+        color: #707375;
+
+        span {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}
+
+.dashboard-side-section {
+  background: #FFFFFF;
+  border-radius: 10px;
+  margin-bottom: 30px;
+
+  .section-heading {
+    h2 {
+      font-style: normal;
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 28px;
+      color: #000000;
+      margin: 0px;
+      padding: 18px 25px 0px;
+    }
+  }
+
+  .section-body {
+    padding: 0 10px 20px;
+
+    .mat-list-base {
+      .mat-list-item {
+        height: 82px;
+
+        .mat-list-avatar {
+          border-radius: 10px;
+          height: 53px;
+          width: auto;
+        }
+
+        a.mat-line {
+          font-weight: 600;
+          font-size: 16px;
+          line-height: 20px;
+          letter-spacing: 0.01em;
+          color: #000000;
+          text-decoration: none;
+        }
+
+        .mat-line:nth-child(n+2) {
+          font-weight: normal;
+          font-size: 12px;
+          line-height: 18px;
+          letter-spacing: 0.01em;
+          color: #666666;
+
+          .pill {
+            display: inline-block;
+            text-align: center;
+            background: #F9F2CE;
+            color: #1E1F20;
+            border-radius: 10px;
+            margin-left: 10px;
+            font-weight: bold;
+            font-size: 10px;
+            width: 70px;
+
+            &.color-cream {
+              background: #F9F2CE;
+            }
+
+            &.color-pink {
+              background: #FFD1C1;
+            }
+
+            &.color-green {
+              background: #D1FEC1;
+            }
+
+            &.color-blue {
+              background: #C9D7DE;
+            }
+          }
+        }
+      }
+    }
+
+    // .mat-list-base .mat-list-item .mat-list-avatar,
+    // .mat-list-base .mat-list-option .mat-list-avatar {
+    //   border-radius: 10px;
+    // }
+
+    // .mat-list-base .mat-list-item.mat-2-line,
+    // .mat-list-base .mat-list-option.mat-2-line {
+    //   height: 52px;
+    // }
+  }
+}
+
+.dashboard-recently-uploaded {
+  .section-heading {
+    h2 {
+      font-style: normal;
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 28px;
+      color: #000000;
+    }
+  }
+
+  mat-card.mat-card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+
+    .mat-card-image {
+      height: 115px;
+      object-fit: cover;
+    }
+
+    .mat-card-content {
+      margin-bottom: 10px;
+
+      .mat-card-subtitle {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 18px;
+        margin-bottom: 14px;
+        position: relative;
+
+        span.duration {
+          position: absolute;
+          right: 0px;
+        }
+      }
+
+      .mat-card-title {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 21px;
+        color: #1E1F20;
+        min-height: 65px;
+      }
+    }
+
+    .mat-card-footer {
+      display: flex;
+      padding-bottom: 5px;
+
+      a.mat-flat-button {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        color: #002B43;
+        background-color: transparent;
+      }
+    }
+  }
+}

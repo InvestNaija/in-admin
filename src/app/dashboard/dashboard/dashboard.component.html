@@ -1,1 +1,242 @@
-<p>dashboard works!</p>
+<div class="container-fluid p-4">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="dashboard-select-course">
+        <div class="section-heading">
+          <h2>Select Course</h2>
+        </div>
+        <div class="section-body">
+          <p>Learn, and improve your skills across business, tech, and more with our certificate courses</p>
+        </div>
+        <div class="section-action">
+          <a mat-button [routerLink]="['/courses']">
+            Get Started<mat-icon>arrow_forward</mat-icon>
+          </a>
+        </div>
+      </div>
+
+      <div class="dashboard-activities">
+        <div class="section-heading">
+          <h2>Activities</h2>
+        </div>
+        <div class="section-body">
+          <div class="row">
+            <div class="col-md-4">
+              <mat-list>
+                <mat-list-item>
+                  <img matListAvatar src="/assets/images/activities_current.png" alt="...">
+                  <h3 matLine href="/">9</h3>
+                  <p matLine>Current Courses</p>
+                </mat-list-item>
+              </mat-list>
+            </div>
+            <div class="col-md-4">
+              <mat-list>
+                <mat-list-item>
+                  <img matListAvatar src="/assets/images/activities_completed.png" alt="...">
+                  <h3 matLine href="/">12</h3>
+                  <p matLine>Completed Courses</p>
+                </mat-list-item>
+              </mat-list>
+            </div>
+            <div class="col-md-4">
+              <mat-list>
+                <mat-list-item>
+                  <img matListAvatar src="/assets/images/activities_certificates.png" alt="...">
+                  <h3 matLine href="/">2</h3>
+                  <p matLine>Certificates</p>
+                </mat-list-item>
+              </mat-list>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-continue-watching">
+        <div class="section-heading">
+          <h2>Continue Watching</h2>
+        </div>
+        <mat-card class="shadow-none">
+          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+            alt="Photo of a Shiba Inu">
+          <mat-card-header>
+            <img mat-card-avatar src="/assets/images/avi.png" alt="...">
+            <mat-card-title>How to become a UX Designer, with no experience/degree</mat-card-title>
+            <mat-card-subtitle>
+              <span>32,620 views</span>
+              <span>.</span>
+              <span>23 Feb 2021</span>
+            </mat-card-subtitle>
+          </mat-card-header>
+        </mat-card>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="dashboard-side-section">
+        <div class="section-heading">
+          <h2>Newest Videos</h2>
+        </div>
+        <div class="section-body">
+
+          <mat-list>
+            <mat-list-item>
+              <img matListAvatar src="/assets/images/mini-thumbnail.png" alt="...">
+              <a matLine href="/">Introduction to UX Design</a>
+              <p matLine>
+                <span>John Shaw</span>
+                <span class="pill color-cream">DESIGN</span>
+              </p>
+            </mat-list-item>
+            <mat-list-item>
+              <img matListAvatar src="/assets/images/mini-thumbnail.png" alt="...">
+              <a matLine href="/">Web Development Tutorial</a>
+              <p matLine>
+                <span>Ernest Isa</span>
+                <span class="pill color-pink">TECH</span>
+              </p>
+            </mat-list-item>
+            <mat-list-item>
+              <img matListAvatar src="/assets/images/mini-thumbnail.png" alt="...">
+              <a matLine href="/">Introduction to UX Design</a>
+              <p matLine>
+                <span>John Shaw</span>
+                <span class="pill color-cream">DESIGN</span>
+              </p>
+            </mat-list-item>
+            <mat-list-item>
+              <img matListAvatar src="/assets/images/mini-thumbnail.png" alt="...">
+              <a matLine href="/">Career Soft Skills</a>
+              <p matLine>
+                <span>John Shaw</span>
+                <span class="pill color-green">CAREER</span>
+              </p>
+            </mat-list-item>
+          </mat-list>
+
+        </div>
+      </div>
+
+      <div class="dashboard-side-section">
+        <div class="section-heading">
+          <h2>Free Learning Resources</h2>
+        </div>
+        <div class="section-body">
+
+          <mat-list>
+            <mat-list-item>
+              <img matListAvatar src="/assets/images/mini-thumbnail.png" alt="...">
+              <a matLine href="/">Introduction to UX Design</a>
+              <p matLine>
+                <span>John Shaw</span>
+                <span class="pill color-blue">DESIGN</span>
+              </p>
+            </mat-list-item>
+            <mat-list-item>
+              <img matListAvatar src="/assets/images/mini-thumbnail.png" alt="...">
+              <a matLine href="/">Web Development Tutorial</a>
+              <p matLine>
+                <span>John Shaw</span>
+                <span class="pill color-blue">DESIGN</span>
+              </p>
+            </mat-list-item>
+            <mat-list-item>
+              <img matListAvatar src="/assets/images/mini-thumbnail.png" alt="...">
+              <a matLine href="/">Introduction to UX Design</a>
+              <p matLine>
+                <span>John Shaw</span>
+                <span class="pill color-blue">DESIGN</span>
+              </p>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row dashboard-recently-uploaded">
+    <div class="col-12">
+      <div class="section-heading">
+        <h2>Free Learning Resources</h2>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <mat-card class="shadow-none">
+        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+        <mat-card-content>
+          <mat-card-subtitle>8593 students<span class="duration">1h 55m</span></mat-card-subtitle>
+          <mat-card-title>Smart Responsive UX Design Clever Tips, Tricks and Techniques</mat-card-title>
+        </mat-card-content>
+        <mat-card-footer>
+          <a mat-flat-button href="" target="_blank">Leon Matthews</a>
+          <div class="spacer"></div>
+          <button mat-icon-button>
+            <mat-icon class="">favorite_border</mat-icon>
+          </button>
+
+          <button mat-icon-button>
+            <mat-icon class="">bookmark_border</mat-icon>
+          </button>
+        </mat-card-footer>
+      </mat-card>
+    </div>
+    <div class="col-md-3">
+      <mat-card class="shadow-none">
+        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+        <mat-card-content>
+          <mat-card-subtitle>8593 students<span class="duration">1h 35m</span></mat-card-subtitle>
+          <mat-card-title>Smart Responsive UX Design Clever Tips, Tricks and Techniques</mat-card-title>
+        </mat-card-content>
+        <mat-card-footer>
+          <a mat-flat-button href="" target="_blank">Leon Matthews</a>
+          <div class="spacer"></div>
+          <button mat-icon-button>
+            <mat-icon class="">favorite_border</mat-icon>
+          </button>
+
+          <button mat-icon-button>
+            <mat-icon class="">bookmark_border</mat-icon>
+          </button>
+        </mat-card-footer>
+      </mat-card>
+    </div>
+    <div class="col-md-3">
+      <mat-card class="shadow-none">
+        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+        <mat-card-content>
+          <mat-card-subtitle>8593 students<span class="duration">1h 20m</span></mat-card-subtitle>
+          <mat-card-title>The art of copywriting, and winning your Audience</mat-card-title>
+        </mat-card-content>
+        <mat-card-footer>
+          <a mat-flat-button href="" target="_blank">Leon Matthews</a>
+          <div class="spacer"></div>
+          <button mat-icon-button>
+            <mat-icon class="">favorite_border</mat-icon>
+          </button>
+
+          <button mat-icon-button>
+            <mat-icon class="">bookmark_border</mat-icon>
+          </button>
+        </mat-card-footer>
+      </mat-card>
+    </div>
+    <div class="col-md-3">
+      <mat-card class="shadow-none">
+        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+        <mat-card-content>
+          <mat-card-subtitle>8593 students<span class="duration">2h 10m</span></mat-card-subtitle>
+          <mat-card-title>Smart Responsive UX Design Clever Tips, Tricks and Techniques</mat-card-title>
+        </mat-card-content>
+        <mat-card-footer>
+          <a mat-flat-button href="" target="_blank">Adebayo Dada</a>
+          <div class="spacer"></div>
+          <button mat-icon-button>
+            <mat-icon class="">favorite_border</mat-icon>
+          </button>
+
+          <button mat-icon-button>
+            <mat-icon class="">bookmark_border</mat-icon>
+          </button>
+        </mat-card-footer>
+      </mat-card>
+    </div>
+  </div>
+</div>
