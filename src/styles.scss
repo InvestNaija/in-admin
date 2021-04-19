@@ -58,6 +58,8 @@ body {
 }
 
 .page-filter {
+  margin-bottom: 30px;
+
   label {
     font-style: normal;
     font-weight: 600;
@@ -83,4 +85,8 @@ body {
 
 .spacer {
   flex: 1 1 auto;
+}
+
+table {
+  width: 100%;
 }
