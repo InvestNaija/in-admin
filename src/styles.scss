@@ -1,4 +1,4 @@
-
+@import './assets/fonts/fonts.css';
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
@@ -20,20 +20,67 @@ $investnaija-learning-warn: mat-palette($mat-red);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$investnaija-learning-theme: mat-light-theme((
-  color: (
-    primary: $investnaija-learning-primary,
-    accent: $investnaija-learning-accent,
-    warn: $investnaija-learning-warn,
-  )
-));
+$investnaija-learning-theme: mat-light-theme((color: (primary: $investnaija-learning-primary,
+      accent: $investnaija-learning-accent,
+      warn: $investnaija-learning-warn,
+    )));
+
+$investnaija-learning-typography: mat-typography-config($font-family: 'HK Grotesk, Roboto, Helvetica Neue, sans-serif'
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($investnaija-learning-theme);
-
+@include angular-material-typography($investnaija-learning-typography);
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "HK Grotesk", Roboto, "Helvetica Neue", sans-serif;
+  background-color: #EBF1F4;
+}
+
+.page-title {
+  h1 {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    line-height: 48px;
+    color: #002B43;
+  }
+}
+
+.page-filter {
+  label {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 20px;
+    color: #1E1F20;
+  }
+
+  select {
+    width: 171px;
+    background: #C9D7DE;
+    border-radius: 30px;
+    padding: 10px 10px;
+    border: none;
+
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 21px;
+    color: #1E1F20;
+  }
+}
+
+.spacer {
+  flex: 1 1 auto;
+}

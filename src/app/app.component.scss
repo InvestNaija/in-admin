@@ -179,8 +179,9 @@ mat-sidenav-container {
   }
 
   .main-content {
-    background-color: #e5e5e5;
-    height: 100vh;
+    // background-color: #e5e5e5;
+    background-color: #EBF1F4;
+    // height: 100vh;
 
     mat-toolbar {
       background-color: #ffffff;
@@ -252,9 +253,5 @@ mat-sidenav-container {
         }
       }
     }
-  }
-
-  .spacer {
-    flex: 1 1 auto;
   }
 }
