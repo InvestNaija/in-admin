@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
-import { DashboardRoutingModule } from './dashboard-routing.module';
+// import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { MatListModule } from '@angular/material/list';
@@ -18,7 +19,8 @@ import { DashboardSidebarListsComponent } from './dashboard-sidebar-lists/dashbo
   ],
   imports: [
     CommonModule,
-    DashboardRoutingModule,
+    RouterModule,
+    // DashboardRoutingModule,
     MatListModule,
     MatIconModule,
     MatButtonModule,
