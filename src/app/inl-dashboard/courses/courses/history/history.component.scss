@@ -41,19 +41,27 @@
         }
 
         p {
+          font-style: normal;
+          font-weight: normal;
+          font-size: 14px;
+          line-height: 18px;
+          color: #002B43;
+        }
+
+        .rating {
+          img {
+            height: 18px;
+            width: auto;
+            margin: 0px;
+          }
+
+          span {
             font-style: normal;
             font-weight: normal;
             font-size: 14px;
             line-height: 18px;
-            color: #002B43;
-        }
-
-        .rating {
-            img {
-                height: 20px;
-                width: auto;
-                margin: 0px;
-            }
+            color: #1E1F20;
+          }
         }
 
         .bottom {
