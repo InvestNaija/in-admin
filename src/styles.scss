@@ -47,6 +47,14 @@ body {
   background-color: #EBF1F4;
 }
 
+.spacer {
+  flex: 1 1 auto;
+}
+
+table {
+  width: 100%;
+}
+
 .page-title {
   h1 {
     font-style: normal;
@@ -60,12 +68,39 @@ body {
 .page-filter {
   margin-bottom: 30px;
 
+  .advanced-filter-section,
+  .filter-section {
+    margin-bottom: 20px;
+  }
+
+  .advanced-filter-section {
+    display: none;
+  }
+
+  .filter-section {}
+
+  .advanced-filter-button {
+    button.mat-button {
+      font-style: normal;
+      font-weight: normal;
+      font-size: 15px;
+      // line-height: 21px;
+      text-decoration: underline;
+      color: #000000
+    }
+  }
+
   label {
     font-style: normal;
     font-weight: 600;
     font-size: 15px;
     line-height: 20px;
     color: #1E1F20;
+
+    &.form-check-label {
+      font-size: 12px;
+      line-height: 15px;
+    }
   }
 
   select {
@@ -83,10 +118,66 @@ body {
   }
 }
 
-.spacer {
-  flex: 1 1 auto;
-}
+.course-card-container {
 
-table {
-  width: 100%;
+  mat-card.mat-card {
+    border-radius: 10px;
+    margin-bottom: 30px;
+
+    .mat-card-image {
+      height: 115px;
+      object-fit: cover;
+    }
+
+    .mat-card-content {
+      margin-bottom: 10px;
+
+      .mat-card-subtitle {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 18px;
+        margin-bottom: 14px;
+        position: relative;
+
+        span.duration {
+          position: absolute;
+          right: 0px;
+        }
+      }
+
+      .mat-card-title {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 21px;
+        color: #1E1F20;
+        min-height: 65px;
+      }
+    }
+
+    .price {
+      p {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 19px;
+        color: #1E1F20;
+        margin-bottom: 0px;
+      }
+    }
+
+    .mat-card-footer {
+      display: flex;
+      padding-bottom: 5px;
+
+      a.mat-flat-button {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        color: #002B43;
+        background-color: transparent;
+      }
+    }
+  }
 }
