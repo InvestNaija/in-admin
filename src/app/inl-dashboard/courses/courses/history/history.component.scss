@@ -61,34 +61,28 @@
             font-size: 14px;
             line-height: 18px;
             color: #1E1F20;
+            margin-right: 5px;
+            vertical-align: bottom;
           }
         }
 
         .bottom {
           display: flex;
-          margin-top: 30px;
+          margin-top: 50px;
 
-          span.date {
+          span {
+            color: #5E6062;
             font-style: normal;
-            font-weight: normal;
-            font-size: 10px;
-            line-height: 14px;
-            color: #1E1F20;
-            line-height: 24px;
-          }
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 18px;
+            min-width: 25px;
+            text-align: center;
 
-          a {
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            color: #FF652F;
-            font-style: normal;
-            font-weight: bold;
-            font-size: 12px;
-            line-height: 21px;
-
-            mat-icon {
-              margin-right: 5px;
+            .mat-icon {
+              font-size: 6px;
+              height: 6px;
+              width: 6px;
             }
           }
         }

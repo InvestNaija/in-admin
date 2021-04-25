@@ -1,0 +1,70 @@
+<div class="container-fluid p-4">
+
+  <div class="course-panel">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="main-section">
+          <div class="course-panel_video">
+            <div class="back-button">
+              <a mat-button [routerLink]="['/courses']">
+                <mat-icon>chevron_left</mat-icon>Back
+              </a>
+            </div>
+            <div class="course-panel_details">
+              <h2>Quiz: User Research quiz</h2>
+              <p>Martha Jenkins</p>
+            </div>
+            <div class="course-panel_course">
+              <img src="/assets/images/course-video_placeholder.png" alt="">
+            </div>
+            <div class="course-panel_watching">
+              <span class="green">
+                <mat-icon inline="true">visibility</mat-icon>
+              </span>
+              <span class="green">182</span>
+              <span>students are watching this class</span>
+            </div>
+          </div>
+        </div>
+        <div class="course-panel_quiz">
+
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="sidebar-section">
+            <div class="not-paid">
+                <h3><span class="currency">&#8358;</span> <span class="amount">32,500</span></h3>
+                <button class="buy-course" mat-flat-button>Buy Course</button>
+                <button class="add-to-wishlist" mat-flat-button>Add to Wishlist</button>
+                <div class="course-details">
+                    <h4>This Course Includes</h4>
+                    <p class="detail-list"><img class="ribbon" src="/assets/images/ribbon.png" alt=""><span class="text">Varius vel pharetra vel turpis nunc eget lorem dolor</span></p>
+                    <p class="detail-list"><img class="ribbon" src="/assets/images/ribbon.png" alt=""><span class="text">Varius vel pharetra vel turpis nunc eget lorem dolor</span></p>
+                    <p class="detail-list"><img class="ribbon" src="/assets/images/ribbon.png" alt=""><span class="text">Varius vel pharetra vel turpis nunc eget lorem dolor</span></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="course-details px-4">
+    <div class="row">
+        <div class="col-12">
+          <mat-tab-group animationDuration="0ms">
+            <mat-tab label="About">
+                <in-about></in-about>
+            </mat-tab>
+            <mat-tab label="Reviews">
+              
+            </mat-tab>
+            <mat-tab label="Forum">
+              
+            </mat-tab>
+            <mat-tab label="Resources">
+              
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+  </div>
+</div>
