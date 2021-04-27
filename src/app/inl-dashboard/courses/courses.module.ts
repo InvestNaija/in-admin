@@ -18,6 +18,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { MatMenuModule } from '@angular/material/menu';
     MatButtonModule,
     MatIconModule,
     MatCardModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDividerModule,
+    MatListModule
   ]
 })
 export class CoursesModule { }

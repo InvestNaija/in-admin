@@ -1,0 +1,47 @@
+.course-resources {
+  padding-top: 20px;
+
+  .description {
+    p {
+      font-style: normal;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 28px;
+      color: #1E1F20;
+      margin-bottom: 30px;
+    }
+  }
+
+  .project-files {
+
+    .type {
+      font-style: normal;
+      font-weight: bold;
+      font-size: 14px;
+      line-height: 18px;
+      color: #1E1F20;
+      margin-right: 25px;
+
+      &.color-red {
+        color: #CD1A11;
+      }
+    }
+
+    .desc {
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 18px;
+      color: #1E1F20;
+      margin-right: 10px;
+    }
+
+    .size {
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 18px;
+      color: #707375;
+    }
+  }
+}
