@@ -1,0 +1,26 @@
+.link-pill-nav {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 10px;
+
+  a {
+    font-style: normal;
+    font-weight: 800;
+    font-size: 13px;
+    color: #1E1F20;
+    line-height: 50px;
+    text-decoration: none;
+    border-radius: 10px;
+    border: 1px solid #0F242F;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    min-width: 120px;
+
+    &.current {
+      background-color: #FF652F;
+      border-color: #FF652F;
+      color: #ffffff;
+    }
+  }
+}

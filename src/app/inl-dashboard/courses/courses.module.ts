@@ -13,6 +13,8 @@ import { ReviewsComponent } from './course-page/reviews/reviews.component';
 import { ForumComponent } from './course-page/forum/forum.component';
 import { ResourcesComponent } from './course-page/resources/resources.component';
 
+import { InstructorComponent } from './instructor/instructor.component';
+
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -31,7 +33,8 @@ import { MatListModule } from '@angular/material/list';
     AboutComponent,
     ReviewsComponent,
     ForumComponent,
-    ResourcesComponent
+    ResourcesComponent,
+    InstructorComponent
   ],
   imports: [
     CommonModule,

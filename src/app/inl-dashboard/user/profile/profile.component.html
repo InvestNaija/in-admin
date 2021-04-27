@@ -1,0 +1,90 @@
+<div class="row">
+  <div class="user-profile col-12">
+    <h4>Your Profile Picture</h4>
+    <button mat-button class="delete-profile">Delete Account</button>
+    <div class="row">
+      <mat-list>
+        <mat-list-item>
+          <img matListAvatar src="/assets/images/avi-big.png" alt="...">
+          <button mat-button matLine class="edit-profile">Design Instructor</button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+  <div class="profile-form-container col-12">
+    <form>
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">First Name</label>
+          <input type="text" class="form-control">
+          <small class="form-text">Your full name helps people identify you</small>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">Last Name</label>
+          <input type="text" class="form-control">
+          <small class="form-text">Let people know what you do</small>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputAddress">Country</label>
+          <div class="input-group">
+            <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+              <option selected>Choose...</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button">
+                <mat-icon>lock_open</mat-icon> Show Public
+              </button>
+            </div>
+          </div>
+          <small class="form-text">Let people know what you do</small>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputAddress">Email Address</label>
+          <div class="input-group">
+            <input type="text" class="form-control">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button">
+                <mat-icon>lock</mat-icon> hide from Public
+              </button>
+            </div>
+          </div>
+          <small class="form-text">Add your email address (janedoe@xxx.com)</small>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputAddress">Date of Birth</label>
+          <div class="input-group">
+            <input type="text" class="form-control">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button">
+                <mat-icon>lock_open</mat-icon> Show Public
+              </button>
+            </div>
+          </div>
+          <small class="form-text">Add your email address (janedoe@xxx.com)</small>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputAddress">Phone Number</label>
+          <div class="input-group">
+            <input type="text" class="form-control">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button">
+                <mat-icon>lock</mat-icon> hide from Public
+              </button>
+            </div>
+          </div>
+          <small class="form-text">Add your email address (janedoe@xxx.com)</small>
+        </div>
+        <div class="form-group col-md-10">
+          <label for="inputAddress">Bio</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <div class="form-group col-md-2">
+          <button mat-flat-button type="submit" class="btn btn-primary submit-profile-form">Update Profile</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
