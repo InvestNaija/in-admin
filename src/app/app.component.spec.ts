@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'investnaija-learning'`, () => {
+  it(`should have as title 'investnaija-learning-cp'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('investnaija-learning');
+    expect(app.title).toEqual('investnaija-learning-cp');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('investnaija-learning app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('investnaija-learning-cp app is running!');
   });
 });

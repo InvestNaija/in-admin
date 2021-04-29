@@ -12,27 +12,27 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$investnaija-learning-primary: mat-palette($mat-indigo);
-$investnaija-learning-accent: mat-palette($mat-pink, A200, A100, A400);
+$investnaija-learning-cp-primary: mat-palette($mat-indigo);
+$investnaija-learning-cp-accent: mat-palette($mat-pink, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
-$investnaija-learning-warn: mat-palette($mat-red);
+$investnaija-learning-cp-warn: mat-palette($mat-red);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$investnaija-learning-theme: mat-light-theme((color: (primary: $investnaija-learning-primary,
-      accent: $investnaija-learning-accent,
-      warn: $investnaija-learning-warn,
+$investnaija-learning-cp-theme: mat-light-theme((color: (primary: $investnaija-learning-cp-primary,
+      accent: $investnaija-learning-cp-accent,
+      warn: $investnaija-learning-cp-warn,
     )));
 
-$investnaija-learning-typography: mat-typography-config($font-family: 'HK Grotesk, Roboto, Helvetica Neue, sans-serif'
+$investnaija-learning-cp-typography: mat-typography-config($font-family: 'HK Grotesk, Roboto, Helvetica Neue, sans-serif'
 );
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include angular-material-theme($investnaija-learning-theme);
-@include angular-material-typography($investnaija-learning-typography);
+@include angular-material-theme($investnaija-learning-cp-theme);
+@include angular-material-typography($investnaija-learning-cp-typography);
 /* You can add global styles to this file, and also import other style files */
 
 

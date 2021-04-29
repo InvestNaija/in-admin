@@ -18,16 +18,6 @@ const routes: Routes = [
         // canActivate: [AuthGuard]
       },
       {
-        path: 'certificates',
-        loadChildren: () => import('./certificates/certificates.module').then(m => m.CertificatesModule),
-        // canActivate: [AuthGuard]
-      },
-      {
-        path: 'leaderboard',
-        loadChildren: () => import('./leaderboard/leaderboard.module').then(m => m.LeaderboardModule),
-        // canActivate: [AuthGuard]
-      },
-      {
         path: 'messages',
         loadChildren: () => import('./messages/messages.module').then(m => m.MessagesModule),
         // canActivate: [AuthGuard]

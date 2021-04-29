@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "investnaija-learning": {
+    "investnaija-learning-cp": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/investnaija-learning",
+            "outputPath": "dist/investnaija-learning-cp",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -69,18 +69,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "investnaija-learning:build"
+            "browserTarget": "investnaija-learning-cp:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "investnaija-learning:build:production"
+              "browserTarget": "investnaija-learning-cp:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "investnaija-learning:build"
+            "browserTarget": "investnaija-learning-cp:build"
           }
         },
         "test": {
@@ -117,16 +117,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "investnaija-learning:serve"
+            "devServerTarget": "investnaija-learning-cp:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "investnaija-learning:serve:production"
+              "devServerTarget": "investnaija-learning-cp:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "investnaija-learning"
+  "defaultProject": "investnaija-learning-cp"
 }
