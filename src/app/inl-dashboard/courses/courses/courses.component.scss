@@ -1,0 +1,64 @@
+a {
+  text-decoration: none;
+}
+
+.dashboard-table {
+  background: #FFFFFF;
+  box-shadow: 0px 4px 15px rgba(120, 121, 121, 0.06);
+  border-radius: 5px;
+  padding: 20px 30px;
+  margin-bottom: 20px;
+  overflow: auto;
+
+  .table-title {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 18px;
+    color: #1E1F20;
+  }
+
+  tr {
+    border-radius: 5px;
+
+    th {
+      background: #F2F5F7;
+      border-radius: 5px;
+      border: 0px;
+
+      font-style: normal;
+      font-weight: bold;
+      font-size: 14px;
+      line-height: 16px;
+      color: #1E1F20;
+      padding: 0 20px;
+    }
+
+    td {
+      background-color: #fff;
+      border: 0px;
+
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 16px;
+      color: #1E1F20;
+      padding: 0 20px;
+
+      &.investment {
+        font-weight: bold;
+        color: #FF652F;
+      }
+
+      &.unapproved {
+        font-weight: bold;
+        color: #CD1A11;
+      }
+
+      &.approved {
+        font-weight: bold;
+        color: #00BA88;
+      }
+    }
+  }
+}

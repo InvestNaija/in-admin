@@ -56,6 +56,9 @@ table {
 }
 
 .page-title {
+  display: flex;
+  justify-content: space-between;
+
   h1 {
     font-style: normal;
     font-weight: bold;
@@ -78,6 +81,19 @@ table {
     font-size: 15px;
     line-height: 28px;
     color: #1E1F20;
+  }
+
+  button, a {
+    padding: 0 20px;
+    height: 50px;
+    background: #FF652F;
+    border-radius: 10px;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 13px;
+    line-height: 50px;
+    text-align: center;
+    color: #FFFFFF;
   }
 }
 

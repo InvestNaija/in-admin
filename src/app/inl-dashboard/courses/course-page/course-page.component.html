@@ -1,73 +1,217 @@
 <div class="container-fluid p-4">
-
-  <div class="course-panel">
-    <div class="row">
-      <div class="col-lg-8">
-        <div class="main-section">
-          <div class="course-panel_video">
-            <div class="back-button">
-              <a mat-button [routerLink]="['/courses']">
-                <mat-icon>chevron_left</mat-icon>Back
-              </a>
-            </div>
-            <div class="course-panel_details">
-              <h2>Quiz: User Research quiz</h2>
-              <p>Martha Jenkins</p>
-            </div>
-            <div class="course-panel_course">
-              <img src="/assets/images/course-video_placeholder.png" alt="">
-            </div>
-            <div class="course-panel_watching">
-              <span class="green">
-                <mat-icon inline="true">visibility</mat-icon>
-              </span>
-              <span class="green">182</span>
-              <span>students are watching this class</span>
-            </div>
-          </div>
-        </div>
-        <div class="course-panel_quiz">
-
-        </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="page-title">
+        <h1>View Course</h1>
       </div>
-      <div class="col-lg-4">
-        <div class="sidebar-section">
-          <div class="not-paid">
-            <h3><span class="currency">&#8358;</span> <span class="amount">32,500</span></h3>
-            <button class="buy-course" mat-flat-button>Buy Course</button>
-            <button class="add-to-wishlist" mat-flat-button>Add to Wishlist</button>
-            <div class="course-details">
-              <h4>This Course Includes</h4>
-              <p class="detail-list"><img class="ribbon" src="/assets/images/ribbon.png" alt=""><span
-                  class="text">Varius vel pharetra vel turpis nunc eget lorem dolor</span></p>
-              <p class="detail-list"><img class="ribbon" src="/assets/images/ribbon.png" alt=""><span
-                  class="text">Varius vel pharetra vel turpis nunc eget lorem dolor</span></p>
-              <p class="detail-list"><img class="ribbon" src="/assets/images/ribbon.png" alt=""><span
-                  class="text">Varius vel pharetra vel turpis nunc eget lorem dolor</span></p>
+    </div>
+  </div>
+  <div class="course-top-panel">
+    <div class="row">
+      <div class="col-12">
+        <div class="media flex-lg-row">
+          <img src="/assets/images/view-course-main.png" alt="...">
+          <div class="media-body">
+            <div class="row">
+              <div class="col-xl-9">
+                <div class="course-title">
+                  <h2>Introduction to Visual Design</h2>
+                </div>
+                <div class="course-description">
+                  <p>Visual Design aims to improve a product’s aesthetic appeal using suitable layouts, typography,
+                    icons and images</p>
+                </div>
+                <div class="course-details">
+                  <p>
+                    <span>Adam Lay</span>
+                    <span class="pill color-blue">DESIGN</span>
+                  </p>
+                </div>
+              </div>
+              <div class="col-xl-3">
+                <div class="course-actions">
+                  <button class="post-course" mat-flat-button>Post Now</button>
+                  <button class="delete-course" mat-flat-button>Edit</button>
+                  <button class="delete-course" mat-flat-button>Delete</button>
+                </div>
+              </div>
+            </div>
+            <div class="bottom">
+              <div class="bottom-left">
+                <span class="icon">
+                  <mat-icon inline="true">web</mat-icon>
+                </span>
+                <span><b>20</b> Lessons</span>
+                <span class="icon">
+                  <mat-icon inline="true">timelapse</mat-icon>
+                </span>
+                <span><b>40</b> Mins</span>
+                <span class="icon">
+                  <mat-icon inline="true">visibility</mat-icon>
+                </span>
+                <span><b>500</b> Views</span>
+              </div>
+              <div class="bottom-right">
+                <span class="free">free</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- <div class="course-details"> -->
+  <div class="course-content-container">
     <div class="row">
-      <div class="col-12">
-        <mat-tab-group animationDuration="0ms">
-          <mat-tab label="About">
-            <in-about></in-about>
-          </mat-tab>
-          <mat-tab label="Reviews">
-
-          </mat-tab>
-          <mat-tab label="Forum">
-
-          </mat-tab>
-          <mat-tab label="Resources">
-            <in-resources></in-resources>
-          </mat-tab>
-        </mat-tab-group>
+      <div class="col-12 section-heading">
+        <h2>Course Content</h2>
+      </div>
+      <div class="col-md-12 col-lg-6 col-xl-3 mb-4">
+        <mat-card class="shadow-none">
+          <div>
+            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+              alt="Photo of a Shiba Inu">
+            <mat-card-content>
+              <mat-card-subtitle>LESSON 1</mat-card-subtitle>
+              <a mat-card-title>Fonts and Colours</a>
+              <P>In this lesson you’ll learn about the fundamentals of ...</P>
+            </mat-card-content>
+          </div>
+          <div class="custom-mat-footer">
+            <mat-icon inline="true">slideshow</mat-icon>
+            <div class="spacer"></div>
+            <span class="icon">
+              <mat-icon inline="true">timelapse</mat-icon>
+            </span>
+            <span><b>40</b> Mins</span>
+          </div>
+        </mat-card>
+      </div>
+      <div class="col-md-12 col-lg-6 col-xl-3 mb-4">
+        <mat-card class="shadow-none">
+          <div>
+            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+              alt="Photo of a Shiba Inu">
+            <mat-card-content>
+              <mat-card-subtitle>LESSON 2</mat-card-subtitle>
+              <a mat-card-title>Fonts and Colours</a>
+              <P>In this lesson you’ll learn about the fundamentals of ...</P>
+            </mat-card-content>
+          </div>
+          <div class="custom-mat-footer">
+            <mat-icon inline="true">slideshow</mat-icon>
+            <div class="spacer"></div>
+            <span class="icon">
+              <mat-icon inline="true">timelapse</mat-icon>
+            </span>
+            <span><b>40</b> Mins</span>
+          </div>
+        </mat-card>
+      </div>
+      <div class="col-md-12 col-lg-6 col-xl-3 mb-4">
+        <mat-card class="shadow-none">
+          <div>
+            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+              alt="Photo of a Shiba Inu">
+            <mat-card-content>
+              <mat-card-subtitle>LESSON 3</mat-card-subtitle>
+              <a mat-card-title>Fonts and Colours</a>
+              <P>In this lesson you’ll learn about the fundamentals of ...</P>
+            </mat-card-content>
+          </div>
+          <div class="custom-mat-footer">
+            <mat-icon inline="true">slideshow</mat-icon>
+            <div class="spacer"></div>
+            <span class="icon">
+              <mat-icon inline="true">timelapse</mat-icon>
+            </span>
+            <span><b>40</b> Mins</span>
+          </div>
+        </mat-card>
+      </div>
+      <div class="col-md-12 col-lg-6 col-xl-3 mb-4">
+        <mat-card class="shadow-none">
+          <div>
+            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+              alt="Photo of a Shiba Inu">
+            <mat-card-content>
+              <mat-card-subtitle>LESSON 4</mat-card-subtitle>
+              <a mat-card-title>Fonts and Colours</a>
+              <P>In this lesson you’ll learn about the fundamentals of ...</P>
+            </mat-card-content>
+          </div>
+          <div class="custom-mat-footer">
+            <mat-icon inline="true">slideshow</mat-icon>
+            <div class="spacer"></div>
+            <span class="icon">
+              <mat-icon inline="true">timelapse</mat-icon>
+            </span>
+            <span><b>40</b> Mins</span>
+          </div>
+        </mat-card>
+      </div>
+      <div class="col-md-12 col-lg-6 col-xl-3 mb-4">
+        <mat-card class="shadow-none">
+          <div>
+            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+              alt="Photo of a Shiba Inu">
+            <mat-card-content>
+              <mat-card-subtitle>LESSON 5</mat-card-subtitle>
+              <a mat-card-title>Fonts and Colours</a>
+              <P>In this lesson you’ll learn about the fundamentals of ...</P>
+            </mat-card-content>
+          </div>
+          <div class="custom-mat-footer">
+            <mat-icon inline="true">slideshow</mat-icon>
+            <div class="spacer"></div>
+            <span class="icon">
+              <mat-icon inline="true">timelapse</mat-icon>
+            </span>
+            <span><b>40</b> Mins</span>
+          </div>
+        </mat-card>
+      </div>
+      <div class="col-md-12 col-lg-6 col-xl-3 mb-4">
+        <mat-card class="shadow-none">
+          <div>
+            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+              alt="Photo of a Shiba Inu">
+            <mat-card-content>
+              <mat-card-subtitle>LESSON 6</mat-card-subtitle>
+              <a mat-card-title>Fonts and Colours</a>
+              <P>In this lesson you’ll learn about the fundamentals of ...</P>
+            </mat-card-content>
+          </div>
+          <div class="custom-mat-footer">
+            <mat-icon inline="true">slideshow</mat-icon>
+            <div class="spacer"></div>
+            <span class="icon">
+              <mat-icon inline="true">timelapse</mat-icon>
+            </span>
+            <span><b>40</b> Mins</span>
+          </div>
+        </mat-card>
+      </div>
+      <div class="col-md-12 col-lg-6 col-xl-3 mb-4">
+        <mat-card class="shadow-none">
+          <div>
+            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+              alt="Photo of a Shiba Inu">
+            <mat-card-content>
+              <mat-card-subtitle>LESSON 7</mat-card-subtitle>
+              <a mat-card-title>Fonts and Colours</a>
+              <P>In this lesson you’ll learn about the fundamentals of ...</P>
+            </mat-card-content>
+          </div>
+          <div class="custom-mat-footer">
+            <mat-icon inline="true">slideshow</mat-icon>
+            <div class="spacer"></div>
+            <span class="icon">
+              <mat-icon inline="true">timelapse</mat-icon>
+            </span>
+            <span><b>40</b> Mins</span>
+          </div>
+        </mat-card>
       </div>
     </div>
-  <!-- </div> -->
+  </div>
 </div>
