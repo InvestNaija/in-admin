@@ -1,0 +1,115 @@
+.course-form {
+  background: #FFFFFF;
+  box-shadow: 0px 4px 15px rgba(120, 121, 121, 0.06);
+  border-radius: 5px;
+  padding: 30px;
+
+  .form-group {
+    margin-bottom: 30px;
+  }
+
+  .inl-form-input {
+    label {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 16px;
+      color: #1E1F20;
+      opacity: 0.6;
+    }
+
+    select,
+    input {
+      height: 52px;
+      background: #FFFFFF !important;
+      border: 1px solid #DEDFE0;
+      border-radius: 10px;
+    }
+
+    small {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 16px;
+      color: #1E1F20;
+      opacity: 0.6;
+    }
+
+    textarea {
+      background: #FFFFFF !important;
+      border: 1px solid #DEDFE0;
+      border-radius: 10px;
+    }
+
+    .input-group-append {
+      button {
+        display: inline-flex;
+        align-items: center;
+        border: 0px;
+      }
+    }
+  }
+
+  .inl-form-custom-input {
+    .custom-file {
+      min-height: 125px;
+      height: 100%;
+
+      //   &.upload-cover-art {
+      //     min-height: 125px;
+      //   }
+
+      //   &.upload-lesson {
+      //       min-height: 150px;
+      //   }
+
+      input {}
+
+      label {
+        text-align: center;
+        height: 100%;
+        border: 1px dashed #000000;
+        border-radius: 5px;
+        padding: 15px 10px;
+
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 20px;
+        color: #9A9A9B;
+
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .custom-radio {
+    margin-bottom: 20px;
+
+    .custom-control-label::before,
+    .custom-control-label::after {
+      top: 0rem !important;
+      width: 1.25rem !important;
+      height: 1.25rem !important;
+    }
+
+    .custom-control-label {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 15px;
+      line-height: 18px;
+      color: #1E1F20;
+      padding-left: 5px;
+
+      &.color-green {
+        color: #45A196;
+      }
+
+      &.color-red {
+        color: #CD1A11;
+      }
+    }
+  }
+}
