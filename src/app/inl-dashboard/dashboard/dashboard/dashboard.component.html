@@ -98,8 +98,8 @@
                   <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #historylistmenu="matMenu">
-                  <a mat-menu-item><mat-icon>drive_file_rename_outline</mat-icon> Edit Course</a>
-                  <a mat-menu-item><mat-icon>visibility</mat-icon> View Course</a>
+                  <a [routerLink]="['/dashboard/courses/edit/1']"  mat-menu-item><mat-icon>drive_file_rename_outline</mat-icon> Edit Course</a>
+                  <a [routerLink]="['/dashboard/courses/view/1']" mat-menu-item><mat-icon>visibility</mat-icon> View Course</a>
                   <a mat-menu-item><mat-icon>delete</mat-icon> Delete Course</a>
                 </mat-menu>
               </span>
