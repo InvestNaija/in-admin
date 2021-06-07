@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -8,9 +10,10 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadChildren: () => import('./inl-dashboard/inl-dashboard.module').then(m => m.InlDashboardModule)
-  }
-  // { path: '**', component: PageNotFoundComponent },
+    loadChildren: () => import('./inl-dashboard/inl-dashboard.module').then(m => m.InlDashboardModule),
+    canActivate: [AuthGuard]
+  },
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({

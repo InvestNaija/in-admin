@@ -17,12 +17,12 @@
             <span class="subtitle">Sign in with your phone number and account <br/> password</span>
 
             <div class="form">
-                <form>
-                    <input type="email" placeholder="Email" value="" required />
-                    <input type="password" placeholder="Password" value="" required />
+                <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" >
+                    <input name="email" type="email" placeholder="Email" required ngModel/>
+                    <input name="password" type="password" placeholder="Password" required ngModel/>
 
                 <div class="buttons-arrange">
-                    <input type="button" value="Login" alt="" />
+                    <input type="submit" value="Login" alt="" />
                     <a target="_blank">
                         Reset Password
                     </a>
