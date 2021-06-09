@@ -33,7 +33,7 @@ export class InlLoginComponent implements OnInit {
 
     console.log(values);
     
-    this.api.post('/api/login/provider', payload)
+    this.api.post('/api/provider/login', payload)
       .subscribe(response => {
         console.log(response);
         this.appContext.userInformation = response.data;

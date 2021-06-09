@@ -35,8 +35,7 @@ export class ApiService {
   request(method: string, url: string, useToken: boolean, body?: Object) {
     let headers = new HttpHeaders()
       .append('Content-Type', 'application/json')
-      // .append('Authorization', `Bearer ${this.auth.getToken()}`);
-      .append('Authorization', `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU2NDMwNGNmLTk0NzQtNGRhMy1hNTIxLWMxYmMzZjAwOWI2YyIsInJvbGUiOiJwcm92aWRlciIsImlhdCI6MTYyMjE5OTk2NSwiZXhwIjoxNjIyMjg2MzY1fQ.HF6FX2-Qvpkc4deuv3oqZC8gD_ip_RSjujsAKYNLfQo`);
+      .append('Authorization', `Bearer ${this.auth.getToken()}`);
 
     if (!useToken) {
       headers = headers.delete('Authorization');

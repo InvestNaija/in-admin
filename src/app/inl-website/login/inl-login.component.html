@@ -1,34 +1,34 @@
 <div class="container_custom">
-    <div class="left-box">
-        <div>
-            <img src="/assets/images/login-logo.png" alt="">
-        </div>
-        <p>A platform that works for you</p>
+  <div class="left-box">
+    <div>
+      <img src="/assets/images/login-logo.png" alt="">
     </div>
+    <p>A platform that works for you</p>
+  </div>
 
-    <div class="right-box">
-        <div class="form-box">
-            <div class="header">
-                <p>Login</p>
-                <a target="_blank">
-                    Create Account
-                </a>
-            </div>
-            <span class="subtitle">Sign in with your phone number and account <br/> password</span>
+  <div class="right-box">
+    <div class="form-box">
+      <div class="header">
+        <p>Login</p>
+        <a target="_blank">
+          Create Account
+        </a>
+      </div>
+      <span class="subtitle">Sign in with your phone number and account <br /> password</span>
 
-            <div class="form">
-                <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" >
-                    <input name="email" type="email" placeholder="Email" required ngModel/>
-                    <input name="password" type="password" placeholder="Password" required ngModel/>
+      <div class="form">
+        <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+          <input name="email" type="email" placeholder="Email" required ngModel />
+          <input name="password" type="password" placeholder="Password" required ngModel />
 
-                <div class="buttons-arrange">
-                    <input type="submit" value="Login" alt="" />
-                    <a target="_blank">
-                        Reset Password
-                    </a>
-                </div>
-                </form>
-            </div>
-        </div>
+          <div class="buttons-arrange">
+            <input type="submit" value="Login" alt="" />
+            <a target="_blank">
+              Reset Password
+            </a>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
