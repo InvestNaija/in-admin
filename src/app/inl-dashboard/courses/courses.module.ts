@@ -8,6 +8,7 @@ import { CoursePageComponent } from './course-page/course-page.component';
 import { CourseAddComponent } from './course-add/course-add.component';
 import { CourseEditComponent } from './course-edit/course-edit.component';
 
+import { NgSelectModule } from '@ng-select/ng-select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -31,6 +32,7 @@ import { CourseFormComponent } from './course-form/course-form.component';
     CommonModule,
     CoursesRoutingModule,
 
+    NgSelectModule,
     MatTabsModule,
     MatButtonModule,
     MatIconModule,

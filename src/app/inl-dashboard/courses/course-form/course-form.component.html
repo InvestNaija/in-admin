@@ -22,34 +22,21 @@
           </div>
           <div class="form-group col-md-6 inl-form-input">
             <label for="inputAddress">Category</label>
-            <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+            <!-- <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
               <option selected>Choose...</option>
               <option value="1">One</option>
               <option value="2">Two</option>
               <option value="3">Three</option>
-            </select>
-          </div>
-          <div class="form-group col-md-6 inl-form-input">
-            <label for="inputAddress">Provider</label>
-            <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-              <option selected>Choose...</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
+            </select> -->
+            <ng-select [items]="commonService.container['category'] | async" bindLabel="title"
+                        (click)="getLOVs('/api/categories','category',{loading:'categoryLoading'})"
+                        notFoundText = "{{commonService.container['categoryLoading'] || 'No items found'}}"
+                        placeholder="Select school" formControlName="category">
+            </ng-select>
           </div>
           <div class="form-group col-md-6 inl-form-input">
             <label for="inputAddress">Course fee</label>
             <input type="text" class="form-control">
-          </div>
-          <div class="form-group col-md-6 inl-form-input">
-            <label for="inputAddress">Published By</label>
-            <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-              <option selected>Choose...</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
           </div>
         </div>
       </div>

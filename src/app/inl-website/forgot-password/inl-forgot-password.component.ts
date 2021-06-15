@@ -6,11 +6,11 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { ApplicationContextService } from "src/app/shared/services/application-context.service";
 
 @Component({
-  selector: 'in-inl-login',
-  templateUrl: './inl-login.component.html',
-  styleUrls: ['./inl-login.component.scss']
+  selector: 'in-inl-forgot-password',
+  templateUrl: './inl-forgot-password.component.html',
+  styleUrls: ['./inl-forgot-password.component.scss']
 })
-export class InlLoginComponent implements OnInit {
+export class InlForgotPasswordComponent implements OnInit {
 
   constructor(private api: ApiService,
     private auth: AuthService,
@@ -25,25 +25,19 @@ export class InlLoginComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     const values = form.value;
-
     const payload = {
       email: values.email,
-      password: values.password
     };
-
-    console.log(values);
-
-    this.api.post('/api/provider/login', payload, false)
+    this.api.post('/api/provider/forgot-password', payload, false)
       .subscribe(response => {
         console.log(response);
-        this.appContext.userInformation = response.data;
-        this.auth.setToken(response);
-        if (this.auth.redirectUrl) {
-          this.router.navigate([this.auth.redirectUrl]);
-          this.auth.redirectUrl = '';
-        } else {
-          this.router.navigate(['/dashboard']);
-        }
+        // this.appContext.userInformation = response.data;
+        // if (this.auth.redirectUrl) {
+        //   this.router.navigate([this.auth.redirectUrl]);
+        //   this.auth.redirectUrl = '';
+        // } else {
+        //   this.router.navigate(['/dashboard']);
+        // }
       });
   }
 

@@ -3,20 +3,5 @@
     "target": "https://chapelhil-lms.herokuapp.com",
     "secure": false,
     "changeOrigin": true
-  },
-  "/auth": {
-    "target": "https://chapelhil-lms.herokuapp.com",
-    "secure": false,
-    "changeOrigin": true
-  },
-  "/platformcore": {
-    "target": "https://chapelhil-lms.herokuapp.com",
-    "secure": false,
-    "changeOrigin": true
-  },
-  "/uaa/": {
-    "target": "https://chapelhil-lms.herokuapp.com",
-    "secure": false,
-    "changeOrigin": true
   }
 }

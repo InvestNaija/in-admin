@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
-import bsCustomFileInput from 'bs-custom-file-input'
+import { ApiService } from '../../../shared/services/api.service';
+import { CommonService } from '../../../shared/services/common.service';
 
 @Component({
   selector: 'in-course-form',
@@ -8,15 +9,18 @@ import bsCustomFileInput from 'bs-custom-file-input'
 })
 export class CourseFormComponent implements OnInit, AfterViewChecked {
 
-  constructor() { }
+  constructor(
+    public api: ApiService,
+    public commonService: CommonService) { }
 
   ngOnInit(): void {
-    
+    this.commonService.resetContainer();
   }
 
   ngAfterViewChecked() {
-    //Copy in all the js code from the script.js. Typescript will complain but it works just fine
-    // bsCustomFileInput.init()
   }
 
+  getLOVs(endpoint: string, selectScope: string, options: any) {
+    this.commonService.getLOVs(endpoint, selectScope, options)
+  }
 }

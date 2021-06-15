@@ -17,19 +17,9 @@
       <div class="dashboard-table">
         <table mat-table [dataSource]="dataSource" fixedLayout="false" class="leaderboard-table">
 
-          <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef>S/N</th>
-            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-          </ng-container>
-
           <ng-container matColumnDef="course">
             <th mat-header-cell *matHeaderCellDef>Course</th>
-            <td mat-cell *matCellDef="let element"> {{element.course}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="courseFee">
-            <th mat-header-cell *matHeaderCellDef>Course Fee</th>
-            <td mat-cell *matCellDef="let element"> {{element.courseFee}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.title}} </td>
           </ng-container>
 
           <ng-container matColumnDef="category">
@@ -37,14 +27,19 @@
             <td mat-cell *matCellDef="let element" class="{{element.category | lowercase}}"> {{element.category}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="scheduled">
-            <th mat-header-cell *matHeaderCellDef>Scheduled Date</th>
-            <td mat-cell *matCellDef="let element"> {{element.scheduled}} </td>
+          <ng-container matColumnDef="courseFee">
+            <th mat-header-cell *matHeaderCellDef>Course Fee</th>
+            <td mat-cell *matCellDef="let element"> {{element.course_fee}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="level">
+            <th mat-header-cell *matHeaderCellDef>Difficulty Level</th>
+            <td mat-cell *matCellDef="let element"> {{element.level}} </td>
           </ng-container>
 
           <ng-container matColumnDef="published">
             <th mat-header-cell *matHeaderCellDef>Published Date</th>
-            <td mat-cell *matCellDef="let element"> {{element.published}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.publish_date | date}} </td>
           </ng-container>
 
           <ng-container matColumnDef="status">
@@ -60,8 +55,8 @@
                   <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #historylistmenu="matMenu">
-                  <a [routerLink]="['edit/1']"  mat-menu-item><mat-icon>drive_file_rename_outline</mat-icon> Edit Course</a>
-                  <a [routerLink]="['view/1']" mat-menu-item><mat-icon>visibility</mat-icon> View Course</a>
+                  <a [routerLink]="['edit', element.id]" mat-menu-item><mat-icon>drive_file_rename_outline</mat-icon> Edit Course</a>
+                  <a [routerLink]="['view', element.id]" mat-menu-item><mat-icon>visibility</mat-icon> View Course</a>
                   <a mat-menu-item><mat-icon>delete</mat-icon> Delete Course</a>
                 </mat-menu>
               </span>
