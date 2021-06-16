@@ -19,6 +19,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CourseFormComponent } from './course-form/course-form.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { CourseFormComponent } from './course-form/course-form.component';
     CommonModule,
     CoursesRoutingModule,
 
+    SharedModule,
     NgSelectModule,
     MatTabsModule,
     MatButtonModule,

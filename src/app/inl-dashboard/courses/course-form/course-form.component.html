@@ -1,5 +1,5 @@
 <div class="course-form">
-  <form>
+  <form class="form-horizontal" [formGroup]="myForm" (ngSubmit)="submit()">
     <div class="row">
       <div class="col-lg-9">
         <div class="row">
@@ -14,29 +14,23 @@
           </div>
           <div class="form-group col-md-8 inl-form-input">
             <label for="inputEmail4" class="mt-md-5">Course Title</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" formControlName="title">
           </div>
           <div class="form-group col-md-12 inl-form-input">
             <label for="inputAddress">Description</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" formControlName="description"></textarea>
           </div>
           <div class="form-group col-md-6 inl-form-input">
             <label for="inputAddress">Category</label>
-            <!-- <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-              <option selected>Choose...</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select> -->
             <ng-select [items]="commonService.container['category'] | async" bindLabel="title"
                         (click)="getLOVs('/api/categories','category',{loading:'categoryLoading'})"
                         notFoundText = "{{commonService.container['categoryLoading'] || 'No items found'}}"
-                        placeholder="Select school" formControlName="category">
+                        placeholder="Select category" formControlName="category">
             </ng-select>
           </div>
           <div class="form-group col-md-6 inl-form-input">
             <label for="inputAddress">Course fee</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" formControlName="course_fee">
           </div>
         </div>
       </div>
@@ -50,12 +44,12 @@
               <h3>STATUS</h3>
             </div>
             <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" name="customRadio" id="customRadio1">
-              <label class="custom-control-label color-green" for="customRadio1">APPROVED</label>
+              <input type="radio" class="custom-control-input" id="approved" value="approved" formControlName="status">
+              <label class="custom-control-label color-green" for="approved">APPROVED</label>
             </div>
             <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" name="customRadio" id="customRadio2">
-              <label class="custom-control-label color-red" for="customRadio2">UNAPPROVED</label>
+              <input type="radio" class="custom-control-input" id="unapproved" value="unapproved" formControlName="status">
+              <label class="custom-control-label color-red" for="unapproved">UNAPPROVED</label>
             </div>
           </div>
           <div class="col-md-6 col-lg-12 attribute-level">
@@ -63,16 +57,16 @@
               <h3>LEVEL</h3>
             </div>
             <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" name="customRadio1" id="customRadio3">
-              <label class="custom-control-label" for="customRadio3">BEGINNER</label>
+              <input type="radio" class="custom-control-input" id="beginner" value="beginner" formControlName="level">
+              <label class="custom-control-label" for="beginner">BEGINNER</label>
             </div>
             <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" name="customRadio1" id="customRadio4">
-              <label class="custom-control-label" for="customRadio4">INTERMEDIATE</label>
+              <input type="radio" class="custom-control-input" id="intermediate" value="intermediate" formControlName="level">
+              <label class="custom-control-label" for="intermediate">INTERMEDIATE</label>
             </div>
             <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" name="customRadio1" id="customRadio5">
-              <label class="custom-control-label" for="customRadio5">ADVANCE</label>
+              <input type="radio" class="custom-control-input" id="advance" value="advance" formControlName="level">
+              <label class="custom-control-label" for="advance">ADVANCE</label>
             </div>
           </div>
         </div>

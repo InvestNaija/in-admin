@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+
 import { ApiService } from 'src/app/shared/services/api.service';
 import { ApplicationContextService } from 'src/app/shared/services/application-context.service';
 import { CommonService } from 'src/app/shared/services/common.service';
@@ -22,8 +23,7 @@ export interface PeriodicElement {
 export class CoursesComponent implements OnInit, AfterViewInit  {
 
   constructor(
-    private api: ApiService,
-    private appContext: ApplicationContextService,
+    private api: ApiService
   ) { }
 
   displayedColumns: string[] = ['course', 'courseFee', 'category', 'level', 'published', 'status', 'action'];

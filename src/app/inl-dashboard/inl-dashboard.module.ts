@@ -15,6 +15,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { MatInputModule } from '@angular/material/input';
     InlDashboardRoutingModule,
     DashboardModule,
 
+    SharedModule,
     MatButtonModule,
     MatIconModule,
     MatMenuModule,

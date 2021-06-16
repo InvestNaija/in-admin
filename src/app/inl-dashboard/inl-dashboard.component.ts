@@ -44,12 +44,10 @@ export class InlDashboardComponent implements OnInit, OnDestroy {
 
   getUserInformation() {
     this.appContext.userInformationObs().subscribe(
-      {
-        next: data => {
+       data => {
           console.log('UserInfo', data);
           this.userInformation = data;
         }
-      }
     );
   }
 

@@ -35,7 +35,6 @@ export class InlLoginComponent implements OnInit {
 
     this.api.post('/api/provider/login', payload, false)
       .subscribe(response => {
-        console.log(response);
         this.appContext.userInformation = response.data;
         this.auth.setToken(response);
         if (this.auth.redirectUrl) {

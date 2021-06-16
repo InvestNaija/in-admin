@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { ApplicationContextService } from '../../../shared/services/application-context.service';
+import { ApiService } from '../../../shared/services/api.service';
+import { switchMap } from 'rxjs/operators';
 
 export interface PeriodicElement {
   position: number;
@@ -26,11 +29,30 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  userInformation: any;
   displayedColumns: string[] = ['position', 'course', 'courseFee', 'category', 'scheduled', 'published', 'status', 'action'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
+
+  constructor(
+    private api: ApiService,
+    private appContext: ApplicationContextService
+  ) { }
+
+  ngOnInit(): void {
+    this.fetchCourses();
+  }
+
+  fetchCourses() {
+    this.appContext.userInformationObs().pipe(
+      switchMap(user => {
+        this.userInformation = user;
+        return this.api.get(`/api/provider/unapproved/courses/${this.userInformation.id}`);
+      })
+    ).subscribe(response => {
+        this.dataSource = new MatTableDataSource(response.data);
+        this.dataSource.filterPredicate = (data: PeriodicElement, filter: string) => {
+          return data.status.trim().toLowerCase() == filter;
+        };
+      });
+  }
 }
