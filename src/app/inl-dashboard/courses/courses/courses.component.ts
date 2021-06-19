@@ -1,6 +1,8 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { BehaviorSubject, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import { ApiService } from 'src/app/shared/services/api.service';
 import { ApplicationContextService } from 'src/app/shared/services/application-context.service';
@@ -30,14 +32,38 @@ export class CoursesComponent implements OnInit, AfterViewInit  {
   dataSource: any;
   activeLink = 'all';
 
+  total_count = 0;
+  pageSize = 10;
+  currentPage = new BehaviorSubject<number>(1);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit(): void {
-    this.fetchCourses();
   }
 
   ngAfterViewInit() {
     // this.dataSource.paginator = this.paginator;
+    this.fetchCourses(this.paginator.pageIndex)
+      .pipe(
+        map(data => {
+        // Flip flag to show that loading has finished.
+        // this.isLoadingResults = false;
+          this.total_count = data.response.totalItems;
+          return data.response.allData;
+        }),
+        catchError(() => {
+          // this.isLoadingResults = false;
+          return of([]);
+        })
+      )
+      .subscribe(response => {
+        console.log(response);
+        this.dataSource = new MatTableDataSource(response);
+
+        this.dataSource.filterPredicate = (data: PeriodicElement, filter: string) => {
+          return data.status.trim().toLowerCase() == filter;
+        };
+        this.dataSource.paginator = this.paginator;
+      });
   }
 
   applyFilter(filterValue: string) {
@@ -50,14 +76,8 @@ export class CoursesComponent implements OnInit, AfterViewInit  {
     }
   }
 
-  fetchCourses() {
-    this.api.get('/api/provider/courses')
-      .subscribe(response => {
-        this.dataSource = new MatTableDataSource(response.data);
-        this.dataSource.filterPredicate = (data: PeriodicElement, filter: string) => {
-          return data.status.trim().toLowerCase() == filter;
-        };
-        this.dataSource.paginator = this.paginator;
-      });
+  fetchCourses(page: number) {
+    console.log(page);
+    return this.api.get('/api/provider/courses');
   }
 }
