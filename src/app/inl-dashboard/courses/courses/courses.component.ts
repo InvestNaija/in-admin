@@ -45,7 +45,6 @@ export class CoursesComponent implements OnInit, AfterViewInit  {
     this.fetchCourses(this.paginator.pageIndex)
       .pipe(
         map(data => {
-        // Flip flag to show that loading has finished.
         // this.isLoadingResults = false;
           this.total_count = data.response.totalItems;
           return data.response.allData;
@@ -77,7 +76,6 @@ export class CoursesComponent implements OnInit, AfterViewInit  {
   }
 
   fetchCourses(page: number) {
-    console.log(page);
     return this.api.get('/api/provider/courses');
   }
 }

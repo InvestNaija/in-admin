@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, of } from 'rxjs';
+import { MatPaginator } from '@angular/material/paginator';
+
 import { ApplicationContextService } from '../../../shared/services/application-context.service';
 import { ApiService } from '../../../shared/services/api.service';
-import { switchMap } from 'rxjs/operators';
 
 export interface PeriodicElement {
   position: number;
@@ -14,45 +17,58 @@ export interface PeriodicElement {
   status: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, course: 'Kunle Coker', courseFee: 3925, category: 'Investment', scheduled: 'Jan. 20th,2020', published: 'Jan. 20th,2020', status: 'Unapproved' },
-  { position: 2, course: 'Nengi Hampson', courseFee: 3243, category: 'Investment', scheduled: 'Jan. 20th,2020', published: 'Jan. 20th,2020', status: 'Unapproved' },
-  { position: 3, course: 'Benson Idashosa', courseFee: 2945, category: 'Investment', scheduled: 'Jan. 20th,2020', published: 'Jan. 20th,2020', status: 'Unapproved' },
-  { position: 4, course: 'Doja Kabiru', courseFee: 2546, category: 'Investment', scheduled: 'Jan. 20th,2020', published: 'Jan. 20th,2020', status: 'Unapproved' },
-  { position: 5, course: 'Sylvester Ayodele', courseFee: 1982, category: 'Investment', scheduled: 'Jan. 20th,2020', published: 'Jan. 20th,2020', status: 'Unapproved' },
-  { position: 6, course: 'Linda Pedro', courseFee: 847, category: 'Investment', scheduled: 'Jan. 20th,2020', published: 'Jan. 20th,2020', status: 'Unapproved' },
-];
 @Component({
   selector: 'in-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
 
+  displayedColumns: string[] = ['course', 'courseFee', 'category', 'level', 'published', 'status', 'action'];
+  dataSource: any;
   userInformation: any;
-  displayedColumns: string[] = ['position', 'course', 'courseFee', 'category', 'scheduled', 'published', 'status', 'action'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+
+  total_count = 0;
+  pageSize = 10;
+  currentPage = new BehaviorSubject<number>(1);
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  stats: any;
 
   constructor(
     private api: ApiService,
-    private appContext: ApplicationContextService
   ) { }
 
   ngOnInit(): void {
-    this.fetchCourses();
+    this.api.get('/api/provider/stats')
+      .subscribe(response => this.stats = response.data);
   }
 
-  fetchCourses() {
-    this.appContext.userInformationObs().pipe(
-      switchMap(user => {
-        this.userInformation = user;
-        return this.api.get(`/api/provider/unapproved/courses/${this.userInformation.id}`);
-      })
-    ).subscribe(response => {
-        this.dataSource = new MatTableDataSource(response.data);
+  ngAfterViewInit() {
+    // this.dataSource.paginator = this.paginator;
+    this.fetchCourses(this.paginator.pageIndex)
+      .pipe(
+        map(data => {
+        // this.isLoadingResults = false;
+          this.total_count = data.response.totalItems;
+          return data.response.allData;
+        }),
+        catchError(() => {
+          // this.isLoadingResults = false;
+          return of([]);
+        })
+      )
+      .subscribe(response => {
+        console.log(response);
+        this.dataSource = new MatTableDataSource(response);
+
         this.dataSource.filterPredicate = (data: PeriodicElement, filter: string) => {
           return data.status.trim().toLowerCase() == filter;
         };
+        this.dataSource.paginator = this.paginator;
       });
+  }
+  fetchCourses(page: number) {
+    return this.api.get('/api/provider/unapproved/courses');
   }
 }
