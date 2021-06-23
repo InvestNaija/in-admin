@@ -9,6 +9,7 @@ import { CourseAddComponent } from './course-add/course-add.component';
 import { CourseEditComponent } from './course-edit/course-edit.component';
 
 import { NgSelectModule } from '@ng-select/ng-select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -35,6 +36,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
     SharedModule,
     NgSelectModule,
+    MatProgressSpinnerModule,
     MatTabsModule,
     MatButtonModule,
     MatIconModule,

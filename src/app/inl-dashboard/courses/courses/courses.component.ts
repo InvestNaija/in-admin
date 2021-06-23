@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject, of } from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { catchError, finalize, map, startWith, switchMap, take } from 'rxjs/operators';
 
 import { ApiService } from 'src/app/shared/services/api.service';
 
@@ -33,33 +33,32 @@ export class CoursesComponent implements OnInit, AfterViewInit  {
 
   total_count = 0;
   pageSize = 10;
-  isLoading = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  isLoading$ = this.loadingSubject.asObservable();
 
   ngOnInit(): void {
   }
 
   ngAfterViewInit() {
-    // this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     this.paginator.page
       .pipe(
         startWith({}),
         switchMap(() => {
-          this.isLoading = true;
-          return this.fetchCourses(this.paginator.pageIndex);
+          this.dataSource = null;
+          this.loadingSubject.next(true);
+          return this.fetchCourses(this.paginator.pageIndex, this.paginator.pageSize);
         }),
         map((data: any) => {
-          this.isLoading = false;
           this.total_count = data.response.totalItems;
           return data.response.allData;
         }),
         catchError(() => {
-          this.isLoading = false;
           return of([]);
         })
       )
       .subscribe(response => {
+        this.loadingSubject.next(false);
         this.dataSource = new MatTableDataSource(response);
 
         this.dataSource.filterPredicate = (data: PeriodicElement, filter: string) => {
@@ -78,7 +77,7 @@ export class CoursesComponent implements OnInit, AfterViewInit  {
     }
   }
 
-  fetchCourses(page: number) {
-    return this.api.get(`/api/provider/courses?page=${page+1}`);
+  fetchCourses(page: number, size: number) {
+    return this.api.get(`/api/provider/courses?page=${page+1}&size=${size}`);
   }
 }

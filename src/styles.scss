@@ -12,6 +12,12 @@
   height: 52px;
   border-radius: 10px;
 }
+.mat-spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fafafa;
+}
 
 // For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
