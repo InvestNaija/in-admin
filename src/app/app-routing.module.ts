@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: 'dashboard',
     loadChildren: () => import('./inl-dashboard/inl-dashboard.module').then(m => m.InlDashboardModule),
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
   },
   { path: '**', component: PageNotFoundComponent },
 ];

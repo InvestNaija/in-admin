@@ -8,7 +8,7 @@ const routes: Routes = [
   {
     path: '',
     component: InlDashboardComponent,
-    canActivateChild: [AuthGuard],
+    // canActivateChild: [AuthGuard],
     children: [
       {
         path: 'index',

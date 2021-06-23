@@ -24,7 +24,7 @@
 
           <ng-container matColumnDef="category">
             <th mat-header-cell *matHeaderCellDef>Category</th>
-            <td mat-cell *matCellDef="let element" class="{{element.category | lowercase}}"> {{element.category}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.category?.title}} </td>
           </ng-container>
 
           <ng-container matColumnDef="courseFee">

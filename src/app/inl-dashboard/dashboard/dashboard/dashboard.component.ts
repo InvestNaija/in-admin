@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { BehaviorSubject, of } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 
@@ -30,10 +30,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   total_count = 0;
   pageSize = 10;
-  currentPage = new BehaviorSubject<number>(1);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   stats: any;
+  isLoadingResults: boolean;
 
   constructor(
     private api: ApiService,
@@ -45,30 +45,33 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // this.dataSource.paginator = this.paginator;
-    this.fetchCourses(this.paginator.pageIndex)
+    // this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    this.paginator.page
       .pipe(
-        map(data => {
-        // this.isLoadingResults = false;
+        startWith({}),
+        switchMap(() => {
+          this.isLoadingResults = true;
+          return this.fetchCourses(this.paginator.pageIndex);
+        }),
+        map((data: any) => {
+          this.isLoadingResults = false;
           this.total_count = data.response.totalItems;
           return data.response.allData;
         }),
         catchError(() => {
-          // this.isLoadingResults = false;
+          this.isLoadingResults = false;
           return of([]);
         })
       )
       .subscribe(response => {
-        console.log(response);
         this.dataSource = new MatTableDataSource(response);
 
         this.dataSource.filterPredicate = (data: PeriodicElement, filter: string) => {
           return data.status.trim().toLowerCase() == filter;
         };
-        this.dataSource.paginator = this.paginator;
       });
   }
   fetchCourses(page: number) {
-    return this.api.get('/api/provider/unapproved/courses');
+    return this.api.get(`/api/provider/unapproved/courses?page=${page+1}`);
   }
 }

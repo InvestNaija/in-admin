@@ -1,17 +1,16 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 
 import { ApiService } from 'src/app/shared/services/api.service';
-import { ApplicationContextService } from 'src/app/shared/services/application-context.service';
-import { CommonService } from 'src/app/shared/services/common.service';
 
 export interface PeriodicElement {
   title: string;
   course_fee: number;
-  category: string;
+  category: any;
   level: string;
   publish_date: string;
   status: string;
@@ -34,34 +33,38 @@ export class CoursesComponent implements OnInit, AfterViewInit  {
 
   total_count = 0;
   pageSize = 10;
-  currentPage = new BehaviorSubject<number>(1);
+  isLoading = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit(): void {
   }
 
   ngAfterViewInit() {
-    // this.dataSource.paginator = this.paginator;
-    this.fetchCourses(this.paginator.pageIndex)
+    // this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    this.paginator.page
       .pipe(
-        map(data => {
-        // this.isLoadingResults = false;
+        startWith({}),
+        switchMap(() => {
+          this.isLoading = true;
+          return this.fetchCourses(this.paginator.pageIndex);
+        }),
+        map((data: any) => {
+          this.isLoading = false;
           this.total_count = data.response.totalItems;
           return data.response.allData;
         }),
         catchError(() => {
-          // this.isLoadingResults = false;
+          this.isLoading = false;
           return of([]);
         })
       )
       .subscribe(response => {
-        console.log(response);
         this.dataSource = new MatTableDataSource(response);
 
         this.dataSource.filterPredicate = (data: PeriodicElement, filter: string) => {
           return data.status.trim().toLowerCase() == filter;
         };
-        this.dataSource.paginator = this.paginator;
       });
   }
 
@@ -76,6 +79,6 @@ export class CoursesComponent implements OnInit, AfterViewInit  {
   }
 
   fetchCourses(page: number) {
-    return this.api.get('/api/provider/courses');
+    return this.api.get(`/api/provider/courses?page=${page+1}`);
   }
 }
