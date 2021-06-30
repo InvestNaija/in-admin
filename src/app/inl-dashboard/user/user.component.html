@@ -1,27 +1,38 @@
 <div class="container-fluid p-4">
   <div class="row">
     <div class="col-12">
+      <a [routerLink]="['/dashboard/index']" class="text-dark text-decoration-none">< Back</a>
       <div class="page-title">
-        <h1>My Profile</h1>
-        <h3>Account Settings</h3>
+        <h1 class="display-block">My Profile</h1>
       </div>
-    </div>
-    <div class="col-12">
-      <div class="link-pill-nav">
-        <a mat-stroked-button [routerLink]="['profile']" routerLinkActive="current">
-          Profile</a>
-        <a mat-stroked-button [routerLink]="['password']" routerLinkActive="current">
-          Password</a>
-        <a mat-stroked-button [routerLink]="['socials']" routerLinkActive="current">
-          Social Profiles</a>
-        <a mat-stroked-button [routerLink]="['documents']" routerLinkActive="current">
-          Document & KYC</a>
-        <a mat-stroked-button [routerLink]="['bank-details']" routerLinkActive="current">
-          Bank Details</a>
-        <a mat-stroked-button [routerLink]="['notifications']" routerLinkActive="current">
-          Notifications</a>
+      <div class="page-title">
+        <h3 class="display-block">Account Settings</h3>
       </div>
     </div>
   </div>
-  <router-outlet></router-outlet>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <mat-tab-group [selectedIndex]="selectedIndex" (selectedIndexChange)="setIndex($event)">
+            <mat-tab label="Profile">
+              <in-profile *matTabContent></in-profile>
+            </mat-tab>
+            <mat-tab label="Password">
+              <in-password *matTabContent></in-password>
+            </mat-tab>
+            <mat-tab label="Social Profiles">
+              <in-socials *matTabContent></in-socials>
+            </mat-tab>
+            <mat-tab label="Documents & KYC">
+              <in-documents *matTabContent></in-documents>
+            </mat-tab>
+            <mat-tab label="Bank Details">
+              <in-banking-details *matTabContent></in-banking-details>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

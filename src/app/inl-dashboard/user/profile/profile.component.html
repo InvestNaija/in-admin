@@ -1,88 +1,54 @@
-<div class="row">
+<mat-spinner *ngIf="loading" [diameter]="60"></mat-spinner>
+<div class="row m-2" *ngIf="!loading">
   <div class="user-profile col-12">
     <h4>Your Profile Picture</h4>
-    <button mat-button class="delete-profile">Delete Account</button>
     <div class="row">
-      <mat-list>
-        <mat-list-item>
-          <img matListAvatar src="/assets/images/avi-big.png" alt="...">
-          <button mat-button matLine class="edit-profile">Design Instructor</button>
-        </mat-list-item>
-      </mat-list>
+      <div class="col-3">
+        <file-pond
+            class="filepond"
+            #myPond
+            [files]="pondFiles"
+            [options]="pondOptions"
+            (oninit)="pondHandleInit()"
+            (onaddfile)="pondHandleAddFile($event)"
+        >
+        </file-pond>
+      </div>
+      <div class="col-3 d-flex">
+        <button class="btn btn-danger align-self-center" (click)="onUploadImage()" [disabled]="uploading">Upload Image</button>
+      </div>
     </div>
   </div>
   <div class="profile-form-container col-12">
-    <form>
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
       <div class="row">
         <div class="form-group col-md-6">
-          <label for="inputEmail4">First Name</label>
-          <input type="text" class="form-control">
-          <small class="form-text">Your full name helps people identify you</small>
+          <label for="firstName">First Name</label>
+          <input formControlName="firstName" type="text" class="form-control" placeholder="Enter First Name">
         </div>
         <div class="form-group col-md-6">
-          <label for="inputPassword4">Last Name</label>
-          <input type="text" class="form-control">
-          <small class="form-text">Let people know what you do</small>
+          <label for="lastName">Last Name</label>
+          <input formControlName="lastName" type="text" class="form-control" placeholder="Enter Last Name">
         </div>
         <div class="form-group col-md-6">
-          <label for="inputAddress">Country</label>
-          <div class="input-group">
-            <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-              <option selected>Choose...</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button">
-                <mat-icon>lock_open</mat-icon> Show Public
-              </button>
-            </div>
-          </div>
-          <small class="form-text">Let people know what you do</small>
+          <label for="country">Country</label>
+          <ng-select [items]="container['countries']" bindLabel="name"
+                  notFoundText = "{{container['countriesLoading'] || 'No items found'}}"
+                  placeholder="Select Country" formControlName="country">
+          </ng-select>
         </div>
         <div class="form-group col-md-6">
-          <label for="inputAddress">Email Address</label>
-          <div class="input-group">
-            <input type="text" class="form-control">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button">
-                <mat-icon>lock</mat-icon> hide from Public
-              </button>
-            </div>
-          </div>
+          <label for="email">Email Address</label>
+          <input formControlName="email" type="text" class="form-control" placeholder="Enter email">
           <small class="form-text">Add your email address (janedoe@xxx.com)</small>
         </div>
         <div class="form-group col-md-6">
-          <label for="inputAddress">Date of Birth</label>
-          <div class="input-group">
-            <input type="text" class="form-control">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button">
-                <mat-icon>lock_open</mat-icon> Show Public
-              </button>
-            </div>
-          </div>
-          <small class="form-text">Add your email address (janedoe@xxx.com)</small>
+          <label for="dob">Date of Birth</label>
+          <input formControlName="dob" type="text" class="form-control" placeholder="Enter Date of Birth">
         </div>
         <div class="form-group col-md-6">
-          <label for="inputAddress">Phone Number</label>
-          <div class="input-group">
-            <input type="text" class="form-control">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button">
-                <mat-icon>lock</mat-icon> hide from Public
-              </button>
-            </div>
-          </div>
-          <small class="form-text">Add your email address (janedoe@xxx.com)</small>
-        </div>
-        <div class="form-group col-md-10">
-          <label for="inputAddress">Bio</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-        </div>
-        <div class="form-group col-md-2">
-          <button mat-flat-button type="submit" class="btn btn-primary submit-profile-form">Update Profile</button>
+          <label for="phone">Phone Number</label>
+          <input formControlName="phone" type="text" class="form-control" placeholder="Enter phone">
         </div>
       </div>
     </form>

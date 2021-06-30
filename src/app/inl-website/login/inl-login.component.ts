@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ApiService } from 'src/app/shared/services/api.service';
-import { AuthService } from 'src/app/shared/services/auth.service';
-import { ApplicationContextService } from "src/app/shared/services/application-context.service";
+import Swal from 'sweetalert2';
+
+import { ApiService } from '@app/_shared/services/api.service';
+import { AuthService } from '@app/_shared/services/auth.service';
+import { ApplicationContextService } from "@app/_shared/services/application-context.service";
+import { FormErrors, ValidationMessages } from './login.validators';
+import { CommonService } from '@app/_shared/services/common.service';
 
 @Component({
   selector: 'in-inl-login',
@@ -11,30 +15,51 @@ import { ApplicationContextService } from "src/app/shared/services/application-c
   styleUrls: ['./inl-login.component.scss']
 })
 export class InlLoginComponent implements OnInit {
+  myForm: FormGroup;
+  errors = [];
+  formErrors = FormErrors;
+  uiErrors = FormErrors;
+  validationMessages = ValidationMessages;
+  APIResponse = false; submitting = false;
 
-  constructor(private api: ApiService,
+  constructor(
+    private fb: FormBuilder,
+    private api: ApiService,
     private auth: AuthService,
     private appContext: ApplicationContextService,
+    private commonServices: CommonService,
     private router: Router) { }
 
   ngOnInit(): void {
     if (this.auth.isLoggedIn()) {
       this.router.navigate(['/dashboard']);
     }
+    this.myForm = this.fb.group({
+      email: [null, [Validators.required, Validators.email]],
+      password: [null, Validators.required],
+    });
   }
 
-  onSubmit(form: NgForm) {
-    const values = form.value;
+  onSubmit() {
 
-    const payload = {
-      email: values.email,
-      password: values.password
-    };
+    this.APIResponse = true; this.submitting = true;
+    if (this.myForm.invalid) {
+      this.uiErrors = JSON.parse(JSON.stringify(this.formErrors))
+      this.errors = this.commonServices.findInvalidControlsRecursive(this.myForm);
+      Object.keys(this.errors).forEach((control) => {
+        Object.keys(this.errors[control]).forEach(error => {
+          this.uiErrors[control] = ValidationMessages[control][error];
+        })
+      });
+      this.APIResponse = false; this.submitting = false;
+      return;
+    }
+    const fd = JSON.parse(JSON.stringify(this.myForm.value));
+    console.log(fd);
 
-    console.log(values);
-
-    this.api.post('/api/provider/login', payload, false)
+    this.api.post('/api/v1/auth/customers/login', fd, false)
       .subscribe(response => {
+        this.APIResponse = false; this.submitting = false;
         this.appContext.userInformation = response.data;
         this.auth.setToken(response);
         if (this.auth.redirectUrl) {
@@ -43,6 +68,10 @@ export class InlLoginComponent implements OnInit {
         } else {
           this.router.navigate(['/dashboard']);
         }
+      },
+      errResp => {
+        this.APIResponse = false; this.submitting = false;
+        Swal.fire('Oops...', errResp?.error?.error?.message, 'error')
       });
   }
 

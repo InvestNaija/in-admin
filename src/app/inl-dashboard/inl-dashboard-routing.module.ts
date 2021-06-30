@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InlDashboardComponent } from './inl-dashboard.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
-import { AuthGuard } from '../shared/guards/auth.guard';
+import { AuthGuard } from '../_shared/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -15,12 +15,12 @@ const routes: Routes = [
         component: DashboardComponent
       },
       {
-        path: 'courses',
-        loadChildren: () => import('./courses/courses.module').then(m => m.CoursesModule),
+        path: 'shares',
+        loadChildren: () => import('./shares/shares.module').then(m => m.SharesModule),
       },
       {
-        path: 'messages',
-        loadChildren: () => import('./messages/messages.module').then(m => m.MessagesModule),
+        path: 'transactions',
+        loadChildren: () => import('./transactions/transactions.module').then(m => m.TransactionsModule),
       },
       {
         path: 'user',

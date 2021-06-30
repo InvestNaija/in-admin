@@ -1,0 +1,45 @@
+
+<div class="form-box">
+  <div class="header">
+    <p>Verify OTP</p>
+    <a routerLink="/auth/signup">
+      Create an account>
+    </a>
+  </div>
+  <span class="subtitle">Verify your account with your email address and otp</span>
+
+  <div class="form">
+    <div class="course-form">
+      <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="form-group col-md-12 inl-form-input">
+            <input formControlName="email" type="email" placeholder="email" />
+            <span *ngIf="uiErrors.email">{{uiErrors.email}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-12 inl-form-input">
+          <strong (click)="onResendOTP()" class="text-danger cursor-pointer">Click Here to Resend OTP</strong>
+          <mat-spinner *ngIf="resending" color="accent" [diameter]="20"></mat-spinner>
+        </div>
+      </div>
+        <div class="row">
+          <div class="form-group col-md-12 inl-form-input">
+            <input formControlName="otp" type="text" placeholder="OTP" />
+            <span *ngIf="uiErrors.otp">{{uiErrors.otp}}</span>
+          </div>
+        </div>
+
+        <div class="row buttons-arrange">
+          <div class="form-group col-md-6">
+            <button type="submit" class="btn btn-danger">Verify</button>
+          </div>
+          <div class="form-group col-md-6 text-right">
+            <!-- <input type="submit" value="Login" alt="" /> -->
+            <!-- <strong><a routerLink="/auth/forgot-password">Reset Password</a></strong> -->
+          </div>
+        </div>
+    </form>
+    </div>
+  </div>
+</div>

@@ -17,8 +17,11 @@
   input, select {
     height: 52px;
     background: #FFFFFF !important;
-    border: 1px solid #DEDFE0;
     border-radius: 10px;
+    .ng-invalid {
+      border-bottom-color: red;
+      color: red;
+    }
   }
 
   .submit-bank-form {
@@ -28,4 +31,9 @@
     color: #FFFFFF;
     border-radius: 10px;
   }
+}
+
+.ng-invalid {
+  border-bottom-color: red;
+  color: red;
 }

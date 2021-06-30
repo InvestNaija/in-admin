@@ -10,6 +10,7 @@ export class DocumentsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log('in-documents loaded')
   }
 
 }

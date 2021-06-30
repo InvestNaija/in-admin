@@ -30,7 +30,15 @@
               </a>
             </li>
             <li>
-              <a [routerLink]="['courses']" routerLinkActive="current">
+              <a [routerLink]="['shares']" routerLinkActive="current">
+                <span class="dash-menu-icon">
+                  <ion-icon name="trending-up"></ion-icon>
+                </span>
+                Shares
+              </a>
+            </li>
+            <li>
+              <a [routerLink]="['transactions']" routerLinkActive="current">
                 <span class="dash-menu-icon">
                   <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <mask id="path-1-inside-1" fill="white">
@@ -65,7 +73,7 @@
                       fill="white" mask="url(#path-5-inside-3)" />
                   </svg>
                 </span>
-                Courses
+                Transactions
               </a>
             </li>
             <!-- <li>
@@ -129,36 +137,6 @@
           <mat-icon>menu</mat-icon>
         </button>
 
-        <button mat-flat-button [matMenuTriggerFor]="categories" class="toolbar-categories-menu">
-          Categories <mat-icon>expand_more</mat-icon>
-        </button>
-        <mat-menu #categories="matMenu">
-          <button mat-menu-item>
-            <mat-icon>publish</mat-icon>
-            <span>Share</span>
-          </button>
-          <button mat-menu-item disabled>
-            <mat-icon>mode_comment</mat-icon>
-            <span>Comment</span>
-          </button>
-          <button mat-menu-item>
-            <mat-icon>delete</mat-icon>
-            <span>Delete</span>
-          </button>
-        </mat-menu>
-
-        <div class="form-group my-2 my-lg-0 toolbar-searchbar">
-          <div class="input-group flex-nowrap">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="addon-wrapping">
-                <mat-icon>search</mat-icon>
-              </span>
-            </div>
-            <input class="form-control mr-sm-2" type="search" placeholder="What do you want to learn today?"
-              aria-label="Search">
-          </div>
-        </div>
-
         <div class="spacer"></div>
 
         <button mat-icon-button>
@@ -173,26 +151,29 @@
           <img src="/assets/images/face_placeholder.png" alt="">
           <div class="user-details">
             <p class="top">Hello,</p>
-            <p class="bottom">Linda Pedro</p>
+            <p class="bottom">{{userInformation?.lastName}} {{userInformation?.firstName}}</p>
           </div>
           <mat-icon>expand_more</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>
-            <mat-icon>publish</mat-icon>
-            <span>Share</span>
-          </button>
-          <button mat-menu-item disabled>
-            <mat-icon>mode_comment</mat-icon>
-            <span>Comment</span>
-          </button>
-          <button mat-menu-item>
-            <mat-icon>delete</mat-icon>
-            <span>Delete</span>
+          <a routerLink="/dashboard/index" class="text-decoration-none">
+            <button mat-menu-item >
+              <!-- <mat-icon>publish</mat-icon> -->
+              <span>Dashboard</span>
+            </button>
+          </a>
+          <a routerLink="/dashboard/user" class="text-decoration-none">
+            <button mat-menu-item>
+              <!-- <mat-icon>delete</mat-icon> -->
+              <span>Edit Profile</span>
+            </button>
+          </a>
+          <button mat-menu-item class="text-danger">
+            <!-- <mat-icon>delete</mat-icon> -->
+            <span>Logout</span>
           </button>
         </mat-menu>
       </mat-toolbar>
-
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>

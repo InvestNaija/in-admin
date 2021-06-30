@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ApiService } from 'src/app/shared/services/api.service';
-import { AuthService } from 'src/app/shared/services/auth.service';
-import { ApplicationContextService } from "src/app/shared/services/application-context.service";
+import Swal from 'sweetalert2';
+
+import { ApiService } from '@app/_shared/services/api.service';
+import { ApplicationContextService } from '@app/_shared/services/application-context.service';
+import { AuthService } from '@app/_shared/services/auth.service';
+import { CommonService } from '@app/_shared/services/common.service';
+import { FormErrors, ValidationMessages } from './reset-password.validators';
 
 @Component({
   selector: 'in-inl-forgot-password',
@@ -11,33 +15,60 @@ import { ApplicationContextService } from "src/app/shared/services/application-c
   styleUrls: ['./inl-forgot-password.component.scss']
 })
 export class InlForgotPasswordComponent implements OnInit {
+  myForm: FormGroup;
+  errors = [];
+  formErrors = FormErrors;
+  uiErrors = FormErrors;
+  validationMessages = ValidationMessages;
+  APIResponse = false; submitting = false;
 
-  constructor(private api: ApiService,
+  constructor(
+    private fb: FormBuilder,
+    private api: ApiService,
     private auth: AuthService,
     private appContext: ApplicationContextService,
+    private commonServices: CommonService,
     private router: Router) { }
 
   ngOnInit(): void {
     if (this.auth.isLoggedIn()) {
       this.router.navigate(['/dashboard']);
     }
+    this.myForm = this.fb.group({
+      email: [null, [Validators.required, Validators.email]]
+    });
   }
 
-  onSubmit(form: NgForm) {
-    const values = form.value;
-    const payload = {
-      email: values.email,
-    };
-    this.api.post('/api/provider/forgot-password', payload, false)
+  onSubmit() {
+    this.APIResponse = true; this.submitting = true;
+    if (this.myForm.invalid) {
+      this.uiErrors = JSON.parse(JSON.stringify(this.formErrors))
+      this.errors = this.commonServices.findInvalidControlsRecursive(this.myForm);
+      Object.keys(this.errors).forEach((control) => {
+        Object.keys(this.errors[control]).forEach(error => {
+          this.uiErrors[control] = ValidationMessages[control][error];
+        })
+      });
+      this.APIResponse = false; this.submitting = false;
+      return;
+    }
+    const fd = JSON.parse(JSON.stringify(this.myForm.value));
+    console.log(fd);
+
+    this.api.post('/api/v1/auth/customers/forgot-password', fd, false)
       .subscribe(response => {
-        console.log(response);
-        // this.appContext.userInformation = response.data;
+        this.APIResponse = false; this.submitting = false;
+        Swal.fire('', response?.message, 'success');
         // if (this.auth.redirectUrl) {
         //   this.router.navigate([this.auth.redirectUrl]);
         //   this.auth.redirectUrl = '';
         // } else {
         //   this.router.navigate(['/dashboard']);
         // }
+      },
+      errResp => {
+        this.APIResponse = false; this.submitting = false;
+        Swal.fire('Oops...', errResp?.error?.error?.message, 'error')
       });
   }
 

@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "https://chapelhil-lms.herokuapp.com",
+    "target": "https://chapel-hill-be.herokuapp.com",
     "secure": false,
     "changeOrigin": true
   }

@@ -1,32 +1,42 @@
-<div class="row">
-  <div class="bank-form-container col-12">
-    <form>
+<div class="row m-2">
+  <div class="bank-form-container col-9">
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
       <div class="row">
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-6">
           <label for="inputEmail4">Bank Name</label>
-          <select class="form-control">
-            <option selected>Enter Bank Name</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
+          <ng-select [items]="commonServices.container['bankName'] | async" bindLabel="name"
+                      (click)="commonServices.getLOVs('https://griffin-be.herokuapp.com/api/v1/transactions/banks','bankName',{loading:'bankNameLoading'})"
+                      notFoundText = "{{commonServices.container['bankNameLoading'] || 'No items found'}}"
+                      placeholder="Select Bank Name" formControlName="bankCode">
+          </ng-select>
+          <span *ngIf="uiErrors.bankCode">{{uiErrors.bankCode}}</span>
         </div>
-        <div class="form-group col-md-4">
-        </div>
-        <div class="form-group col-md-8">
+      </div>
+      <div class="row">
+        <div class="form-group col-md-6">
           <label for="inputAddress">Account Number</label>
-          <input type="text" class="form-control" placeholder="Enter Account Number">
+          <input formControlName="nuban" type="text" class="form-control" maxlength="10" placeholder="Enter Account Number">
+          <span *ngIf="uiErrors.nuban">{{uiErrors.nuban}}</span>
         </div>
-        <div class="form-group col-md-4">
+      </div>
+      <div class="row" *ngIf="!loadingBankName">
+        <div class="form-group col-md-6">
+          <p class="font-weight-bolder" [ngClass]="bankAccountName?.success?'text-dark':'text-danger'">{{bankAccountName?.name}}</p>
         </div>
-        <div class="form-group col-md-8">
-          <label for="inputAddress">Account Name</label>
-          <input type="text" class="form-control" placeholder="Enter Account Name">
+      </div>
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="inputAddress">Password</label>
+          <input formControlName="password" type="password" class="form-control" placeholder="Enter Password">
+          <span *ngIf="uiErrors.password">{{uiErrors.password}}</span>
         </div>
-        <div class="form-group col-md-4">
-        </div>
+      </div>
+      <div class="row">
         <div class="form-group col-md-12">
-          <button mat-flat-button type="submit" class="btn btn-primary submit-bank-form">Update Bank Details</button>
+          <button mat-flat-button type="submit" class="btn btn-danger submit-password-form" [disabled]="submitting || disableButton">
+            <span *ngIf="!submitting">Update Password</span>
+            <mat-spinner *ngIf="submitting" [diameter]="30"></mat-spinner>
+          </button>
         </div>
       </div>
     </form>

@@ -1,0 +1,105 @@
+
+<div class="form-box">
+  <div class="header">
+    <p>Create Account</p>
+  </div>
+  <span class="subtitle">Sign in with your phone number and account
+    password
+  </span>
+
+  <div class="form">
+    <div class="course-form">
+      <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="form-group col-md-6 inl-form-input">
+            <input formControlName="firstName" type="text" placeholder="First Name" readonly />
+            <span *ngIf="uiErrors.firstName">{{uiErrors.firstName}}</span>
+          </div>
+          <div class="form-group col-md-6 inl-form-input">
+            <input formControlName="lastName" type="text" placeholder="Surname" readonly />
+            <span *ngIf="uiErrors.lastName">{{uiErrors.lastName}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-12 inl-form-input">
+            <input formControlName="middleName" type="text" placeholder="Middle Name" readonly />
+            <span *ngIf="uiErrors.middleName">{{uiErrors.middleName}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6 inl-form-input">
+            <input formControlName="birthdate" type="date" placeholder="Date Of Birth (mm/dd/yyyy)" readonly />
+            <span *ngIf="uiErrors.birthdate">{{uiErrors.birthdate}}</span>
+          </div>
+          <div class="col-md-6">
+            <ng-select [items]="gender" placeholder="Gender" bindLabel="name" formControlName="gender">
+           </ng-select>
+           <span *ngIf="uiErrors.gender">{{uiErrors.gender}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-12 inl-form-input">
+            <input formControlName="phone" type="text" placeholder="Phone" />
+            <span *ngIf="uiErrors.phone">{{uiErrors.phone}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-12 inl-form-input">
+            <input formControlName="address" type="text" placeholder="Address Line 1" />
+            <span *ngIf="uiErrors.address">{{uiErrors.address}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-12 inl-form-input">
+            <input formControlName="bvn" type="text" placeholder="BVN" />
+            <span *ngIf="uiErrors.bvn">{{uiErrors.bvn}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-12 inl-form-input">
+            <input formControlName="email" type="email" placeholder="email" />
+            <span *ngIf="uiErrors.email">{{uiErrors.email}}</span>
+          </div>
+        </div>
+        <div formGroupName="passwordGroup">
+          <div class="row">
+            <div class="form-group col-md-12 inl-form-input">
+              <input formControlName="password" type="password" placeholder="Password" />
+              <span *ngIf="uiErrors.password">{{uiErrors.password}}</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-12 inl-form-input">
+              <input formControlName="confirmPassword" type="password" placeholder="Confirm Password" />
+              <span *ngIf="uiErrors.confirmPassword">{{uiErrors.confirmPassword }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-12">
+            <span *ngIf="uiErrors.accept">{{uiErrors.accept}}</span>
+            <input formControlName="accept" type="checkbox" style="display: inline; margin-right: 3px; width: 20px;"/>
+            <label>I have read and accept the purchase conditions, and understand the
+              <br /><a href="https://chapelhill.flexi.ng/terms-and-conditions/" target="_blank">
+                Terms and Conditions
+              </a>
+            </label>
+          </div>
+        </div>
+        <div class="row buttons-arrange">
+          <div class="form-group col-md-6">
+            <button type="submit" class="btn btn-danger">Continue</button>
+          </div>
+          <div class="form-group col-md-6 text-right">
+            <!-- <input type="submit" value="Login" alt="" /> -->
+            <!-- <strong><a routerLink="/auth/forgot-password">Reset Password</a></strong> -->
+          </div>
+        </div>
+      <!-- <div class="buttons-arrange"> -->
+        <!-- <input type="submit" value="Continue" alt="" /> -->
+        <!-- <button type="submit">Continue</button> -->
+      <!-- </div> -->
+    </form>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { IonicModule } from '@ionic/angular';
+
 import { InlDashboardRoutingModule } from './inl-dashboard-routing.module';
 import { InlDashboardComponent } from './inl-dashboard.component';
 
@@ -15,7 +17,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '../_shared/shared.module';
 
 
 @NgModule({
@@ -26,7 +28,7 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     InlDashboardRoutingModule,
     DashboardModule,
-
+    IonicModule,
     SharedModule,
     MatButtonModule,
     MatIconModule,
