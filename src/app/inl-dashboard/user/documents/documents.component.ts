@@ -29,7 +29,6 @@ export class DocumentsComponent implements OnInit {
   profOfId = [
     {code: 'passport', value:  'passportNo', label: 'International Passport Number'},
     {code: 'driverLicense', value:  'driverLicenseNo', label: 'Driver\'s License'},
-    {code: 'utility', value:  'utilityNo', label: 'Utility Bills'},
     {code: 'nationalId', value:  'nationalIdNo', label: 'National Identity Card'}
   ];
   documents = [
