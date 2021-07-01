@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AutoLogoutService } from './_shared/services/auto-logout.service';
 
 @Component({
   selector: 'in-root',
@@ -7,4 +8,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'investnaija-learning-cp';
+
+  constructor(private logout: AutoLogoutService) {}
 }

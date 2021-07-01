@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
-
 import { ApiService } from '@app/_shared/services/api.service';
 import { FormErrors, ValidationMessages } from './profile.validators';
 
@@ -29,8 +28,8 @@ export class ProfileComponent implements OnInit {
     acceptedFileTypes: 'image/jpeg, image/png',
     imagePreviewHeight: 100,
     imageCropAspectRatio: '1:1',
-    imageResizeTargetWidth: 200,
-    imageResizeTargetHeight: 200,
+    imageResizeTargetWidth: 130,
+    imageResizeTargetHeight: 130,
     stylePanelLayout: 'compact circle',
     styleLoadIndicatorPosition: 'center bottom',
     styleProgressIndicatorPosition: 'right bottom',

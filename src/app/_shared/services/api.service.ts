@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpRequest, Ht
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry, map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
+import { environment } from '@environments/environment';
 // import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
@@ -49,7 +50,8 @@ export class ApiService {
       headers,
     }
 
-    return this.http.request(method, url, options)
+    const endpoint = environment.apiUrl + url
+    return this.http.request(method, endpoint, options)
       .pipe(catchError((error: HttpErrorResponse) => this.onRequestError(error)));
   }
 

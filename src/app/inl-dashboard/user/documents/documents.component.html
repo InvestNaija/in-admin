@@ -1,1 +1,42 @@
-<p>documents works!</p>
+<mat-spinner *ngIf="loading" [diameter]="60"></mat-spinner>
+<div class="row m-2" *ngIf="!loading">
+  <div class="user-profile col-12">
+    <div *ngFor="let document of documents">
+      <div class="row pt-3">
+        <div class="col-3">
+          <h2 class="d-block">{{document.title}}</h2>
+        </div>
+      </div>
+
+      <div class="row border-bottom p-3">
+        <div class="col-4">
+          <label for="country">Select ID Type</label>
+          <ng-select [items]="profOfAddress" bindLabel="label"
+              notFoundText = "'No items found'"
+              placeholder="Select Proof of Address" [(ngModel)]="document.IdType">
+          </ng-select>
+        </div>
+        <div class="col-3" *ngIf="document.IdType && document.IdType.code !== 'utility'">
+          <div class="form-group">
+            <label for="phone">ID Number</label>
+            <input [(ngModel)]="document.idNumber" type="text" class="form-control" placeholder="Enter ID Number" [disabled]="!document.IdType">
+          </div>
+        </div>
+        <div class="col-3" *ngIf="document.IdType">
+          <file-pond
+              class="filepond"
+              [files]="document.pondFile"
+              [options]="pondOptions"
+              (before-add-file)="beforeAdd($event)"
+              (beforeaddfile)="beforeAdd($event)"
+              (beforeAddFile)="beforeAdd($event)"
+              (onprocessfilestart)="pondProcessFileStart($event)"
+          ></file-pond>
+        </div>
+        <div class="col-2">
+          <button class="btn btn-danger" (click)="onSaveFile(document)">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

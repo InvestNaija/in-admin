@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, ReplaySubject, Subject, throwError } from 'rxjs/index';
+import { BehaviorSubject, Observable, of, ReplaySubject, Subject, throwError } from 'rxjs';
 import { catchError, map, publishLast, refCount, take } from "rxjs/operators";
 
 @Injectable({
