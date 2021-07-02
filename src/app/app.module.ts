@@ -9,7 +9,6 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './_shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
-import { IonicModule } from '@ionic/angular';
 
 @NgModule({
   declarations: [
@@ -21,8 +20,7 @@ import { IonicModule } from '@ionic/angular';
     HttpClientModule,
     NgSelectModule,
     BrowserAnimationsModule,
-    SharedModule,
-    IonicModule.forRoot()
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

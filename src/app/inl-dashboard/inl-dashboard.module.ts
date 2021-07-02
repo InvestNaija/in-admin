@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { IonicModule } from '@ionic/angular';
-
 import { InlDashboardRoutingModule } from './inl-dashboard-routing.module';
 import { InlDashboardComponent } from './inl-dashboard.component';
 
@@ -28,7 +26,6 @@ import { SharedModule } from '../_shared/shared.module';
     CommonModule,
     InlDashboardRoutingModule,
     DashboardModule,
-    IonicModule,
     SharedModule,
     MatButtonModule,
     MatIconModule,
