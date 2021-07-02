@@ -252,7 +252,10 @@ a.mat-menu-item {
   background-size: cover;
   display: flex;
   flex-flow: row;
-
+  input.ng-invalid {
+    border-bottom-color: red;
+    color: red;
+  }
   .left-box{
       display: flex;
       flex-flow: column;
@@ -326,15 +329,14 @@ a.mat-menu-item {
                   input{
                     width: 100%;
                     font: inherit;
-                    font-size: 0.8em;
                     margin: 0 0 1em;
                     display: block;
-                    border: none;
+                    border: 2px solid #CCC;
                     padding: 20px 1em 10px;
                     border-radius: 10px;
                     transition: background 0.3s cubic-bezier(.64,.09,.08,1);
                     resize: none;
-                    .ng-invalid {
+                    &.ng-invalid.ng-touched {
                       border-bottom-color: red;
                       color: red;
                     }
@@ -348,7 +350,6 @@ a.mat-menu-item {
                       &:invalid {
                           box-shadow: none;
                           outline: none;
-                          border: 2px solid #FF652F;
                           background-position: 0 0;
 
                           &::-webkit-input-placeholder {
@@ -374,7 +375,7 @@ a.mat-menu-item {
                       font-size 0.3s ease-in-out,
                       visibility 0.3s ease-in-out;
                   font-weight: 500;
-                  font-size: 16px;
+                  font-size: 1em;
                   line-height: 18px;
                   }
               }
@@ -406,4 +407,8 @@ a.mat-menu-item {
           }
       }
   }
+}
+input.ng-invalid {
+  border-bottom-color: red;
+  color: red;
 }

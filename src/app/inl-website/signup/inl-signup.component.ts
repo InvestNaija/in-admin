@@ -20,6 +20,7 @@ export class InlSignupComponent implements OnInit {
   formErrors = FormErrors;
   uiErrors = FormErrors;
   validationMessages = ValidationMessages;
+  APIResponse = false; submitting = false;
 
   constructor(
     private fb: FormBuilder,
@@ -40,6 +41,7 @@ export class InlSignupComponent implements OnInit {
   }
 
   onSubmit() {
+    this.APIResponse = true; this.submitting = true;
     if (this.myForm.invalid) {
       this.uiErrors = JSON.parse(JSON.stringify(this.formErrors))
       this.errors = this.commonServices.findInvalidControlsRecursive(this.myForm);
@@ -48,8 +50,10 @@ export class InlSignupComponent implements OnInit {
           this.uiErrors[control] = ValidationMessages[control][error];
         })
       });
+      this.APIResponse = false; this.submitting = false;
       return;
     }
+    this.APIResponse = true; this.submitting = true;
     const fd = JSON.parse(JSON.stringify(this.myForm.value));
     console.log(fd);
     this.api.post('/api/v1/verifications/nin', fd, false)
@@ -58,6 +62,7 @@ export class InlSignupComponent implements OnInit {
         this.router.navigate(['/auth/signup-continue']);
       },
       errResp => {
+        this.APIResponse = false; this.submitting = false;
         Swal.fire('Oops...', errResp?.error?.error?.message, 'error')
       });
   }

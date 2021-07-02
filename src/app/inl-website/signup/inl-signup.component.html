@@ -16,21 +16,28 @@
         <div class="row">
           <div class="form-group col-md-12 inl-form-input">
             <input formControlName="nin" type="email" placeholder="NIN" />
+            <span *ngIf="uiErrors.nin">{{uiErrors.nin }}</span>
           </div>
         </div>
         <div class="row">
           <div class="form-group col-md-12 inl-form-input">
             <input formControlName="firstName" type="text" placeholder="First Name" />
+            <span *ngIf="uiErrors.firstName">{{uiErrors.firstName }}</span>
           </div>
         </div>
         <div class="row">
           <div class="form-group col-md-12 inl-form-input">
             <input formControlName="lastName" type="text" placeholder="Surname" />
+            <span *ngIf="uiErrors.lastName">{{uiErrors.lastName }}</span>
           </div>
         </div>
         <div class="row buttons-arrange">
           <div class="form-group col-md-6">
-            <button type="submit" class="btn btn-danger">Continue</button>
+            <button type="submit" class="btn btn-danger">
+              <span *ngIf="!submitting">Continue</span>
+              <mat-spinner *ngIf="submitting" color="accent" [diameter]="30"></mat-spinner>
+            </button>
+            <button type="submit" class="btn btn-danger"></button>
           </div>
           <div class="form-group col-md-6 text-right">
             <!-- <input type="submit" value="Login" alt="" /> -->
