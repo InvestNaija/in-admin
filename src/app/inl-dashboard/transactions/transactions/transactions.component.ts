@@ -52,7 +52,6 @@ export class TransactionsComponent implements OnInit, AfterViewInit  {
         }),
         map((response: any) => {
           // this.total_count = data.response.totalItems;
-          // console.log(data)
           return response.data;
         }),
         catchError(() => {
@@ -60,7 +59,6 @@ export class TransactionsComponent implements OnInit, AfterViewInit  {
         })
       )
       .subscribe(response => {
-        // console.log(response.data)
         this.loadingSubject.next(false);
         this.dataSource = new MatTableDataSource(response);
 

@@ -62,7 +62,9 @@ export class ProfileComponent implements OnInit {
           dob: [{value: dob, disabled:true}, [Validators.required]],
           phone: [{value: user.phone, disabled:true}, [Validators.required]],
         });
-        this.pondFiles.push(user.image)
+        if(user.image) {
+          this.pondFiles.push(user.image);
+        }
       },
       errResp => {
         this.loading = false;

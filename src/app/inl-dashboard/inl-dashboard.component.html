@@ -159,16 +159,17 @@
 
         <div class="spacer"></div>
 
-        <button mat-icon-button>
+        <!-- <button mat-icon-button>
           <mat-icon class="">mark_email_unread</mat-icon>
         </button>
 
         <button mat-icon-button>
           <mat-icon class="">notifications_active_outlined</mat-icon>
-        </button>
+        </button> -->
 
         <button mat-flat-button [matMenuTriggerFor]="menu" class="profile-menu">
-          <img src="/assets/images/face_placeholder.png" alt="">
+          <img *ngIf="!userInformation.image" src="/assets/images/face_placeholder.png" alt="">
+          <img *ngIf="userInformation.image" [src]="userInformation.image" alt="">
           <div class="user-details">
             <p class="top">Hello,</p>
             <p class="bottom">{{userInformation?.lastName}} {{userInformation?.firstName}}</p>

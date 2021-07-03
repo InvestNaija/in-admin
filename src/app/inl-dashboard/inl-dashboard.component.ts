@@ -45,7 +45,7 @@ export class InlDashboardComponent implements OnInit, OnDestroy {
   getUserInformation() {
     this.appContext.userInformationObs().subscribe(
        data => {
-          // console.log('UserInfo', data);
+          console.log('UserInfo', data);
           this.userInformation = data;
         }
     );
