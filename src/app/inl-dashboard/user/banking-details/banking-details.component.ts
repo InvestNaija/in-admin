@@ -96,6 +96,7 @@ export class BankingDetailsComponent implements OnInit {
             confirmButtonText: `Proceed`,
           }).then((result) => {
               if (result.isConfirmed) {
+                localStorage.removeItem('creating-cscs');
                 this.router.navigateByUrl(`dashboard/shares/${cscsPage}/create-new-cscs`)
               }
           })
