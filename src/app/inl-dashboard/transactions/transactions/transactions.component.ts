@@ -6,6 +6,7 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 
 import { ApiService } from '@app/_shared/services/api.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { ApplicationContextService } from '@app/_shared/services/application-context.service';
 
 
 export interface PeriodicElement {
@@ -32,8 +33,9 @@ export class TransactionsComponent implements OnInit, AfterViewInit  {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
+    private router: Router,
     private api: ApiService,
-    private router: Router
+    private appService: ApplicationContextService
   ) { }
 
   private loadingSubject = new BehaviorSubject<boolean>(true);
@@ -68,6 +70,6 @@ export class TransactionsComponent implements OnInit, AfterViewInit  {
       });
   }
   onMakePayment(element: any) {
-    this.router.navigateByUrl(`/dashboard/transactions/${element.id}/${element.asset.id}/make-payment`)
+    this.appService.checkCSCS(element);
   }
 }
