@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { IShare } from '../../_models/share.model';
 import { ApiService } from '@app/_shared/services/api.service';
 import { CommonService } from '@app/_shared/services/common.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormErrors, ICSCS, ValidationMessages } from './cscs-create.validators';
 import { ApplicationContextService } from '@app/_shared/services/application-context.service';
 import { DOCUMENT } from '@angular/common';
@@ -26,7 +26,7 @@ export class CscsCreateComponent implements OnInit {
   uiErrors = FormErrors;
   validationMessages = ValidationMessages;
 
-  submitting = false;
+  isGetFormDetail: boolean; submitting = false;
 
   total = 0;
   txnId: string;
@@ -55,13 +55,35 @@ export class CscsCreateComponent implements OnInit {
       .pipe(
         switchMap(params => {
           this.txnId = params.get('id');
-          return this.appService.userInformationObs();
+          this.isGetFormDetail = true;
+          return this.apiService.get('/api/v1/customers/profile/fetch');
+
         })
       ).subscribe(userInfo => {
+        this.isGetFormDetail =  false;
+        const user = userInfo.data;
+        this.appService.userInformation = user;
         this.myForm.patchValue({
-          fullName: userInfo.firstName + ' ' + userInfo.lastName
+          fullName: user.firstName + ' ' + user.lastName
         })
+        if(!user.bankCode) {
+          Swal.fire({
+            title: 'Update Bank Details',
+            text: "Your bank information is needed to proceed",
+            confirmButtonText: `Update`,
+            allowOutsideClick: false
+          }).then((result) => {
+              if (result.isConfirmed) {
+                localStorage.setItem('creating-cscs', this.txnId)
+                this.router.navigateByUrl('/dashboard/user/banks')
+              }
+          })
+        }
       })
+  }
+  controlChanged(ctrlName: string) {
+    this.errors = this.commonServices.controlnvalid(this.myForm.get(ctrlName) as FormControl);
+    this.displayErrors();
   }
 
   onSubmit() {
@@ -69,12 +91,7 @@ export class CscsCreateComponent implements OnInit {
     if (this.myForm.invalid) {
       this.uiErrors = JSON.parse(JSON.stringify(this.formErrors))
       this.errors = this.commonServices.findInvalidControlsRecursive(this.myForm);
-      console.log(this.errors);
-      Object.keys(this.errors).forEach((control) => {
-        Object.keys(this.errors[control]).forEach(error => {
-          this.uiErrors[control] = ValidationMessages[control][error];
-        })
-      });
+      this.displayErrors();
       return;
     }
     const fd = JSON.parse(JSON.stringify(this.myForm.value));
@@ -96,6 +113,17 @@ export class CscsCreateComponent implements OnInit {
         this.submitting = false;
         Swal.fire('Oops...', errResp?.error?.error?.message, 'error')
       });
+  }
+
+  displayErrors() {
+    Object.keys(this.formErrors).forEach((control) => {
+      this.formErrors[control] = '';
+    });
+    Object.keys(this.errors).forEach((control) => {
+      Object.keys(this.errors[control]).forEach(error => {
+        this.uiErrors[control] = ValidationMessages[control][error];
+      })
+    });
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '@app/_shared/services/api.service';
 import { AuthService } from '@app/_shared/services/auth.service';
@@ -40,16 +40,17 @@ export class InlSignupComponent implements OnInit {
     });
   }
 
+
+  controlChanged(ctrlName: string) {
+    this.errors = this.commonServices.controlnvalid(this.myForm.get(ctrlName) as FormControl);
+    this.displayErrors();
+  }
   onSubmit() {
     this.APIResponse = true; this.submitting = true;
     if (this.myForm.invalid) {
       this.uiErrors = JSON.parse(JSON.stringify(this.formErrors))
       this.errors = this.commonServices.findInvalidControlsRecursive(this.myForm);
-      Object.keys(this.errors).forEach((control) => {
-        Object.keys(this.errors[control]).forEach(error => {
-          this.uiErrors[control] = ValidationMessages[control][error];
-        })
-      });
+      this.displayErrors();
       this.APIResponse = false; this.submitting = false;
       return;
     }
@@ -67,5 +68,11 @@ export class InlSignupComponent implements OnInit {
       });
   }
 
-
+  displayErrors() {
+    Object.keys(this.errors).forEach((control) => {
+      Object.keys(this.errors[control]).forEach(error => {
+        this.uiErrors[control] = ValidationMessages[control][error];
+      })
+    });
+  }
 }

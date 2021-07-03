@@ -7,6 +7,7 @@ import { CommonService } from '@app/_shared/services/common.service';
 import { FormErrors, ValidationMessages } from './banking-details.validators';
 import { catchError, concatMap, distinctUntilChanged, map, mergeMap, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'in-banking-details',
@@ -21,11 +22,12 @@ export class BankingDetailsComponent implements OnInit {
   validationMessages = ValidationMessages;
   submitting = false; disableButton=false
 
-  loadingBankName = true;
+  loadingBankName: boolean;
   bankAccountName: {success: boolean, name: string}
 
   constructor(
     private fb: FormBuilder,
+    private router: Router,
     public apiService: ApiService,
     public commonServices: CommonService
     ) { }
@@ -85,7 +87,21 @@ export class BankingDetailsComponent implements OnInit {
     this.apiService.patch('/api/v1/customers/update-bank-details', fd)
       .subscribe(response => {
         this.submitting = false;
-        Swal.fire('Great!', response?.message, 'success')
+        const cscsPage = localStorage.getItem('creating-cscs');
+        if(!!cscsPage) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Update successful!',
+            text: 'You will be redirected back to update CSCS data',
+            confirmButtonText: `Proceed`,
+          }).then((result) => {
+              if (result.isConfirmed) {
+                this.router.navigateByUrl(`dashboard/shares/${cscsPage}/create-new-cscs`)
+              }
+          })
+        } else {
+          Swal.fire('Great!', response?.message, 'success')
+        }
       },
       errResp => {
         this.submitting = false;

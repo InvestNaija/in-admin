@@ -255,6 +255,9 @@ a.mat-menu-item {
   input.ng-invalid {
     border-bottom-color: red;
     color: red;
+    + span {
+      color: red;
+    }
   }
   .left-box{
       display: flex;
@@ -331,7 +334,7 @@ a.mat-menu-item {
                     font: inherit;
                     margin: 0 0 1em;
                     display: block;
-                    border: 2px solid #CCC;
+                    border: 1px solid #CCC;
                     padding: 20px 1em 10px;
                     border-radius: 10px;
                     transition: background 0.3s cubic-bezier(.64,.09,.08,1);

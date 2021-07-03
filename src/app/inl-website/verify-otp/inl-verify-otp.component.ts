@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 
@@ -73,18 +73,17 @@ export class InlVerifyOtpComponent implements OnInit, OnDestroy {
       });
   }
 
+  controlChanged(ctrlName: string) {
+    this.errors = this.commonServices.controlnvalid(this.myForm.get(ctrlName) as FormControl);
+    this.displayErrors();
+  }
 
   onSubmit() {
     // this.APIResponse = false; this.submitting = true;
     if (this.myForm.invalid) {
       this.uiErrors = JSON.parse(JSON.stringify(this.formErrors))
       this.errors = this.commonServices.findInvalidControlsRecursive(this.myForm);
-      console.log(this.errors);
-      Object.keys(this.errors).forEach((control) => {
-        Object.keys(this.errors[control]).forEach(error => {
-          this.uiErrors[control] = ValidationMessages[control][error];
-        })
-      });
+      this.displayErrors();
       return;
     }
     const fd = JSON.parse(JSON.stringify(this.myForm.value));
@@ -101,6 +100,14 @@ export class InlVerifyOtpComponent implements OnInit, OnDestroy {
       errResp => {
         Swal.fire('Oops...', errResp?.error?.error?.message, 'error')
       });
+  }
+
+  displayErrors() {
+    Object.keys(this.errors).forEach((control) => {
+      Object.keys(this.errors[control]).forEach(error => {
+        this.uiErrors[control] = ValidationMessages[control][error];
+      })
+    });
   }
 
   ngOnDestroy() {

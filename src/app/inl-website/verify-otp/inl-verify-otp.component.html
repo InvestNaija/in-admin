@@ -13,7 +13,8 @@
       <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
         <div class="row">
           <div class="form-group col-md-12 inl-form-input">
-            <input formControlName="email" type="email" placeholder="email" />
+            <label for="email" *ngIf="myForm.get('email').value">Email</label>
+            <input id="email" formControlName="email" type="email" placeholder="Email" (keyup)="controlChanged('email')" />
             <span *ngIf="uiErrors.email">{{uiErrors.email}}</span>
           </div>
         </div>
@@ -25,7 +26,8 @@
       </div>
         <div class="row">
           <div class="form-group col-md-12 inl-form-input">
-            <input formControlName="otp" type="text" placeholder="OTP" />
+            <label for="otp" *ngIf="myForm.get('otp').value">OTP</label>
+            <input id="otp" formControlName="otp" type="text" placeholder="OTP" (keyup)="controlChanged('otp')" />
             <span *ngIf="uiErrors.otp">{{uiErrors.otp}}</span>
           </div>
         </div>

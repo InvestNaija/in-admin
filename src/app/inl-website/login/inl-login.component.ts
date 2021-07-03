@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
@@ -35,9 +35,21 @@ export class InlLoginComponent implements OnInit {
       this.router.navigate(['/dashboard']);
     }
     this.myForm = this.fb.group({
-      email: [null, [Validators.required, Validators.email]],
-      password: [null, Validators.required],
+      email: [null, [Validators.required, Validators.pattern(this.commonServices.email)]],
+      password: [null, [
+          Validators.required,
+          Validators.minLength(6),
+          this.commonServices.regexValidator(new RegExp(this.commonServices.oneDigit), {'oneDigit': ''}),
+          this.commonServices.regexValidator(new RegExp(this.commonServices.oneLowerCase), {'oneLowerCase': ''}),
+          this.commonServices.regexValidator(new RegExp(this.commonServices.oneUpperCase), {'oneUpperCase': ''}),
+        ]
+      ],
     });
+  }
+
+  controlChanged(ctrlName: string) {
+    this.errors = this.commonServices.controlnvalid(this.myForm.get(ctrlName) as FormControl);
+    this.displayErrors();
   }
 
   onSubmit() {
@@ -46,11 +58,7 @@ export class InlLoginComponent implements OnInit {
     if (this.myForm.invalid) {
       this.uiErrors = JSON.parse(JSON.stringify(this.formErrors))
       this.errors = this.commonServices.findInvalidControlsRecursive(this.myForm);
-      Object.keys(this.errors).forEach((control) => {
-        Object.keys(this.errors[control]).forEach(error => {
-          this.uiErrors[control] = ValidationMessages[control][error];
-        })
-      });
+      this.displayErrors();
       this.APIResponse = false; this.submitting = false;
       return;
     }
@@ -75,4 +83,14 @@ export class InlLoginComponent implements OnInit {
       });
   }
 
+  displayErrors() {
+    Object.keys(this.formErrors).forEach((control) => {
+      this.formErrors[control] = '';
+    });
+    Object.keys(this.errors).forEach((control) => {
+      Object.keys(this.errors[control]).forEach(error => {
+        this.uiErrors[control] = ValidationMessages[control][error];
+      })
+    });
+  }
 }

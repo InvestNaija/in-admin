@@ -15,19 +15,22 @@
       <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
         <div class="row">
           <div class="form-group col-md-12 inl-form-input">
-            <input formControlName="nin" type="email" placeholder="NIN" />
+            <label for="email" *ngIf="myForm.get('nin').value">NIN</label>
+            <input formControlName="nin" type="email" placeholder="NIN" (keyup)="controlChanged('nin')" />
             <span *ngIf="uiErrors.nin">{{uiErrors.nin }}</span>
           </div>
         </div>
         <div class="row">
           <div class="form-group col-md-12 inl-form-input">
-            <input formControlName="firstName" type="text" placeholder="First Name" />
+            <label for="email" *ngIf="myForm.get('firstName').value">First Name</label>
+            <input formControlName="firstName" type="text" placeholder="First Name" (keyup)="controlChanged('firstName')" />
             <span *ngIf="uiErrors.firstName">{{uiErrors.firstName }}</span>
           </div>
         </div>
         <div class="row">
           <div class="form-group col-md-12 inl-form-input">
-            <input formControlName="lastName" type="text" placeholder="Surname" />
+            <label for="email" *ngIf="myForm.get('lastName').value">Surname</label>
+            <input formControlName="lastName" type="text" placeholder="Surname" (keyup)="controlChanged('lastName')" />
             <span *ngIf="uiErrors.lastName">{{uiErrors.lastName }}</span>
           </div>
         </div>
@@ -37,7 +40,6 @@
               <span *ngIf="!submitting">Continue</span>
               <mat-spinner *ngIf="submitting" color="accent" [diameter]="30"></mat-spinner>
             </button>
-            <button type="submit" class="btn btn-danger"></button>
           </div>
           <div class="form-group col-md-6 text-right">
             <!-- <input type="submit" value="Login" alt="" /> -->

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 
@@ -46,7 +46,14 @@ export class InlSignupContinueComponent implements OnInit, OnDestroy {
       bvn: [null, Validators.required],
       signature: [],
       passwordGroup: this.fb.group({
-        password: [null, Validators.required],
+        password: [null, [
+            Validators.required,
+            Validators.minLength(6),
+            this.commonServices.regexValidator(new RegExp(this.commonServices.oneDigit), {'oneDigit': ''}),
+            this.commonServices.regexValidator(new RegExp(this.commonServices.oneLowerCase), {'oneLowerCase': ''}),
+            this.commonServices.regexValidator(new RegExp(this.commonServices.oneUpperCase), {'oneUpperCase': ''}),
+          ]
+        ],
         confirmPassword: [null, Validators.required],
       },{validators: this.commonServices.mustMatch('password', 'confirmPassword')}),
       accept: [false, Validators.requiredTrue]
@@ -81,6 +88,10 @@ export class InlSignupContinueComponent implements OnInit, OnDestroy {
   }
 
 
+  controlChanged(ctrlName: string) {
+    this.errors = this.commonServices.controlnvalid(this.myForm.get(ctrlName) as FormControl);
+    this.displayErrors();
+  }
   onSubmit() {
     // this.APIResponse = false; this.submitting = true;
     if (this.myForm.invalid) {
@@ -120,6 +131,17 @@ export class InlSignupContinueComponent implements OnInit, OnDestroy {
     // this.APIResponse = false; this.submitting = false;
   }
 
+
+  displayErrors() {
+    Object.keys(this.formErrors).forEach((control) => {
+      this.formErrors[control] = '';
+    });
+    Object.keys(this.errors).forEach((control) => {
+      Object.keys(this.errors[control]).forEach(error => {
+        this.uiErrors[control] = ValidationMessages[control][error];
+      })
+    });
+  }
 
   ngOnDestroy() {
     if(this.signupSub) {

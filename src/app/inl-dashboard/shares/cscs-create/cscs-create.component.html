@@ -13,7 +13,8 @@
       <div class="card" style="min-height: 316px;">
         <div class="card-body">
           <h3 class="card-sub-title mb-3">Personal Details</h3>
-          <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+          <mat-spinner *ngIf="isGetFormDetail"></mat-spinner>
+          <form [formGroup]="myForm" (ngSubmit)="onSubmit()" *ngIf="!isGetFormDetail" >
             <div class="row">
               <div class="col-12">
                 <div class="form-group inl-form-input">
@@ -26,7 +27,8 @@
             <div class="row">
               <div class="col-12">
                 <div class="form-group inl-form-input">
-                  <input formControlName="MaidenName" class="form-control" type="text" placeholder="Mother's Maiden Name" />
+                  <label for="MaidenName" *ngIf="myForm.get('MaidenName').value">Mother's Maiden Name</label>
+                  <input id="MaidenName" formControlName="MaidenName" class="form-control" type="text" placeholder="Mother's Maiden Name" (keyup)="controlChanged('MaidenName')" />
                   <span *ngIf="uiErrors.MaidenName">{{uiErrors.MaidenName}}</span>
                 </div>
               </div>
@@ -34,13 +36,15 @@
             <div class="row">
               <div class="col-6">
                 <div class="form-group inl-form-input">
-                  <input formControlName="City" class="form-control" type="text" placeholder="City" />
+                  <label for="City" *ngIf="myForm.get('City').value">City</label>
+                  <input id="City" formControlName="City" class="form-control" type="text" placeholder="City" (keyup)="controlChanged('City')" />
                   <span *ngIf="uiErrors.City">{{uiErrors.City}}</span>
                 </div>
               </div>
               <div class="col-6">
                 <div class="form-group inl-form-input">
-                  <input formControlName="Country" class="form-control" type="text" placeholder="Country" />
+                  <label for="Country" *ngIf="myForm.get('Country').value">Country</label>
+                  <input id="Country" formControlName="Country" class="form-control" type="text" placeholder="Country" />
                   <span *ngIf="uiErrors.Country">{{uiErrors.Country}}</span>
                 </div>
               </div>
@@ -48,13 +52,15 @@
             <div class="row">
               <div class="col-6">
                 <div class="form-group inl-form-input">
-                  <input formControlName="Citizen" class="form-control" type="text" placeholder="Nationality" />
+                  <label for="Citizen" *ngIf="myForm.get('Citizen').value">Nationality</label>
+                  <input id="Citizen" formControlName="Citizen" class="form-control" type="text" placeholder="Nationality" />
                   <span *ngIf="uiErrors.Citizen">{{uiErrors.Citizen}}</span>
                 </div>
               </div>
               <div class="col-6">
                 <div class="form-group inl-form-input">
-                  <input formControlName="PostalCode" class="form-control" type="text" placeholder="Postal Code" />
+                  <label for="PostalCode" *ngIf="myForm.get('PostalCode').value">Postal Code</label>
+                  <input id="PostalCode" formControlName="PostalCode" class="form-control" type="text" placeholder="Postal Code" (keyup)="controlChanged('PostalCode')" />
                   <span *ngIf="uiErrors.PostalCode">{{uiErrors.PostalCode}}</span>
                 </div>
               </div>

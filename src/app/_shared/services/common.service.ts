@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormArray, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import {  BehaviorSubject, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -9,6 +9,11 @@ import { ApiService } from './api.service';
   providedIn: 'root'
 })
 export class CommonService {
+
+  email = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  oneDigit = /\d/;
+  oneLowerCase = /[a-z]/;
+  oneUpperCase = /[A-Z]/;
 
   private loadingSubject = new BehaviorSubject<boolean>(null);
   isLoading$ = this.loadingSubject.asObservable();
@@ -63,6 +68,15 @@ export class CommonService {
     }
   }
 
+  regexValidator(regex: RegExp, error: ValidationErrors): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} => {
+      if (!control.value) {
+        return null;
+      }
+      const valid = regex.test(control.value);
+      return valid ? null : error;
+    };
+  }
   findInvalidControlsRecursive(formToInvestigate: FormGroup|FormArray): string[] {
     const invalidControls: any = {};
     const recursiveFunc = (form: FormGroup|FormArray) => {
@@ -79,6 +93,14 @@ export class CommonService {
       });
     }
     recursiveFunc(formToInvestigate);
+    return invalidControls;
+  }
+  controlnvalid(controlToInvestigate: FormControl): string[] {
+    const invalidControls: any = {};
+    if (controlToInvestigate.invalid ) {
+      const controlName = (Object.keys(controlToInvestigate.parent.controls).find(key => controlToInvestigate.parent.controls[key] === controlToInvestigate))
+      invalidControls[controlName] = controlToInvestigate.errors;
+    }
     return invalidControls;
   }
 }

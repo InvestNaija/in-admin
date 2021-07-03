@@ -17,11 +17,8 @@
           <label for="inputAddress">Account Number</label>
           <input formControlName="nuban" type="text" class="form-control" maxlength="10" placeholder="Enter Account Number">
           <span *ngIf="uiErrors.nuban">{{uiErrors.nuban}}</span>
-        </div>
-      </div>
-      <div class="row" *ngIf="!loadingBankName">
-        <div class="form-group col-md-6">
-          <p class="font-weight-bolder" [ngClass]="bankAccountName?.success?'text-dark':'text-danger'">{{bankAccountName?.name}}</p>
+          <mat-spinner *ngIf="loadingBankName" [diameter]="30"></mat-spinner>
+          <p class="pt-2 font-weight-bolder" *ngIf="!uiErrors.nuban && !loadingBankName" [ngClass]="bankAccountName?.success?'text-dark':'text-danger'">{{bankAccountName?.name}}</p>
         </div>
       </div>
       <div class="row">
@@ -33,8 +30,8 @@
       </div>
       <div class="row">
         <div class="form-group col-md-12">
-          <button mat-flat-button type="submit" class="btn btn-danger submit-password-form" [disabled]="submitting || disableButton">
-            <span *ngIf="!submitting">Update Password</span>
+          <button mat-flat-button type="submit" class="btn btn-danger submit-password-form" [disabled]="submitting || disableButton || loadingBankName">
+            <span *ngIf="!submitting">Update Bank</span>
             <mat-spinner *ngIf="submitting" [diameter]="30"></mat-spinner>
           </button>
         </div>

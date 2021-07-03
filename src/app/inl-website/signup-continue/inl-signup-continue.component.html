@@ -64,20 +64,21 @@
         <div formGroupName="passwordGroup">
           <div class="row">
             <div class="form-group col-md-12 inl-form-input">
-              <input formControlName="password" type="password" placeholder="Password" />
+              <label for="password" *ngIf="myForm.get('password').value">Password</label>
+              <input id="password" formControlName="password" type="password" placeholder="Password" (keyup)="controlChanged('password')" />
               <span *ngIf="uiErrors.password">{{uiErrors.password}}</span>
             </div>
           </div>
           <div class="row">
             <div class="form-group col-md-12 inl-form-input">
-              <input formControlName="confirmPassword" type="password" placeholder="Confirm Password" />
+              <label for="confirmPassword" *ngIf="myForm.get('confirmPassword').value">Confirm Password</label>
+              <input id="confirmPassword" formControlName="confirmPassword" type="password" placeholder="Confirm Password" (keyup)="controlChanged('confirmPassword')" />
               <span *ngIf="uiErrors.confirmPassword">{{uiErrors.confirmPassword }}</span>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="form-group col-md-12">
-            <span *ngIf="uiErrors.accept">{{uiErrors.accept}}</span>
             <input formControlName="accept" type="checkbox" style="display: inline; margin-right: 3px; width: 20px;"/>
             <label>I have read and accept the purchase conditions, and understand the
               <br /><a href="https://chapelhill.flexi.ng/terms-and-conditions/" target="_blank">
