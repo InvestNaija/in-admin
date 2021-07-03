@@ -6,6 +6,7 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 
 import { ApiService } from '@app/_shared/services/api.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { ApplicationContextService } from '@app/_shared/services/application-context.service';
 
 
 export interface PeriodicElement {
@@ -19,11 +20,11 @@ export interface PeriodicElement {
 }
 
 @Component({
-  selector: 'in-transactions',
-  templateUrl: './transactions.component.html',
-  styleUrls: ['./transactions.component.scss']
+  selector: 'in-portfolio',
+  templateUrl: './portfolio.component.html',
+  styleUrls: ['./portfolio.component.scss']
 })
-export class TransactionsComponent implements OnInit, AfterViewInit  {
+export class PortfolioComponent implements OnInit, AfterViewInit  {
 
   displayedColumns: string[] = ['asset', 'price', 'unitsExpressed', 'unitsAlloted', 'amount', 'status', 'action'];
   dataSource: any = null;
@@ -31,9 +32,14 @@ export class TransactionsComponent implements OnInit, AfterViewInit  {
   pageSize = 10;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  bestAsset = {loading: true, value: 0};
+  totalAsset= {loading: true, value: 0};
+  totalPortfolio= {loading: true, value: 0};
+
   constructor(
+    private router: Router,
     private api: ApiService,
-    private router: Router
+    private appService: ApplicationContextService,
   ) { }
 
   private loadingSubject = new BehaviorSubject<boolean>(true);
@@ -41,6 +47,11 @@ export class TransactionsComponent implements OnInit, AfterViewInit  {
 
   ngOnInit(): void { }
   ngAfterViewInit() {
+    this.api.get(`/api/v1/assets/top-assets`)
+      .subscribe(response => {
+        this.bestAsset.loading = false;
+        this.bestAsset.value = Math.max.apply(Math, response.data.map(function(ob:any) { return ob.sharePrice; }))
+      });
     this.paginator.page
       .pipe(
         startWith({}),
@@ -58,7 +69,10 @@ export class TransactionsComponent implements OnInit, AfterViewInit  {
         })
       )
       .subscribe(response => {
-        // console.log(response.data)
+        this.totalAsset.loading = false; this.totalPortfolio.loading = false
+        this.totalAsset.value = response.length;
+        this.totalPortfolio.value = response.reduce((a:any, b:any) => a + b.amount, 0);
+
         this.loadingSubject.next(false);
         this.dataSource = new MatTableDataSource(response);
 
@@ -68,6 +82,6 @@ export class TransactionsComponent implements OnInit, AfterViewInit  {
       });
   }
   onMakePayment(element: any) {
-    this.router.navigateByUrl(`/dashboard/transactions/${element.id}/${element.asset.id}/make-payment`)
+    this.appService.checkCSCS(element);
   }
 }

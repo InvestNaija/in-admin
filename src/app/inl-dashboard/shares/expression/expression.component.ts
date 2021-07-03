@@ -32,7 +32,6 @@ export class ExpressionComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private aRoute: ActivatedRoute,
-    private router: Router,
     private apiService: ApiService,
     public commonServices: CommonService,
     private appService: ApplicationContextService
@@ -96,42 +95,7 @@ export class ExpressionComponent implements OnInit {
     // this.APIResponse = false; this.submitting = false;
     this.apiService.post(`/api/v1/reservations/express-interest`, fd)
       .subscribe(response => {
-        this.appService.userInformationObs()
-          .subscribe(userDetail => {
-            if(!userDetail.cscs) {
-              Swal.fire({
-                title: 'CSCS Details',
-                text: "To make payment for this asset, you should have a CSCS Number. Do you have a CSCS Number?",
-                icon: 'info',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes!',
-                cancelButtonText: 'No, I don\'t'
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  this.router.navigateByUrl(`/dashboard/shares/details/${response.data.reservation.id}/verify-cscs-number`)
-                } else {
-                  Swal.fire({
-                    title: 'A CSCS account number would be created for you',
-                    text: "Your CSCS number is mandatory to complete a transaction",
-                    icon: 'info',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Proceed!',
-                    cancelButtonText: 'Cancel'
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                      this.router.navigateByUrl(`/dashboard/shares/${response.data.reservation.id}/create-new-cscs`)
-                    } else {
-                      Swal.fire('Note', 'You can not complete this transaction without a CSCS Number.','error');
-                    }
-                  });
-                }
-              })
-            }
-          });
+        this.appService.checkCSCS(response.data.reservation.id);
       },
       errResp => {
         this.submitting = false;

@@ -5,6 +5,8 @@ import { BehaviorSubject, of } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 
 import { ApiService } from '@app/_shared/services/api.service';
+import { Router } from '@angular/router';
+import { ApplicationContextService } from '@app/_shared/services/application-context.service';
 
 export interface PeriodicElement {
   position: number;
@@ -33,9 +35,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   private loadingSubject = new BehaviorSubject<boolean>(true);
   isLoading$ = this.loadingSubject.asObservable();
   topAssets: any;
+  bestAsset = {loading: true, value: null};
+  totalPortfolio= {loading: true, value: 0};
 
   constructor(
+    private router: Router,
     private api: ApiService,
+    private appService: ApplicationContextService,
   ) { }
 
   ngOnInit(): void {
@@ -43,6 +49,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       .subscribe(response => {
         console.log(response)
         this.topAssets = response.data
+        this.bestAsset.loading = false
+        this.bestAsset.value = response.data.reduce(function(prev, current) {
+          return (prev.sharePrice > current.sharePrice) ? prev : current
+        })
       });
   }
 
@@ -65,7 +75,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         })
       )
       .subscribe(response => {
-        // console.log(response.data)
+        this.totalPortfolio.loading = false
+        this.totalPortfolio.value = response.reduce((a:any, b:any) => a + b.amount, 0);
         this.loadingSubject.next(false);
         this.dataSource = new MatTableDataSource(response);
 
@@ -76,5 +87,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   fetchTxns() {
     return this.api.get(`/api/v1/reservations/my-reservations`);
+  }
+  onMakePayment(element: any) {
+    this.appService.checkCSCS(element);
   }
 }
