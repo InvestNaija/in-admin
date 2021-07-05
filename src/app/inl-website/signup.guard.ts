@@ -25,12 +25,12 @@ export class SignupGuard implements CanActivate {
           this.router.navigate(['/auth/login']);
           return false
         }),
-        catchError(error => {
-          console.log(error);
-          this.authService.signup$.next(null);
-          this.router.navigate(['/auth/login']);
-          return of(false)
-        })
+        // catchError(error => {
+        //   console.log(error);
+        //   this.authService.signup$.next(null);
+        //   this.router.navigate(['/auth/login']);
+        //   return of(false)
+        // })
       )
   }
 

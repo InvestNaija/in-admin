@@ -23,6 +23,7 @@ export class InlSignupContinueComponent implements OnInit, OnDestroy {
   uiErrors = FormErrors;
   validationMessages = ValidationMessages;
   container: any = {};
+  APIResponse = false; submitting = false;
 
   constructor(
     private fb: FormBuilder,
@@ -45,22 +46,19 @@ export class InlSignupContinueComponent implements OnInit, OnDestroy {
       nin: [null],
       bvn: [null, Validators.required],
       signature: [],
-      passwordGroup: this.fb.group({
-        password: [null, [
-            Validators.required,
-            Validators.minLength(6),
-            this.commonServices.regexValidator(new RegExp(this.commonServices.oneDigit), {'oneDigit': ''}),
-            this.commonServices.regexValidator(new RegExp(this.commonServices.oneLowerCase), {'oneLowerCase': ''}),
-            this.commonServices.regexValidator(new RegExp(this.commonServices.oneUpperCase), {'oneUpperCase': ''}),
-          ]
-        ],
-        confirmPassword: [null, Validators.required],
-      },{validators: this.commonServices.mustMatch('password', 'confirmPassword')}),
+      password: [null, [
+          Validators.required,
+          Validators.minLength(6),
+          this.commonServices.regexValidator(new RegExp(this.commonServices.oneDigit), {'oneDigit': ''}),
+          this.commonServices.regexValidator(new RegExp(this.commonServices.oneLowerCase), {'oneLowerCase': ''}),
+          this.commonServices.regexValidator(new RegExp(this.commonServices.oneUpperCase), {'oneUpperCase': ''}),
+        ]
+      ],
+      confirmPassword: [null, Validators.required],
       accept: [false, Validators.requiredTrue]
-    });
+    },{validators: this.commonServices.mustMatch('password', 'confirmPassword')});
     this.signupSub = this.authService.signUp().subscribe(
       data => {
-        console.log(data)
         if(data) {
           this.populateKYCDetail(data);
         }
@@ -93,32 +91,31 @@ export class InlSignupContinueComponent implements OnInit, OnDestroy {
     this.displayErrors();
   }
   onSubmit() {
-    // this.APIResponse = false; this.submitting = true;
+    this.APIResponse = false; this.submitting = true;
     if (this.myForm.invalid) {
       this.uiErrors = JSON.parse(JSON.stringify(this.formErrors))
       this.errors = this.commonServices.findInvalidControlsRecursive(this.myForm);
-      Object.keys(this.errors).forEach((control) => {
-        Object.keys(this.errors[control]).forEach(error => {
-          this.uiErrors[control] = ValidationMessages[control][error];
-        })
-      })
+      this.errors = this.commonServices.findInvalidControlsRecursive(this.myForm);
+      this.displayErrors();
+      this.APIResponse = true; this.submitting = true;
       return;
     }
     const fd = JSON.parse(JSON.stringify(this.myForm.value));
     fd.dob = fd.birthdate;
-    fd.confirmPassword = fd.passwordGroup.confirmPassword;
-    fd.password = fd.passwordGroup.password;
+    fd.confirmPassword = fd.confirmPassword;
+    fd.password = fd.password;
     fd.gender = fd.gender.name
-    delete fd.passwordGroup;
     delete fd.photo;
     delete fd.signature;
 
     if(!fd.accept) {
       Swal.fire('', 'You need to accept the terms and conditions to proceed', 'warning');
+      this.APIResponse = false; this.submitting = false;
       return;
     }
     this.apiService.post('/api/v1/auth/customers/signup', fd, false)
       .subscribe(response => {
+        this.APIResponse = false; this.submitting = false;
         this.authService.signup$.next(response.data);
         Swal.fire('', response?.message, 'success');
         setTimeout(()=>{
@@ -126,6 +123,7 @@ export class InlSignupContinueComponent implements OnInit, OnDestroy {
         }, 2000)
       },
       errResp => {
+        this.APIResponse = false; this.submitting = false;
         Swal.fire('Oops...', errResp?.error?.error?.message, 'error')
       });
     // this.APIResponse = false; this.submitting = false;
@@ -133,9 +131,6 @@ export class InlSignupContinueComponent implements OnInit, OnDestroy {
 
 
   displayErrors() {
-    Object.keys(this.formErrors).forEach((control) => {
-      this.formErrors[control] = '';
-    });
     Object.keys(this.errors).forEach((control) => {
       Object.keys(this.errors[control]).forEach(error => {
         this.uiErrors[control] = ValidationMessages[control][error];

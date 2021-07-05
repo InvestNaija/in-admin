@@ -54,11 +54,11 @@ export class InlSignupComponent implements OnInit {
       this.APIResponse = false; this.submitting = false;
       return;
     }
-    this.APIResponse = true; this.submitting = true;
     const fd = JSON.parse(JSON.stringify(this.myForm.value));
     console.log(fd);
     this.api.post('/api/v1/verifications/nin', fd, false)
       .subscribe(response => {
+        this.APIResponse = false; this.submitting = false;
         this.authService.signup$.next(response.data);
         this.router.navigate(['/auth/signup-continue']);
       },

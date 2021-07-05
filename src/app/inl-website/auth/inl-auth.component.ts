@@ -27,7 +27,6 @@ export class InlAuthComponent implements OnInit {
     }
     this.signupSub = this.authService.signUp().subscribe(
       data => {
-        console.log(data)
         if(data) {
           // this.populateKYCDetail(data);
         }
@@ -42,7 +41,6 @@ export class InlAuthComponent implements OnInit {
     };
     this.api.post('/api/provider/forgot-password', payload, false)
       .subscribe(response => {
-        console.log(response);
         // this.appContext.userInformation = response.data;
         // if (this.auth.redirectUrl) {
         //   this.router.navigate([this.auth.redirectUrl]);

@@ -17,21 +17,21 @@
           <div class="form-group col-md-12 inl-form-input">
             <label for="email" *ngIf="myForm.get('nin').value">NIN</label>
             <input formControlName="nin" type="email" placeholder="NIN" (keyup)="controlChanged('nin')" />
-            <span *ngIf="uiErrors.nin">{{uiErrors.nin }}</span>
+            <span *ngIf="uiErrors.nin != ''">{{uiErrors.nin }}</span>
           </div>
         </div>
         <div class="row">
           <div class="form-group col-md-12 inl-form-input">
             <label for="email" *ngIf="myForm.get('firstName').value">First Name</label>
             <input formControlName="firstName" type="text" placeholder="First Name" (keyup)="controlChanged('firstName')" />
-            <span *ngIf="uiErrors.firstName">{{uiErrors.firstName }}</span>
+            <span *ngIf="uiErrors.firstName != ''">{{uiErrors.firstName }}</span>
           </div>
         </div>
         <div class="row">
           <div class="form-group col-md-12 inl-form-input">
             <label for="email" *ngIf="myForm.get('lastName').value">Surname</label>
             <input formControlName="lastName" type="text" placeholder="Surname" (keyup)="controlChanged('lastName')" />
-            <span *ngIf="uiErrors.lastName">{{uiErrors.lastName }}</span>
+            <span *ngIf="uiErrors.lastName != ''">{{uiErrors.lastName }}</span>
           </div>
         </div>
         <div class="row buttons-arrange">

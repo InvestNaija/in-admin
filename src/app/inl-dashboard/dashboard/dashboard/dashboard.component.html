@@ -55,43 +55,45 @@
         <div class="card">
           <div class="card-body">
             <h3 class="table-title text-muted">Recent Transactions <a class="pull-right text-danger" [routerLink]="['/dashboard/transactions']">See all</a></h3>
-            <table mat-table [dataSource]="dataSource" fixedLayout="false" class="leaderboard-table">
+            <mat-table [dataSource]="dataSource" fixedLayout="false" class="leaderboard-table">
 
               <ng-container matColumnDef="asset">
-                <th mat-header-cell *matHeaderCellDef>Asset</th>
-                <td mat-cell *matCellDef="let element">
+                <mat-header-cell *matHeaderCellDef>Asset</mat-header-cell>
+                <mat-cell mat-cell *matCellDef="let element">
                   <img [src]="element.asset?.image" style="height: 30px;" class="mr-1"/>
                   {{element.asset?.name}}
-                </td>
+                </mat-cell>
               </ng-container>
 
               <ng-container matColumnDef="price">
-                <th mat-header-cell *matHeaderCellDef>Share Price</th>
-                <td mat-cell *matCellDef="let element" class="{{element.asset?.sharePrice | number}}"> {{element.asset?.sharePrice | number}} </td>
+                <mat-header-cell *matHeaderCellDef>Share Price</mat-header-cell>
+                <mat-cell *matCellDef="let element" class="{{element.asset?.sharePrice | number}}">
+                  {{element.asset?.sharePrice | number}}
+                </mat-cell>
               </ng-container>
 
               <ng-container matColumnDef="unitsExpressed">
-                <th mat-header-cell *matHeaderCellDef>Units</th>
+                <mat-header-cell *matHeaderCellDef>Units</mat-header-cell>
                 <td mat-cell *matCellDef="let element"> {{element.unitsExpressed}} </td>
               </ng-container>
 
               <ng-container matColumnDef="amount">
-                <th mat-header-cell *matHeaderCellDef>Total Cost</th>
-                <td mat-cell *matCellDef="let element"> {{element.amount | number}} </td>
+                <mat-header-cell *matHeaderCellDef>Total Cost</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.amount | currency:'NGN':'symbol-narrow'}} </mat-cell>
               </ng-container>
 
               <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef>Status</th>
-                <td mat-cell *matCellDef="let element">
+                <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+                <mat-cell *matCellDef="let element">
                   <div class="text-center transaction-badge p-1" [ngClass]="!element.paid && element.asset.openForPurchase ? 'bg-warning text-danger' : !element.asset.openForPurchase? 'bg-secondary text-body' : 'bg-success text-warning'">
                     {{!element.paid && element.asset.openForPurchase ? "Make Payment" : !element.asset.openForPurchase? "Not Available" : "Paid"}}
                   </div>
-                </td>
+                </mat-cell>
               </ng-container>
 
               <ng-container matColumnDef="action">
-                <th mat-header-cell *matHeaderCellDef>Action</th>
-                <td mat-cell *matCellDef="let element">
+                <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+                <mat-cell *matCellDef="let element">
                   <span class="header-menu" *ngIf="!element.paid && element.asset.openForPurchase">
                     <button mat-icon-button [matMenuTriggerFor]="historylistmenu">
                       <mat-icon>more_vert</mat-icon>
@@ -102,12 +104,12 @@
                       </a>
                     </mat-menu>
                   </span>
-                </td>
+                </mat-cell>
               </ng-container>
 
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
 
             <div *ngIf="isLoading$ | async" class="mat-spinner-container">
               <mat-spinner></mat-spinner>
@@ -119,13 +121,17 @@
       </div>
       <div class="col-md-4">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body font-weight-bold">
             <h3 class="card-title text-muted">Trending Shares <a class="pull-right text-danger" href="#">See all</a></h3>
             <div class="row p-3" *ngFor="let asset of topAssets; let i = index">
-              <div class="col-md-1 p-0 m-0">{{i+1}}</div>
-              <div class="col-md-6 p-0 m-0">{{asset.name}}</div>
-              <div class="col-md-3 p-0 m-0">{{asset.sharePrice}}</div>
-              <div class="col-md-1 p-0 m-0">u</div>
+              <div class="col-md-1 text-muted p-0 m-0">{{i+1}}</div>
+              <div class="col-md-6 text-muted p-0 m-0">{{asset.name}}</div>
+              <div class="col-md-3 text-muted p-0 m-0">{{asset.sharePrice | currency:'NGN':'symbol-narrow'}}</div>
+              <div class="col-md-1 p-0 m-0">
+                <svg width="14" height="7" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.7425 9.00001H2.75554C2.40074 9.00049 2.05305 8.90682 1.75271 8.72985C1.45238 8.55288 1.21167 8.29983 1.05846 8.00001C0.879117 7.64427 0.810039 7.24848 0.859104 6.85774C0.908168 6.46701 1.0734 6.09704 1.33597 5.79001L5.82947 0.69001C6.00582 0.49938 6.22384 0.346494 6.46876 0.241713C6.71368 0.136931 6.97979 0.0827026 7.24904 0.0827026C7.51829 0.0827026 7.78439 0.136931 8.02931 0.241713C8.27424 0.346494 8.49226 0.49938 8.6686 0.69001L13.1621 5.79001C13.4247 6.09704 13.5899 6.46701 13.639 6.85774C13.688 7.24848 13.619 7.64427 13.4396 8.00001C13.2864 8.29983 13.0457 8.55288 12.7454 8.72985C12.445 8.90682 12.0973 9.00049 11.7425 9.00001Z" fill="#00BA88"></path>
+                </svg>
+              </div>
             </div>
           </div>
         </div>
