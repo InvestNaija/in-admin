@@ -21,7 +21,7 @@
                   <img [src]="share?.image" style="height: 60px;">
                   <div class="ml-2" style="margin-left: 10px;">
                     <h6 class="m-0 font-weight-bold">{{share?.name}}</h6>
-                    <p class="m-0">{{share?.anticipatedMinPrice | currency:'NGN':'symbol-narrow'}} - {{share?.anticipatedMaxPrice | currency:"NGN":"symbol-narrow"}}</p>
+                    <p class="m-0">{{share?.anticipatedMinPrice | currency:share?.currency:'symbol-narrow'}} - {{share?.anticipatedMaxPrice | currency:share?.currency:"symbol-narrow"}}</p>
                     <p class="m-0 text-success font-weight-bold">+0 (+0%)</p>
                   </div>
                 </div>
@@ -57,7 +57,7 @@
             </div>
             <div class="form-group border-bottom px-5 py-2">
               <p class="text-muted font-weight-bold">Price per Share</p>
-              <h1><small>{{myForm.get('amount').value | currency:'NGN':'symbol-narrow' }}</small></h1>
+              <h1><small>{{myForm.get('amount').value | currency:share?.currency:'symbol-narrow' }}</small></h1>
             </div>
             <div class="form-group border-bottom py-3">
               <button class="btn btn-danger w-100 text-white" type="submit">

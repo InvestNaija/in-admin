@@ -58,11 +58,11 @@ export class MakePaymentComponent implements OnInit {
     }
     const payload = {
       gateway: environment.gateway,
-      reservationId: this.transaction.id
+      reservationId: this.transaction.id,
+      currency: this.asset.currency
     }
     this.apiService.post('/api/v1/reservations/make-payment', payload)
       .subscribe(response => {
-        console.log(response);
         this.paying = false;
         this.document.location.href = response.data.authorization_url;
       },

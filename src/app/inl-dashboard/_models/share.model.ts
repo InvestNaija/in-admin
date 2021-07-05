@@ -11,6 +11,7 @@ export interface IShare {
   closingDate: string,
   popularity: number,
   image: string,
+  currency: string,
   createdAt?: string,
   updatedAt?: string;
 }

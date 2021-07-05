@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { combineLatest } from 'rxjs';
+import {  switchMap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 import { IShare } from '../../_models/share.model';
@@ -30,6 +31,7 @@ export class VerifyCscsComponent implements OnInit {
 
   total = 0;
   assetId: string;
+  txn: any;
 
   constructor(
     private fb: FormBuilder,
@@ -47,9 +49,15 @@ export class VerifyCscsComponent implements OnInit {
     });
 
     this.aRoute.paramMap
-      .subscribe(params => {
-        this.assetId = params.get('id');
-    })
+      .pipe(
+        switchMap(params => {
+          this.assetId = params.get('id');
+          return this.apiService.get(`/api/v1/reservations/fetch/${params.get('txnId')}`)
+        })
+      )
+      .subscribe(response => {
+        this.txn = response.data
+      })
   }
 
   populateExpression(expression: ICSCS) {
@@ -72,21 +80,36 @@ export class VerifyCscsComponent implements OnInit {
       });
       return;
     }
+    console.log(this.myForm.value);
     const fd = JSON.parse(JSON.stringify(this.myForm.value));
     fd.cscsNo = fd.cscsNo.toString()
     this.apiService.post('/api/v1/verifications/cscs', fd)
       .pipe(
         switchMap(resp => {
+          Swal.fire({
+            title: resp.message,
+            icon: 'success',
+            text: 'Redirecting...Please wait',
+            confirmButtonText: `Ok`,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+          })
           console.log(resp);
           const payload = {
             gateway: environment.gateway,
-            reservationId: this.assetId
+            reservationId: this.assetId,
+            currency: this.txn.asset?.currency
           }
-          return this.apiService.post('/api/v1/reservations/make-payment', payload)
+
+        return combineLatest([
+            this.apiService.get(`/api/v1/customers/profile/fetch`),
+            this.apiService.post('/api/v1/reservations/make-payment', payload)
+          ])
         })
       )
-      .subscribe(response => {
-        this.document.location.href = response.data.authorization_url;
+      .subscribe(([user, paymentRef]) => {
+        this.appService.userInformation = user.data
+        this.document.location.href = paymentRef.data.authorization_url;
       },
       errResp => {
         this.submitting = false;

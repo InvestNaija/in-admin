@@ -8,6 +8,7 @@ import { FormErrors, ValidationMessages } from './banking-details.validators';
 import { catchError, concatMap, distinctUntilChanged, map, mergeMap, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'in-banking-details',
@@ -21,13 +22,14 @@ export class BankingDetailsComponent implements OnInit {
   uiErrors = FormErrors;
   validationMessages = ValidationMessages;
   submitting = false; disableButton=false
-
+  container = {};
   loadingBankName: boolean;
   bankAccountName: {success: boolean, name: string}
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private http: HttpClient,
     public apiService: ApiService,
     public commonServices: CommonService
     ) { }
@@ -108,5 +110,27 @@ export class BankingDetailsComponent implements OnInit {
         this.submitting = false;
         Swal.fire('Oops...', errResp?.error?.error?.message, 'error')
       });
+  }
+
+  getLOVs(endpoint: string, selectScope: string, options: any){
+    if (this.container[selectScope] == null) {
+      this.container[options['loading']] = 'Loading, please wait...';
+      return this.http.get(endpoint).pipe(
+        map((response: any) => {
+            return of(response.data);
+          }
+        )
+      )
+          .subscribe(
+            (response) => {
+              this.container[options['loading']] = null;
+              this.container[selectScope] = response;
+            },
+            (err) => {
+              this.container[options['loading']] = null;
+              console.log(err);
+            }
+          );
+    }
   }
 }
