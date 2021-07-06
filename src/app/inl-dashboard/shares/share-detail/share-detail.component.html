@@ -3,7 +3,7 @@
     <div class="col-12">
       <a [routerLink]="['/dashboard/index']" class="text-dark text-decoration-none">< Back</a>
       <div class="page-title">
-        <h1>Shares</h1>
+        <h1>Fund</h1>
       </div>
     </div>
   </div>
@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="col-sm-12 col-md-2">
-      <button class="btn btn-danger"  (click)="onExpressInterest(share)">Express Interest</button>
+      <button class="btn btn-danger"  (click)="onExpressInterest(share)">Buy Fund</button>
     </div>
   </div>
   <div class="row">
@@ -48,11 +48,11 @@
               <p class="text-dark font-weight-bold text-uppercase">{{share?.type}}</p>
             </div>
             <div class="col-6">
-              <p class="text-muted font-weight-bold">Share Price</p>
+              <p class="text-muted font-weight-bold">Mutual Fund Price</p>
               <p class="text-dark font-weight-bold">{{share?.sharePrice | number}}</p>
             </div>
             <div class="col-6">
-              <p class="text-muted font-weight-bold">Shares Avaliable for Sale</p>
+              <p class="text-muted font-weight-bold">Mutual Fund Avaliable for Sale</p>
               <p class="text-dark font-weight-bold">{{share?.availableShares | number}}</p>
             </div>
             <div class="col-6">
@@ -70,7 +70,7 @@
     <div class="col-md-6">
       <div class="card" style="min-height: 316px;">
         <div class="card-body">
-          <h3 class="card-title mb-3">IPO Description</h3>
+          <h3 class="card-title mb-3">Mutual Fund Description</h3>
           <h2 class="card-title text-dark">About {{share?.name | uppercase}}</h2>
           <p>{{share?.description}}</p>
         </div>

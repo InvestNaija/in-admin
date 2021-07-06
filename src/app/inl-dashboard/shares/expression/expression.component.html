@@ -32,31 +32,35 @@
             <div class="row border-bottom py-3">
               <div class="col-6">
                 <div class="form-group col-md-12 inl-form-input">
+                  <p class="text-muted font-weight-bold">Offering Type</p>
                   <input formControlName="type" class="form-control" type="text" placeholder="Offering Type" />
                   <span *ngIf="uiErrors.type">{{uiErrors.type}}</span>
                 </div>
               </div>
               <div class="col-6">
                 <div class="form-group col-md-12 inl-form-input">
+                  <p class="text-muted font-weight-bold">Asset Price</p>
                   <input formControlName="sharePrice" class="form-control" type="text" placeholder="Asset Price" />
                   <span *ngIf="uiErrors.sharePrice">{{uiErrors.sharePrice}}</span>
                 </div>
               </div>
               <div class="col-6">
                 <div class="form-group col-md-12 inl-form-input">
+                  <p class="text-muted font-weight-bold">Specified Units</p>
                   <input formControlName="units" class="form-control" type="number" placeholder="Specified Units" />
                   <span *ngIf="uiErrors.units">{{uiErrors.units}}</span>
                 </div>
               </div>
               <div class="col-6">
                 <div class="form-group col-md-12 inl-form-input">
+                  <p class="text-muted font-weight-bold">Estimated Amount</p>
                   <input formControlName="amount" class="form-control" type="text" placeholder="Estimated Amount" />
                   <span *ngIf="uiErrors.amount">{{uiErrors.amount}}</span>
                 </div>
               </div>
             </div>
             <div class="form-group border-bottom px-5 py-2">
-              <p class="text-muted font-weight-bold">Price per Share</p>
+              <p class="text-muted font-weight-bold">Total</p>
               <h1><small>{{myForm.get('amount').value | currency:share?.currency:'symbol-narrow' }}</small></h1>
             </div>
             <div class="form-group border-bottom py-3">

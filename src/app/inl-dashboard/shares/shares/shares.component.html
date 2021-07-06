@@ -3,7 +3,7 @@
     <div class="col-12">
       <a [routerLink]="['/dashboard/index']" class="text-dark text-decoration-none">< Back</a>
       <div class="page-title">
-        <h1>Shares</h1>
+        <h1>Funds</h1>
       </div>
     </div>
   </div>
@@ -11,7 +11,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-body">
-          <h3 class="card-title">Nigerian Shares</h3>
+          <!-- <h3 class="card-title">Nigerian Shares</h3> -->
 
           <div *ngIf="isLoading$ | async" class="mat-spinner-container">
             <mat-spinner color="accent" [diameter]="30"></mat-spinner>

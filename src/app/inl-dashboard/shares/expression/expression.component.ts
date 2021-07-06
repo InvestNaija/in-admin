@@ -32,6 +32,7 @@ export class ExpressionComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private aRoute: ActivatedRoute,
+    private router: Router,
     private apiService: ApiService,
     public commonServices: CommonService,
     private appService: ApplicationContextService
@@ -95,7 +96,7 @@ export class ExpressionComponent implements OnInit {
     // this.APIResponse = false; this.submitting = false;
     this.apiService.post(`/api/v1/reservations/express-interest`, fd)
       .subscribe(response => {
-        this.appService.checkCSCS(response.data.reservation.id);
+        this.router.navigateByUrl(`/dashboard/transactions/${response.data.reservation.id}/${response.data.asset.id}/make-payment`)
       },
       errResp => {
         this.submitting = false;

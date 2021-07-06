@@ -36,7 +36,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   isLoading$ = this.loadingSubject.asObservable();
   topAssets: any;
   bestAsset = {loading: true, value: null};
-  totalPortfolio= {loading: true, value: 0};
+  totalPortfolio= {loading: true, value: []};
 
   constructor(
     private router: Router,
@@ -75,8 +75,20 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         })
       )
       .subscribe(response => {
-        this.totalPortfolio.loading = false
-        this.totalPortfolio.value = response.reduce((a:any, b:any) => a + b.amount, 0);
+        this.totalPortfolio.loading = false;
+        let result = [];
+        response.reduce(function(res, value) {
+          if(value.paid) {
+            if (!res[value.asset.currency]) {
+              res[value.asset.currency] = { currency: value.asset.currency, amount: 0 };
+              result.push(res[value.asset.currency])
+            }
+            res[value.asset.currency].amount += value.amount;
+          }
+          return res;
+        }, {});
+
+        this.totalPortfolio.value = result;
         this.loadingSubject.next(false);
         this.dataSource = new MatTableDataSource(response);
 
