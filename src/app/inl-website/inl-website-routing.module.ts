@@ -16,9 +16,9 @@ const routes: Routes = [
       { path: 'login', component: InlLoginComponent },
       { path: 'forgot-password', component: InlForgotPasswordComponent },
       { path: 'signup', component: InlSignupComponent },
-      { path: 'signup-continue', canActivate: [SignupGuard],
+      { path: 'signup-continue', //canActivate: [SignupGuard],
           component: InlSignupContinueComponent },
-      { path: 'verify-otp', canActivate: [SignupGuard],
+      { path: 'verify-otp', //canActivate: [SignupGuard],
           component: InlVerifyOtpComponent },
       { path: '', redirectTo: '/auth/login', pathMatch: 'full'},
     ]

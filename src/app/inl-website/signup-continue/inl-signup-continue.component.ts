@@ -55,7 +55,7 @@ export class InlSignupContinueComponent implements OnInit, OnDestroy {
         ]
       ],
       confirmPassword: [null, Validators.required],
-      accept: [false, Validators.requiredTrue]
+      accept: [false]
     },{validators: this.commonServices.mustMatch('password', 'confirmPassword')});
     this.signupSub = this.authService.signUp().subscribe(
       data => {
