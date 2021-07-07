@@ -20,28 +20,32 @@ export class InlDashboardComponent implements OnInit, OnDestroy {
   userInformation: any;
 
   constructor(private auth: AuthService,
-    private appContext: ApplicationContextService) { }
+    private appContext: ApplicationContextService
+  ) {
 
-  ngOnInit(): void {
-    this.resizeObservable$ = fromEvent(window, 'resize');
-    this.loadObservable$ = fromEvent(window, 'load');
-    this.allSideNavEventsObservable$ = merge(this.resizeObservable$, this.loadObservable$);
-    this.sidenavSubscription$ = this.allSideNavEventsObservable$.pipe(debounceTime(50)).subscribe(evt => {
-      // console.log('event: ', evt);
-      // console.log('event.target.innerWidth: ', (evt.currentTarget as Window).innerWidth);
-      let browserVidth = (evt.currentTarget as Window).innerWidth;
-      if (browserVidth < 991) {
-        this.sideNavMode = 'over';
-        this.sideNavOpen = false;
-      } else {
-        this.sideNavMode = 'side';
-        this.sideNavOpen = true;
-      }
-    });
+      this.resizeObservable$ = fromEvent(window, 'resize');
+      this.loadObservable$ = fromEvent(window, 'load');
+      this.allSideNavEventsObservable$ = merge(this.resizeObservable$, this.loadObservable$);
+      this.sidenavSubscription$ = this.allSideNavEventsObservable$.pipe(debounceTime(50)).subscribe(evt => {
+        // console.log('event: ', evt);
+        // console.log('event.target.innerWidth: ', (evt.currentTarget as Window).innerWidth);
+        let browserVidth = (evt.currentTarget as Window).innerWidth;
+        if (browserVidth < 991) {
+          this.sideNavMode = 'over';
+          this.sideNavOpen = false;
+        } else {
+          this.sideNavMode = 'side';
+          this.sideNavOpen = true;
+        }
+      });
 
     if(!this.auth.getToken()) {
       this.logout();
     }
+  }
+
+  ngOnInit(): void {
+
     this.getUserInformation();
   }
 
