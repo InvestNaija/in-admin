@@ -8,12 +8,12 @@
   </div>
   <div class="dashboard-top-cards">
 
-    <div class="row mb-4">
-      <div class="col-md-3">
-        <div class="card">
+    <div class="row g-2 pb-2 mb-2">
+      <div class="col-sm-12 col-md-4 col-lg-3 h-100">
+        <div class="card dashboard-card">
           <div class="card-body">
             <h3 class="card-title text-muted">Portfolio</h3>
-            <p class="card-text font-weight-bolder mt-1 mb-3">
+            <p class="card-text font-weight-bolder mt-1">
               <mat-spinner *ngIf="totalPortfolio.loading" [diameter]="20"></mat-spinner>
               <span *ngIf="!totalPortfolio.loading">
                 <span *ngFor="let portfolio of totalPortfolio.value">
@@ -24,27 +24,36 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3">
-        <div class="card">
+      <div class="col-sm-12 col-md-4 col-lg-3 h-100">
+        <div class="card dashboard-card">
           <div class="card-body">
-            <h3 class="card-title text-muted">Top Perfoming Asset</h3>
-            <div class="row d-flex h-100 w-100 align-items-center">
+            <h3 class="card-title text-muted m-0">Top Perfoming Asset</h3>
+            <div data-v-32447316="" class="d-flex align-items-center w-100 m-0">
+              <div data-v-32447316="">
+                <img data-v-32447316="" alt="image" src="https://res.cloudinary.com/intelligent-innovations/image/upload/v1616418900/blvstwifjvvh0pyip6ix.jpg" style="height: 40px;">
+              </div>
+              <div data-v-32447316="" class="align-self-end mt-2 text-truncate" style="margin-left: 10px;">
+                <p data-v-32447316="" class="card-value font-weight-bold text-truncate m-0" style="font-size: 14px;">exxon shares</p>
+                <p data-v-32447316="" class="m-0">₦24,988.00</p>
+              </div>
+            </div>
+            <!-- <div class="row d-flex h-100 w-100">
               <div class="col-md-4">
                 <img alt="image" [src]="bestAsset.value?.image" style="height: 40px;">
               </div>
               <div class="col-md-8">
-                <p class="card-value mb-1" style="font-size: 14px;">{{bestAsset.value?.name}}</p>
+                <p class="card-value mb-1 font-weight-bold" style="font-size: 1.2em;">{{bestAsset.value?.name}}</p>
                 <p class="m-0">
                   <mat-spinner *ngIf="bestAsset.loading" [diameter]="20"></mat-spinner>
                   <span class="font-weight-bolder" *ngIf="!bestAsset.loading">{{bestAsset.value?.sharePrice | currency:bestAsset.value?.currency:'symbol-narrow'}}</span>
                 </p>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="card">
+      <div class="col-sm-12 col-md-4 col-lg-6 h-100">
+        <div class="card dashboard-card buy-shares-card">
           <div class="card-body">
             <div data-v-65e651c5="" class="row no-gutters">
               <div data-v-65e651c5="" class="col-sm-12 col-md-8">
@@ -75,7 +84,7 @@
   <div class="dashboard-table">
     <div class="row">
       <div class="col-md-8">
-        <div class="card">
+        <div class="card dashboard-card">
           <div class="card-body">
             <h3 class="table-title text-muted">Recent Transactions <a class="pull-right text-danger" [routerLink]="['/dashboard/transactions']">See all</a></h3>
             <mat-table [dataSource]="dataSource" fixedLayout="false" class="leaderboard-table">
@@ -143,7 +152,7 @@
         </div>
       </div>
       <div class="col-md-4">
-        <div class="card">
+        <div class="card dashboard-card">
           <div class="card-body font-weight-bold">
             <h3 class="card-title text-muted">Trending Now <a class="pull-right text-danger" href="#">See all</a></h3>
             <div class="row p-3" *ngFor="let asset of topAssets; let i = index">

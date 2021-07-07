@@ -42,8 +42,8 @@ export class ExpressionComponent implements OnInit {
     this.myForm = this.fb.group({
       type: [{value: '', disabled: true}, [Validators.required]],
       sharePrice: [{value: '', disabled: true}, [Validators.required]],
-      units: ['', [Validators.required]],
-      amount: [{value: '', disabled: true}, [Validators.required]],
+      units: ['', [Validators.required,Validators.min(1)]],
+      amount: ['', [Validators.required]],
     });
 
     this.aRoute.paramMap.pipe(
@@ -55,38 +55,47 @@ export class ExpressionComponent implements OnInit {
     ).subscribe(response => {
       this.commonServices.loading().next(false);
       this.share = response.data;
+
       this.populateExpression(response.data)
     })
 
-    this.myForm.get('units').valueChanges
-        .subscribe(val => {
-          this.myForm.patchValue({
-            amount: +this.myForm.get('sharePrice').value * val
-          })
-        });
+    //
   }
 
   populateExpression(expression: IExpression) {
-    console.log(expression);
+    // console.log(expression);
     this.myForm.patchValue({
       type: expression?.type,
       sharePrice: expression?.sharePrice,
       units: expression?.units,
-      amount: expression?.amount,
+      amount: expression?.amount
     });
+    this.myForm.get('amount').setValidators([Validators.required,Validators.min(this.share.anticipatedMinPrice)]);
+    // this.myForm.get('units').setValidators([Validators.required,Validators.min(this.share.sharePrice)]);
+    this.myForm.get('amount').updateValueAndValidity();
+    // this.myForm.get('units').updateValueAndValidity();
   }
-
+  amountChanged() {
+    this.myForm.patchValue({
+      units: +this.myForm.get('amount').value / +this.myForm.get('sharePrice').value
+    })
+  }
+  unitsChanged() {
+    this.myForm.patchValue({
+      amount: +this.myForm.get('sharePrice').value * +this.myForm.get('units').value
+    })
+  }
   onSubmit() {
     this.submitting = true;
     if (this.myForm.invalid) {
       this.uiErrors = JSON.parse(JSON.stringify(this.formErrors))
       this.errors = this.commonServices.findInvalidControlsRecursive(this.myForm);
-      console.log(this.errors);
       Object.keys(this.errors).forEach((control) => {
         Object.keys(this.errors[control]).forEach(error => {
           this.uiErrors[control] = ValidationMessages[control][error];
         })
       });
+      console.log(this.errors);
       return;
     }
     const fd = {
