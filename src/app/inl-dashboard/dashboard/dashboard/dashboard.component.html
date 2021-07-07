@@ -127,7 +127,12 @@
                   </div>
                 </mat-cell>
               </ng-container>
-
+              <ng-container *matNoDataRow matColumnDef="nodatafound">
+                <mat-cell>
+                  <!-- <div style="display: block;"><img data-v-32447316="" alt="image" src="/assets/images/lifeIsGood.png" style="height: 300px;"></div><br> -->
+                  <div>No Transactions History Yet</div>
+                </mat-cell >
+              </ng-container>
               <ng-container matColumnDef="action">
                 <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
                 <mat-cell *matCellDef="let element">
