@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { catchError, finalize, map, startWith, switchMap } from 'rxjs/operators';
 import { BehaviorSubject, of } from 'rxjs';
+import Swal from 'sweetalert2';
 import { MatPaginator } from '@angular/material/paginator';
 
 import { ApiService } from '@app/_shared/services/api.service';
@@ -102,6 +103,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     return this.api.get(`/api/v1/reservations/my-reservations`);
   }
   onMakePayment(element: any) {
-    this.appService.checkCSCS(element);
+    this.router.navigateByUrl(`/dashboard/transactions/${element.id}/${element.asset.id}/make-payment`)
+  }
+  onDeleteTransaction(element: any) {
+    Swal.fire('Oops...', 'Delete functionality not yet implemented','error');
   }
 }

@@ -131,6 +131,9 @@ export class InlSignupContinueComponent implements OnInit, OnDestroy {
 
 
   displayErrors() {
+    Object.keys(this.formErrors).forEach((control) => {
+      this.formErrors[control] = '';
+    });
     Object.keys(this.errors).forEach((control) => {
       Object.keys(this.errors[control]).forEach(error => {
         this.uiErrors[control] = ValidationMessages[control][error];

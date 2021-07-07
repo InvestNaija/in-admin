@@ -29,7 +29,7 @@
         <strong class="pull-right"><a routerLink="/auth/forgot-password" class="text-primary">Reset Password</a></strong>
         <button type="submit" class="auth-button">
           <span *ngIf="!submitting">Login</span>
-          <mat-spinner *ngIf="submitting" color="accent" [diameter]="30"></mat-spinner>
+          <mat-spinner *ngIf="submitting" [diameter]="30"></mat-spinner>
         </button>
       </div>
     </form>

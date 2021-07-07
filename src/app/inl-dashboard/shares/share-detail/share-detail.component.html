@@ -71,7 +71,7 @@
       <div class="card" style="min-height: 316px;">
         <div class="card-body">
           <h2 class="card-title text-dark text-muted">About {{share?.name | uppercase}}</h2>
-          <p>{{share?.description}}</p>
+          <div [innerHtml]="share?.description"></div>
         </div>
       </div>
     </div>

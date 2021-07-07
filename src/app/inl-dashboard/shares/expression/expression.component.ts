@@ -95,7 +95,7 @@ export class ExpressionComponent implements OnInit {
       this.uiErrors = JSON.parse(JSON.stringify(this.formErrors))
       this.errors = this.commonServices.findInvalidControlsRecursive(this.myForm);
       this.displayErrors();
-      console.log(this.errors);
+      this.submitting = false;
       return;
     }
     const fd = {

@@ -1,6 +1,7 @@
 <div class="row m-2">
   <div class="bank-form-container col-9">
-    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off">
+      <input autocomplete="off" name="hidden" type="text" style="display:none;">
       <div class="row">
         <div class="form-group col-md-6">
           <label for="inputEmail4">Bank Name</label>
@@ -15,7 +16,7 @@
       <div class="row">
         <div class="form-group col-md-6">
           <label for="inputAddress">Account Number</label>
-          <input formControlName="nuban" type="text" class="form-control" autocomplete="off" maxlength="10" placeholder="Enter Account Number">
+          <input formControlName="nuban" type="text" class="form-control" maxlength="10" autocomplete="off" placeholder="Enter Account Number">
           <span *ngIf="uiErrors.nuban">{{uiErrors.nuban}}</span>
           <mat-spinner *ngIf="loadingBankName" [diameter]="30"></mat-spinner>
           <p class="pt-2 font-weight-bolder" *ngIf="!uiErrors.nuban && !loadingBankName" [ngClass]="bankAccountName?.success?'text-dark':'text-danger'">{{bankAccountName?.name}}</p>
