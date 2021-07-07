@@ -17,7 +17,9 @@
               <mat-spinner *ngIf="totalPortfolio.loading" [diameter]="20"></mat-spinner>
               <span *ngIf="!totalPortfolio.loading">
                 <span *ngFor="let portfolio of totalPortfolio.value">
-                  <p class="font-weight-bold" style="font-size: 1.5em;" *ngIf="!totalPortfolio.loading">{{portfolio.amount | currency:portfolio.currency:'symbol-narrow'}}</p>
+                  <p class="font-weight-bold" style="font-size: 1.5em;" *ngIf="!totalPortfolio.loading">
+                    {{portfolio.currency ? (portfolio.amount | currency:portfolio.currency:'symbol-narrow') :  portfolio.amount}}
+                  </p>
                 </span>
               </span>
             </p>
@@ -30,11 +32,14 @@
             <h3 class="card-title text-muted m-0">Top Perfoming Asset</h3>
             <div data-v-32447316="" class="d-flex align-items-center w-100 m-0">
               <div data-v-32447316="">
-                <img data-v-32447316="" alt="image" src="https://res.cloudinary.com/intelligent-innovations/image/upload/v1616418900/blvstwifjvvh0pyip6ix.jpg" style="height: 40px;">
+                <img data-v-32447316="" alt="image" [src]="bestAsset.value?.image" style="height: 40px;">
               </div>
               <div data-v-32447316="" class="align-self-end mt-2 text-truncate" style="margin-left: 10px;">
-                <p data-v-32447316="" class="card-value font-weight-bold text-truncate m-0" style="font-size: 14px;">exxon shares</p>
-                <p data-v-32447316="" class="m-0">₦24,988.00</p>
+                <p data-v-32447316="" class="card-value font-weight-bold text-truncate m-0" style="font-size: 14px;">{{bestAsset.value?.name}}</p>
+                <p data-v-32447316="" class="m-0">
+                  <mat-spinner *ngIf="bestAsset.loading" [diameter]="20"></mat-spinner>
+                  <span class="font-weight-bolder" *ngIf="!bestAsset.loading">{{bestAsset.value?.sharePrice | currency:bestAsset.value?.currency:'symbol-narrow'}}</span>
+                </p>
               </div>
             </div>
             <!-- <div class="row d-flex h-100 w-100">

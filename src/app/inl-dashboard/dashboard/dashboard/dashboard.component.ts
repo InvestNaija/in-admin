@@ -76,7 +76,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       )
       .subscribe(response => {
         this.totalPortfolio.loading = false;
-        let result = [];
+        let result = [{ currency: null, amount: 0 }];
+        console.log(response);
         response.reduce(function(res, value) {
           if(value.paid) {
             if (!res[value.asset.currency]) {
