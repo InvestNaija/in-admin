@@ -39,6 +39,9 @@ export class InlDashboardComponent implements OnInit, OnDestroy {
       }
     });
 
+    if(!this.auth.getToken()) {
+      this.logout();
+    }
     this.getUserInformation();
   }
 

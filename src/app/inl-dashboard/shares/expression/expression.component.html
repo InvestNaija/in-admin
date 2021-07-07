@@ -39,7 +39,7 @@
               </div>
               <div class="col-6">
                 <div class="form-group col-md-12 inl-form-input">
-                  <p class="text-muted font-weight-bold">Asset Price</p>
+                  <p class="text-muted font-weight-bold">Asset Price ({{share?.currency}})</p>
                   <input formControlName="sharePrice" class="form-control" type="text" placeholder="Asset Price" />
                   <span *ngIf="uiErrors.sharePrice">{{uiErrors.sharePrice}}</span>
                 </div>
@@ -47,7 +47,7 @@
               <div class="col-6">
                 <div class="form-group col-md-12 inl-form-input">
                   <p class="text-muted font-weight-bold">Estimated Amount</p>
-                  <input formControlName="amount" class="form-control" type="number" (keyup)="amountChanged()" placeholder="Estimated Amount" />
+                  <input formControlName="amount" class="form-control" type="number" [min]="share?.anticipatedMinPrice" (keyup)="amountChanged('amount')" placeholder="Estimated Amount" />
                   <span *ngIf="uiErrors.amount">{{uiErrors.amount}}</span>
                   <span *ngIf="errors['amount']?.min">Amount cannot be less than {{share?.anticipatedMinPrice | currency:share?.currency:'symbol-narrow'}}.</span>
                 </div>
@@ -55,7 +55,7 @@
               <div class="col-6">
                 <div class="form-group col-md-12 inl-form-input">
                   <p class="text-muted font-weight-bold">Specified Units</p>
-                  <input formControlName="units" class="form-control" type="number" (keyup)="unitsChanged()" placeholder="Specified Units" />
+                  <input formControlName="units" class="form-control" type="number" (keyup)="unitsChanged('units')" placeholder="Specified Units" />
                   <span *ngIf="uiErrors.units">{{uiErrors.units}}</span>
                 </div>
               </div>

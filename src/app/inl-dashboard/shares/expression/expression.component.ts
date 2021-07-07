@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { IShare } from '../../_models/share.model';
 import { ApiService } from '@app/_shared/services/api.service';
 import { CommonService } from '@app/_shared/services/common.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormErrors, IExpression, ValidationMessages } from './expression.validators';
 import { ApplicationContextService } from '@app/_shared/services/application-context.service';
 
@@ -75,26 +75,26 @@ export class ExpressionComponent implements OnInit {
     this.myForm.get('amount').updateValueAndValidity();
     // this.myForm.get('units').updateValueAndValidity();
   }
-  amountChanged() {
+  amountChanged(ctrlName: string) {
     this.myForm.patchValue({
-      units: +this.myForm.get('amount').value / +this.myForm.get('sharePrice').value
+      units: +this.myForm.get(ctrlName).value / +this.myForm.get('sharePrice').value
     })
+    this.errors = this.commonServices.controlnvalid(this.myForm.get(ctrlName) as FormControl);
+    this.displayErrors();
   }
-  unitsChanged() {
+  unitsChanged(ctrlName: string) {
     this.myForm.patchValue({
-      amount: +this.myForm.get('sharePrice').value * +this.myForm.get('units').value
+      amount: +this.myForm.get('sharePrice').value * +this.myForm.get(ctrlName).value
     })
+    this.errors = this.commonServices.controlnvalid(this.myForm.get(ctrlName) as FormControl);
+    this.displayErrors();
   }
   onSubmit() {
     this.submitting = true;
     if (this.myForm.invalid) {
       this.uiErrors = JSON.parse(JSON.stringify(this.formErrors))
       this.errors = this.commonServices.findInvalidControlsRecursive(this.myForm);
-      Object.keys(this.errors).forEach((control) => {
-        Object.keys(this.errors[control]).forEach(error => {
-          this.uiErrors[control] = ValidationMessages[control][error];
-        })
-      });
+      this.displayErrors();
       console.log(this.errors);
       return;
     }
@@ -113,4 +113,14 @@ export class ExpressionComponent implements OnInit {
       });
   }
 
+  displayErrors() {
+    Object.keys(this.formErrors).forEach((control) => {
+      this.formErrors[control] = '';
+    });
+    Object.keys(this.errors).forEach((control) => {
+      Object.keys(this.errors[control]).forEach(error => {
+        this.uiErrors[control] = ValidationMessages[control][error];
+      })
+    });
+  }
 }
