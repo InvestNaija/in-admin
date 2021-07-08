@@ -40,33 +40,33 @@ export class BankingDetailsComponent implements OnInit {
       bankCode: [null, [Validators.required]],
       password: [null, [Validators.required, Validators.minLength(6)]],
     });
-    this.myForm.get('nuban').valueChanges
-      .subscribe((nuban: string)  => {
+  }
 
-        if(!this.myForm.get('bankCode').value){
-          this.myForm.get('nuban').patchValue( null, {emitEvent: false} );
-          Swal.fire('Oops...', 'Please select a bank first', 'error')
-          return null;;
-        }
-        if(nuban.length === 10) {
-          const chosenBank = this.myForm.get('bankCode').value;
-          this.loadingBankName = true
-          const fd = {
-            bank_code: chosenBank?.code,
-            nuban: nuban
-          }
-          this.apiService.post('/api/v1/verifications/bank-account', fd)
-          .subscribe((resp: any) => {
-              this.loadingBankName = false; this.disableButton = false
-              this.bankAccountName = {success: true, name: resp?.data?.account_name};
-          },
-          errResp => {
-            this.loadingBankName = false; this.disableButton = true
-            console.log(errResp?.error?.error?.message)
-            this.bankAccountName = {success: false, name: errResp?.error?.error?.message};
-          });
-        }
-      })
+  onNubanChanged() {
+    let nuban = this.myForm.get('nuban').value;
+    if(!this.myForm.get('bankCode').value){
+      this.myForm.get('nuban').patchValue( null, {emitEvent: false} );
+      Swal.fire('Oops...', 'Please select a bank first', 'error')
+      return null;;
+    }
+    if(nuban.length === 10) {
+      const chosenBank = this.myForm.get('bankCode').value;
+      this.loadingBankName = true
+      const fd = {
+        bank_code: chosenBank?.code,
+        nuban: nuban
+      }
+      this.apiService.post('/api/v1/verifications/bank-account', fd)
+      .subscribe((resp: any) => {
+          this.loadingBankName = false; this.disableButton = false
+          this.bankAccountName = {success: true, name: resp?.data?.account_name};
+      },
+      errResp => {
+        this.loadingBankName = false; this.disableButton = true
+        console.log(errResp?.error?.error?.message)
+        this.bankAccountName = {success: false, name: errResp?.error?.error?.message};
+      });
+    }
   }
 
   onSubmit() {

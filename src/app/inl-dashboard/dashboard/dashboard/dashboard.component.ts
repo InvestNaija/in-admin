@@ -77,7 +77,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       )
       .subscribe(response => {
         this.totalPortfolio.loading = false;
-        let result = [{ currency: null, amount: 0 }];
+        let result = [];
         console.log(response);
         response.reduce(function(res, value) {
           if(value.paid) {
@@ -89,7 +89,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           }
           return res;
         }, {});
-
+        if(result.length === 0) {
+          result.push({ currency: null, amount: 0 });
+        }
         this.totalPortfolio.value = result;
         this.loadingSubject.next(false);
         this.dataSource = new MatTableDataSource(response);

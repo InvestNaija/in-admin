@@ -56,9 +56,13 @@
             </div>
           </div>
           <div class="form-group">
-            <button class="btn btn-danger w-100 text-white" (click)="onMakePayment(terms.checked)">
-              <span> Make Payment </span>
+            <button type="submit" class="auth-button w-100" (click)="onMakePayment(terms.checked)">
+              <span *ngIf="!paying">Make Payment</span>
+              <mat-spinner *ngIf="paying"[diameter]="30"></mat-spinner>
             </button>
+            <!-- <button class="btn btn-danger  text-white">
+              <span>  </span>
+            </button> -->
           </div>
         </div>
       </div>

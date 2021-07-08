@@ -16,7 +16,7 @@
       <div class="row">
         <div class="form-group col-md-6">
           <label for="inputAddress">Account Number</label>
-          <input formControlName="nuban" type="text" class="form-control" maxlength="10" autocomplete="off" placeholder="Enter Account Number">
+          <input formControlName="nuban" type="text" class="form-control" (keyup)="onNubanChanged()" maxlength="10" autocomplete="off" placeholder="Enter Account Number">
           <span *ngIf="uiErrors.nuban">{{uiErrors.nuban}}</span>
           <mat-spinner *ngIf="loadingBankName" [diameter]="30"></mat-spinner>
           <p class="pt-2 font-weight-bolder" *ngIf="!uiErrors.nuban && !loadingBankName" [ngClass]="bankAccountName?.success?'text-dark':'text-danger'">{{bankAccountName?.name}}</p>
@@ -31,7 +31,7 @@
       </div>
       <div class="row">
         <div class="form-group col-md-12">
-          <button mat-flat-button type="submit" class="btn btn-danger submit-password-form" [disabled]="submitting || disableButton || loadingBankName">
+          <button mat-flat-button type="submit" class="auth-button" [disabled]="submitting || disableButton || loadingBankName">
             <span *ngIf="!submitting">Update Bank</span>
             <mat-spinner *ngIf="submitting" [diameter]="30"></mat-spinner>
           </button>

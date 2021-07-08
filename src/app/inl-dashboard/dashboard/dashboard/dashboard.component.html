@@ -122,7 +122,7 @@
               <ng-container matColumnDef="status">
                 <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
                 <mat-cell *matCellDef="let element">
-                  <div class="text-center transaction-badge p-1" [ngClass]="!element.paid && element.asset.openForPurchase ? 'text-danger' : !element.asset.openForPurchase? 'text-body' : 'text-warning'">
+                  <div class="transaction-badge p-1" [ngClass]="!element.paid && element.asset.openForPurchase ? 'text-danger' : !element.asset.openForPurchase? 'text-secondary' : 'text-success'">
                     {{!element.paid && element.asset.openForPurchase ? "Pending Payment" : !element.asset.openForPurchase? "Not Available" : "Paid"}}
                   </div>
                 </mat-cell>
