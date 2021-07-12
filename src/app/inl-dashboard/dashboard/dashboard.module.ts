@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 // import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -13,6 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SharedModule } from '@app/_shared/shared.module';
 
 
 @NgModule({
@@ -20,7 +20,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     DashboardComponent
   ],
   imports: [
-    CommonModule,
+    SharedModule,
     RouterModule,
     MatProgressSpinnerModule,
     MatListModule,

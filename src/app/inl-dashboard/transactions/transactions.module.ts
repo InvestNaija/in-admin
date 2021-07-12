@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { TransactionsRoutingComponent } from './transactions-routing.module';
 import { TransactionsComponent } from './transactions/transactions.component';
@@ -25,7 +24,6 @@ import { SharedModule } from '@app/_shared/shared.module';
     MakePaymentComponent
   ],
   imports: [
-    CommonModule,
     TransactionsRoutingComponent,
 
     SharedModule,

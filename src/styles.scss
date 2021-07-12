@@ -5,6 +5,7 @@
 //For ng-select
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import url(https://fonts.googleapis.com/css?family=Poppins:400,500);
+@import '~ngx-toastr/toastr';
 // @import "~@ng-select/ng-select/themes/material.theme.css";
 .ng-select .ng-select-container {
   min-height: 52px;

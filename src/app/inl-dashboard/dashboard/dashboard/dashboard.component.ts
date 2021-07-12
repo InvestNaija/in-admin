@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { catchError, finalize, map, startWith, switchMap } from 'rxjs/operators';
 import { BehaviorSubject, of } from 'rxjs';
 import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
 import { MatPaginator } from '@angular/material/paginator';
 
 import { ApiService } from '@app/_shared/services/api.service';
@@ -41,8 +42,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   constructor(
     private router: Router,
+    private toastr: ToastrService,
     private api: ApiService,
-    private appService: ApplicationContextService,
   ) { }
 
   ngOnInit(): void {
@@ -57,6 +58,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.getTransactions();
+  }
+
+  getTransactions() {
     this.paginator.page
       .pipe(
         startWith({}),
@@ -102,7 +107,30 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   onMakePayment(element: any) {
     this.router.navigateByUrl(`/dashboard/transactions/${element.id}/${element.asset.id}/make-payment`)
   }
+
+  deleting = false;
   onDeleteTransaction(element: any) {
-    Swal.fire('Oops...', 'Delete functionality not yet implemented','error');
+    Swal.fire({
+      title: 'Delete transaction',
+      text: "Deleting transaction is irreversible action",
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#06262D',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Proceed!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deleting=true;
+        this.api.get(`/api/v1/reservations/cancel/${element.id}`)
+          .subscribe(response => {
+            this.toastr.success(response.message);
+            this.deleting=false;
+            this.getTransactions();
+          },errResp => {
+            this.deleting=false;
+          });
+      }
+    });
   }
 }

@@ -73,4 +73,8 @@ export class ApplicationContextService {
           });
   }
 
+  deleteTransaction(transaction){
+
+  }
+
 }
