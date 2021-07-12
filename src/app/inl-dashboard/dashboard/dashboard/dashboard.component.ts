@@ -48,7 +48,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.api.get('/api/v1/assets/top-assets')
       .subscribe(response => {
-        console.log(response)
         this.topAssets = response.data
         this.bestAsset.loading = false
         this.bestAsset.value = response.data.reduce(function(prev, current) {
@@ -63,12 +62,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         startWith({}),
         switchMap(() => {
           this.dataSource = null;
-          // return this.fetchCourses(this.paginator.pageIndex, this.paginator.pageSize);
           return this.fetchTxns();
         }),
         map((response: any) => {
-          // this.total_count = data.response.totalItems;
-          // console.log(data)
           return response.data;
         }),
         catchError(() => {
@@ -78,7 +74,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       .subscribe(response => {
         this.totalPortfolio.loading = false;
         let result = [];
-        console.log(response);
         response.reduce(function(res, value) {
           if(value.paid) {
             if (!res[value.asset.currency]) {

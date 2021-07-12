@@ -95,6 +95,7 @@ export class CommonService {
     recursiveFunc(formToInvestigate);
     return invalidControls;
   }
+
   controlnvalid(controlToInvestigate: FormControl): string[] {
     const invalidControls: any = {};
     if (controlToInvestigate.invalid ) {
@@ -102,5 +103,17 @@ export class CommonService {
       invalidControls[controlName] = controlToInvestigate.errors;
     }
     return invalidControls;
+  }
+
+  displayErrors(formErrors: any, ValidationMessages: any, errors: any, uiErrors: any) {
+    Object.keys(formErrors).forEach((control) => {
+      formErrors[control] = '';
+    });
+    Object.keys(errors).forEach((control) => {
+      Object.keys(errors[control]).forEach(error => {
+        uiErrors[control] = ValidationMessages[control][error];
+      })
+    });
+    return {formErrors: formErrors, uiErrors: uiErrors};
   }
 }

@@ -16,7 +16,7 @@
       <div class="row">
         <div class="form-group col-md-6">
           <label for="inputAddress">Account Number</label>
-          <input formControlName="nuban" type="text" class="form-control" (keyup)="onNubanChanged()" maxlength="10" autocomplete="off" placeholder="Enter Account Number">
+          <input formControlName="nuban" name="nuban" type="text" class="form-control" (keyup)="onNubanChanged()" maxlength="10" autocomplete="off" placeholder="Enter Account Number">
           <span *ngIf="uiErrors.nuban">{{uiErrors.nuban}}</span>
           <mat-spinner *ngIf="loadingBankName" [diameter]="30"></mat-spinner>
           <p class="pt-2 font-weight-bolder" *ngIf="!uiErrors.nuban && !loadingBankName" [ngClass]="bankAccountName?.success?'text-dark':'text-danger'">{{bankAccountName?.name}}</p>
@@ -25,7 +25,7 @@
       <div class="row">
         <div class="form-group col-md-6">
           <label for="inputAddress">Password</label>
-          <input formControlName="password" type="password" class="form-control" autocomplete="off" placeholder="Enter Password">
+          <input formControlName="password" type="text" class="form-control" autocomplete="new-password" placeholder="Enter Password">
           <span *ngIf="uiErrors.password">{{uiErrors.password}}</span>
         </div>
       </div>

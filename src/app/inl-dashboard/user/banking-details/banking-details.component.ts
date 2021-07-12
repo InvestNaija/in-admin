@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
@@ -15,7 +15,7 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './banking-details.component.html',
   styleUrls: ['./banking-details.component.scss']
 })
-export class BankingDetailsComponent implements OnInit {
+export class BankingDetailsComponent implements OnInit, AfterViewInit {
   myForm: FormGroup;
   errors = [];
   formErrors = FormErrors;
@@ -39,6 +39,12 @@ export class BankingDetailsComponent implements OnInit {
       nuban: [null, [Validators.required, Validators.maxLength(10), Validators.pattern(/[0-9]+$/), Validators.minLength(10)]],
       bankCode: [null, [Validators.required]],
       password: [null, [Validators.required, Validators.minLength(6)]],
+    });
+  }
+
+  ngAfterViewInit() {
+    this.myForm.patchValue({
+      nuban: []
     });
   }
 

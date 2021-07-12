@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { fromEvent, merge, Observable, Subscription } from "rxjs";
 import { debounceTime } from 'rxjs/operators';
 import { ApplicationContextService } from '../_shared/services/application-context.service';
@@ -9,7 +9,8 @@ import { AuthService } from '../_shared/services/auth.service';
   templateUrl: './inl-dashboard.component.html',
   styleUrls: ['./inl-dashboard.component.scss']
 })
-export class InlDashboardComponent implements OnInit, OnDestroy {
+export class InlDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('sidenav') sidenav: any
 
   sideNavMode = 'side';
   sideNavOpen = true;
@@ -18,37 +19,53 @@ export class InlDashboardComponent implements OnInit, OnDestroy {
   sidenavSubscription$: Subscription;
   allSideNavEventsObservable$: Observable<Event>;
   userInformation: any;
+  sidenavClickSubscription$: Subscription;
 
   constructor(private auth: AuthService,
     private appContext: ApplicationContextService
   ) {
 
-      this.resizeObservable$ = fromEvent(window, 'resize');
-      this.loadObservable$ = fromEvent(window, 'load');
-      this.allSideNavEventsObservable$ = merge(this.resizeObservable$, this.loadObservable$);
-      this.sidenavSubscription$ = this.allSideNavEventsObservable$.pipe(debounceTime(50)).subscribe(evt => {
-        // console.log('event: ', evt);
-        // console.log('event.target.innerWidth: ', (evt.currentTarget as Window).innerWidth);
-        let browserVidth = (evt.currentTarget as Window).innerWidth;
-        if (browserVidth < 991) {
-          this.sideNavMode = 'over';
-          this.sideNavOpen = false;
-        } else {
-          this.sideNavMode = 'side';
-          this.sideNavOpen = true;
-        }
-      });
+  }
+
+  ngOnInit(): void {
+    this.setupSideBar();
 
     if(!this.auth.getToken()) {
       this.logout();
     }
-  }
-
-  ngOnInit(): void {
-
     this.getUserInformation();
   }
 
+  ngAfterViewInit() {
+    this.sideNavFunction();
+  }
+
+  setupSideBar() {
+    this.resizeObservable$ = fromEvent(document, 'resize');
+    this.loadObservable$ = fromEvent(document, 'load');
+    this.allSideNavEventsObservable$ = merge(this.resizeObservable$, this.loadObservable$);
+    this.sidenavSubscription$ = this.allSideNavEventsObservable$.pipe(debounceTime(500)).subscribe(evt => this.sideNavFunction());
+
+    let button = document.querySelectorAll('.menu-section-bottom a');
+    let sidenavClick$ = fromEvent(button, 'click');
+
+    this.sidenavClickSubscription$ = sidenavClick$.subscribe(evt => {
+      if (window.innerWidth < 991) {
+        this.sidenav.close();
+      }
+    });
+  }
+
+  sideNavFunction() {
+    let browserVidth = window.innerWidth;
+    if (browserVidth < 991) {
+      this.sideNavMode = 'over';
+      this.sideNavOpen = false;
+    } else {
+      this.sideNavMode = 'side';
+      this.sideNavOpen = true;
+    }
+  }
   getUserInformation() {
     this.appContext.userInformationObs().subscribe(
        data => {

@@ -56,11 +56,11 @@
           <span *ngIf="uiErrors.address">{{uiErrors.address}}</span>
         </div>
         <div class="form-group">
-          <input class="form-control" formControlName="bvn" type="text" placeholder="BVN" />
+          <input class="form-control" formControlName="bvn" type="hidden" placeholder="BVN" />
           <span *ngIf="uiErrors.bvn">{{uiErrors.bvn}}</span>
         </div>
         <div class="form-group">
-          <label for="email" *ngIf="myForm.get('email')?.value">Emai</label>
+          <label for="email" *ngIf="myForm.get('email')?.value">Email</label>
           <input class="form-control" formControlName="email" type="email" placeholder="Email" />
           <span *ngIf="uiErrors.email">{{uiErrors.email}}</span>
         </div>

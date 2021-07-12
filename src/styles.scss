@@ -275,5 +275,6 @@ input.ng-invalid.ng-dirty {
   color: red;
   + span {
     color: red;
+    font-weight: normal;
   }
 }

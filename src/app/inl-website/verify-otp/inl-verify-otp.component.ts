@@ -34,7 +34,7 @@ export class InlVerifyOtpComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.myForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(this.commonServices.email)]],
       otp: [null, [Validators.required, Validators.minLength(6)]],
     });
     this.signupSub = this.authService.signUp().subscribe(

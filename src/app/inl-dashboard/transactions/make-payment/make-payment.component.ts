@@ -44,7 +44,6 @@ export class MakePaymentComponent implements OnInit {
       })
     ).subscribe(([asset, transaction]) => {
       this.commonServices.loading().next(false);
-        console.log(asset, transaction);
         this.asset = asset.data;
         this.transaction = transaction.data;
     })
