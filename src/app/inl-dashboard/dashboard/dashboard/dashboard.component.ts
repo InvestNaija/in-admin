@@ -122,7 +122,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.deleting=true;
-        this.api.get(`/api/v1/reservations/cancel/${element.id}`)
+        this.api.delete(`/api/v1/reservations/cancel/${element.id}`)
           .subscribe(response => {
             this.toastr.success(response.message);
             this.deleting=false;

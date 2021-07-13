@@ -1,4 +1,5 @@
-<div class="row m-2">
+<mat-spinner *ngIf="container['loading']" [diameter]="60"></mat-spinner>
+<div class="row m-2" *ngIf="!container['loading']">
   <div class="bank-form-container col-9">
     <form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off">
       <input autocomplete="off" name="hidden" type="text" style="display:none;">
@@ -8,7 +9,7 @@
           <ng-select [items]="container['bankName'] | async" bindLabel="name"
                       (click)="getLOVs('https://griffin-be.herokuapp.com/api/v1/transactions/banks','bankName',{loading:'bankNameLoading'})"
                       notFoundText = "{{container['bankNameLoading'] || 'No items found'}}"
-                      placeholder="Select Bank Name" formControlName="bankCode">
+                      placeholder="Select Bank" formControlName="bankCode">
           </ng-select>
           <span *ngIf="uiErrors.bankCode">{{uiErrors.bankCode}}</span>
         </div>

@@ -8,12 +8,16 @@
 @import '~ngx-toastr/toastr';
 // @import "~@ng-select/ng-select/themes/material.theme.css";
 .ng-select .ng-select-container {
-  min-height: 52px;
+  // min-height: 52px;
+  height: calc(3.5rem + 2px)!important;
   border-radius: 10px;
+  border: 1px solid #002b43;
 }
 .ng-select.ng-select-single .ng-select-container {
-  height: 52px;
+  // height: 52px;
+  height: calc(3.5rem + 2px)!important;
   border-radius: 10px;
+  border: 1px solid #002b43;
 }
 .mat-spinner-container {
   display: flex;

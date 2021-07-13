@@ -23,6 +23,7 @@ export class BankingDetailsComponent implements OnInit, AfterViewInit {
   validationMessages = ValidationMessages;
   submitting = false; disableButton=false
   container = {};
+
   loadingBankName: boolean;
   bankAccountName: {success: boolean, name: string}
 
@@ -40,6 +41,22 @@ export class BankingDetailsComponent implements OnInit, AfterViewInit {
       bankCode: [null, [Validators.required]],
       password: [null, [Validators.required, Validators.minLength(6)]],
     });
+
+    this.container['loading'] = true;
+    this.apiService.get('/api/v1/customers/profile/fetch')
+      .subscribe(response => {
+        this.container['loading'] = false;
+        if(response.data.bankCode) {
+          this.myForm.patchValue({
+            bankCode: {code: response.data.bankCode, name: response.data.bankName},
+            nuban: response.data.nuban
+          })
+        }
+      },
+      errResp => {
+        this.container['loading'] = false;
+        // Swal.fire('Oops...', errResp?.error?.error?.message, 'error')
+      });
   }
 
   ngAfterViewInit() {

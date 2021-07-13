@@ -18,6 +18,7 @@ export class SocialsComponent implements OnInit {
   uiErrors = FormErrors;
   validationMessages = ValidationMessages;
   submitting = false;
+  container = {};
 
   constructor(
     private fb: FormBuilder,
@@ -26,14 +27,30 @@ export class SocialsComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    const reg = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?%#[]@!\$&'()*\+,;=.]+$/;
     this.myForm = this.fb.group({
-      facebook: [null, [Validators.pattern(reg)]],
-      linkedIn: [null, [Validators.pattern(reg)]],
-      twitter: [null, [Validators.pattern(reg)]],
-      website: [null, [Validators.pattern(reg)]],
-      youtube: [null, [Validators.pattern(reg)]],
+      facebook: [null, [Validators.pattern(this.commonServices.url)]],
+      linkedIn: [null, [Validators.pattern(this.commonServices.url)]],
+      twitter: [null, [Validators.pattern(this.commonServices.url)]],
+      website: [null, [Validators.pattern(this.commonServices.url)]],
+      youtube: [null, [Validators.pattern(this.commonServices.url)]],
     });
+
+    this.container['loading'] = true;
+    this.apiService.get('/api/v1/customers/profile/fetch')
+      .subscribe(response => {
+        this.container['loading'] = false;
+          this.myForm.patchValue({
+            facebook: response.data.facebook,
+            linkedIn: response.data.linkedIn,
+            twitter: response.data.twitter,
+            website: response.data.website,
+            youtube: response.data.youtube,
+          })
+      },
+      errResp => {
+        this.container['loading'] = false;
+        // Swal.fire('Oops...', errResp?.error?.error?.message, 'error')
+      });
   }
   onSubmit() {
     this.submitting = true;
@@ -45,16 +62,18 @@ export class SocialsComponent implements OnInit {
           this.uiErrors[control] = ValidationMessages[control][error];
         })
       })
+      this.submitting = false;
       return;
     }
     const fd = JSON.parse(JSON.stringify(this.myForm.value));
-    this.apiService.post('/api/v1/auth/customers/update-profile', fd)
+    this.apiService.post('/api/v1/customers/update-profile', fd)
       .subscribe(response => {
+        this.submitting = false;
         Swal.fire('Great!', response?.message, 'success')
       },
       errResp => {
         this.submitting = false;
-        Swal.fire('Oops...', errResp?.error?.error?.message, 'error')
+        // Swal.fire('Oops...', errResp?.error?.error?.message, 'error')
       });
   }
 
