@@ -9,6 +9,7 @@ import { catchError, concatMap, distinctUntilChanged, map, mergeMap, switchMap }
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { ApplicationContextService } from '@app/_shared/services/application-context.service';
 
 @Component({
   selector: 'in-banking-details',
@@ -32,31 +33,28 @@ export class BankingDetailsComponent implements OnInit, AfterViewInit {
     private router: Router,
     private http: HttpClient,
     public apiService: ApiService,
+    private appContext: ApplicationContextService,
     public commonServices: CommonService
     ) { }
 
   ngOnInit(): void {
-    this.myForm = this.fb.group({
-      nuban: [null, [Validators.required, Validators.maxLength(10), Validators.pattern(/[0-9]+$/), Validators.minLength(10)]],
-      bankCode: [null, [Validators.required]],
-      password: [null, [Validators.required, Validators.minLength(6)]],
-    });
-
-    this.container['loading'] = true;
-    this.apiService.get('/api/v1/customers/profile/fetch')
-      .subscribe(response => {
-        this.container['loading'] = false;
-        if(response.data.bankCode) {
-          this.myForm.patchValue({
-            bankCode: {code: response.data.bankCode, name: response.data.bankName},
-            nuban: response.data.nuban
-          })
-        }
-      },
-      errResp => {
-        this.container['loading'] = false;
-        // Swal.fire('Oops...', errResp?.error?.error?.message, 'error')
+    this.commonServices.isLoading$.pipe(
+      switchMap(loading => {
+        return this.appContext.userInformationObs();
+      })
+    ).subscribe(user => {
+      this.myForm = this.fb.group({
+        nuban: [null, [Validators.required, Validators.maxLength(10), Validators.pattern(/[0-9]+$/), Validators.minLength(10)]],
+        bankCode: [null, [Validators.required]],
+        password: [null, [Validators.required, Validators.minLength(6)]],
       });
+      if(user.bankCode) {
+        this.myForm.patchValue({
+          bankCode: {code: user.bankCode, name: user.bankName},
+          nuban: user.nuban
+        })
+      }
+    });
   }
 
   ngAfterViewInit() {

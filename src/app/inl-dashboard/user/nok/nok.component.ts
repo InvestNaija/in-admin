@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { ApiService } from '@app/_shared/services/api.service';
 import { CommonService } from '@app/_shared/services/common.service';
 import { FormErrors, ValidationMessages } from './nok.validators';
+import { ApplicationContextService } from '@app/_shared/services/application-context.service';
 
 @Component({
   selector: 'in-nok',
@@ -21,28 +22,22 @@ export class NoKComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private commonServices: CommonService,
+    public commonServices: CommonService,
     private apiService: ApiService,
+    private appContext: ApplicationContextService
     ) { }
 
   ngOnInit(): void {
 
-    this.container['loading'] = true;
-    this.apiService.get('/api/v1/customers/profile/fetch')
-      .subscribe(response => {
-        this.container['loading'] = false;
-        this.myForm = this.fb.group({
-          name: [response.data.nextOfKinName, [Validators.required]],
-          relationship: [response.data.nextOfKinRelationship, [Validators.required]],
-          address: [response.data.nextOfKinAddress, [Validators.required]],
-          phoneNumber: [response.data.nextOfKinPhoneNumber, [Validators.required]],
-          email: [response.data.nextOfKinEmail, [Validators.required, Validators.pattern(this.commonServices.email)]],
-        });
-      },
-      errResp => {
-        this.container['loading'] = false;
-        // Swal.fire('Oops...', errResp?.error?.error?.message, 'error')
+    this.commonServices.isLoading$.subscribe(loading => {
+      this.myForm = this.fb.group({
+        name: [this.appContext.userInformation?.nextOfKinName, [Validators.required]],
+        relationship: [this.appContext.userInformation?.nextOfKinRelationship, [Validators.required]],
+        address: [this.appContext.userInformation?.nextOfKinAddress, [Validators.required]],
+        phoneNumber: [this.appContext.userInformation?.nextOfKinPhoneNumber, [Validators.required]],
+        email: [this.appContext.userInformation?.nextOfKinEmail, [Validators.required, Validators.pattern(this.commonServices.email)]],
       });
+    })
   }
 
   controlChanged(ctrlName: string) {

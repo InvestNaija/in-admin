@@ -1,5 +1,7 @@
-<mat-spinner *ngIf="container['loading']" [diameter]="60"></mat-spinner>
-<div class="row m-3 mt-5" *ngIf="!container['loading']">
+<ng-template #loading>
+  <mat-spinner [diameter]="60"></mat-spinner>
+</ng-template>
+<div class="row m-3 mt-5" *ngIf="!(commonServices.isLoading$ | async); else loading">
   <div class="socials-form-container col-12">
     <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
       <div class="row">

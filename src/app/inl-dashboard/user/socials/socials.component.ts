@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { ApiService } from '@app/_shared/services/api.service';
 import { CommonService } from '@app/_shared/services/common.service';
 import { FormErrors, ValidationMessages } from './socials.validators';
+import { ApplicationContextService } from '@app/_shared/services/application-context.service';
 
 @Component({
   selector: 'in-socials',
@@ -17,43 +18,28 @@ export class SocialsComponent implements OnInit {
   formErrors = FormErrors;
   uiErrors = FormErrors;
   validationMessages = ValidationMessages;
-  submitting = false;
   container = {};
 
   constructor(
     private fb: FormBuilder,
-    private commonServices: CommonService,
+    public commonServices: CommonService,
     private apiService: ApiService,
+    private appContext: ApplicationContextService
     ) { }
 
   ngOnInit(): void {
-    this.myForm = this.fb.group({
-      facebook: [null, [Validators.pattern(this.commonServices.url)]],
-      linkedIn: [null, [Validators.pattern(this.commonServices.url)]],
-      twitter: [null, [Validators.pattern(this.commonServices.url)]],
-      website: [null, [Validators.pattern(this.commonServices.url)]],
-      youtube: [null, [Validators.pattern(this.commonServices.url)]],
-    });
-
-    this.container['loading'] = true;
-    this.apiService.get('/api/v1/customers/profile/fetch')
-      .subscribe(response => {
-        this.container['loading'] = false;
-          this.myForm.patchValue({
-            facebook: response.data.facebook,
-            linkedIn: response.data.linkedIn,
-            twitter: response.data.twitter,
-            website: response.data.website,
-            youtube: response.data.youtube,
-          })
-      },
-      errResp => {
-        this.container['loading'] = false;
-        // Swal.fire('Oops...', errResp?.error?.error?.message, 'error')
+    this.commonServices.isLoading$.subscribe(loading => {
+      this.myForm = this.fb.group({
+        facebook: [this.appContext.userInformation?.facebook, [Validators.pattern(this.commonServices.url)]],
+        linkedIn: [this.appContext.userInformation?.linkedIn, [Validators.pattern(this.commonServices.url)]],
+        twitter: [this.appContext.userInformation?.twitter, [Validators.pattern(this.commonServices.url)]],
+        website: [this.appContext.userInformation?.website, [Validators.pattern(this.commonServices.url)]],
+        youtube: [this.appContext.userInformation?.youtube, [Validators.pattern(this.commonServices.url)]],
       });
+    })
   }
   onSubmit() {
-    this.submitting = true;
+    this.container['submitting'] = true;
     if (this.myForm.invalid) {
       this.uiErrors = JSON.parse(JSON.stringify(this.formErrors))
       this.errors = this.commonServices.findInvalidControlsRecursive(this.myForm);
@@ -62,17 +48,17 @@ export class SocialsComponent implements OnInit {
           this.uiErrors[control] = ValidationMessages[control][error];
         })
       })
-      this.submitting = false;
+      this.container['submitting'] = false;
       return;
     }
     const fd = JSON.parse(JSON.stringify(this.myForm.value));
     this.apiService.post('/api/v1/customers/update-profile', fd)
       .subscribe(response => {
-        this.submitting = false;
+        this.container['submitting'] = false;
         Swal.fire('Great!', response?.message, 'success')
       },
       errResp => {
-        this.submitting = false;
+        this.container['submitting'] = false;
         // Swal.fire('Oops...', errResp?.error?.error?.message, 'error')
       });
   }

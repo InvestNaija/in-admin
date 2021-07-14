@@ -1,6 +1,9 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
-import { fromEvent, merge, Observable, Subscription } from "rxjs";
-import { debounceTime } from 'rxjs/operators';
+import { NavigationEnd, Router } from '@angular/router';
+import { ApiService } from '@app/_shared/services/api.service';
+import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
+import { fromEvent, merge, Observable, of, Subscription } from "rxjs";
+import { debounceTime, filter, switchMap, take } from 'rxjs/operators';
 import { ApplicationContextService } from '../_shared/services/application-context.service';
 import { AuthService } from '../_shared/services/auth.service';
 
@@ -21,10 +24,40 @@ export class InlDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   userInformation: any;
   sidenavClickSubscription$: Subscription;
 
-  constructor(private auth: AuthService,
+  // @ViewChild(ToastContainerDirective, { static: true }) toastContainer: ToastContainerDirective;
+
+  constructor(
+    private router: Router,
+    private toastr: ToastrService,
+    private auth: AuthService,
+    private apiService: ApiService,
     private appContext: ApplicationContextService
   ) {
-
+    this.router.events
+    .pipe(
+      filter((rs): rs is NavigationEnd => rs instanceof NavigationEnd),
+      switchMap((event) => {
+        if (event.id === 1 && event.url === event.urlAfterRedirects) {
+          return this.apiService.get('/api/v1/customers/profile/fetch');
+        }
+        return of({status:'Refreshed', data: this.appContext.userInformation});
+      })
+    )
+    .subscribe((response) => {
+      this.userInformation = response.data;
+      this.appContext.userInformation = response.data
+        const user = this.appContext.userInformation;
+        if((!user.driverLicense || !user.utility || !user.passport) && this.router.url != '/dashboard/user/documents' ) {
+          this.toastr.warning(`<p>Your KYC documents are not complete</p><p>Click here to complete.</p>`, 'Notice', {timeOut: 3000, enableHtml: true, closeButton: true, tapToDismiss: true})
+            .onTap.pipe(take(1)).subscribe(() => this.toasterClickedHandler('/dashboard/user/documents'));
+        }else if((!user.nextOfKinName || !user.nextOfKinPhoneNumber || !user.nextOfKinRelationship) && this.router.url != '/dashboard/user/nok' ) {
+          this.toastr.warning(`<p>Your KYC documents are not complete</p><p>Click here to complete.</p>`, 'Notice', {timeOut: 3000, enableHtml: true, closeButton: true, tapToDismiss: true})
+            .onTap.pipe(take(1)).subscribe(() => this.toasterClickedHandler('/dashboard/user/nok'));
+        }
+    });
+  }
+  toasterClickedHandler(url: string): void {
+    this.router.navigateByUrl(url)
   }
 
   ngOnInit(): void {
@@ -33,7 +66,7 @@ export class InlDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     if(!this.auth.getToken()) {
       this.logout();
     }
-    this.getUserInformation();
+
   }
 
   ngAfterViewInit() {
@@ -65,14 +98,6 @@ export class InlDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.sideNavMode = 'side';
       this.sideNavOpen = true;
     }
-  }
-  getUserInformation() {
-    this.appContext.userInformationObs().subscribe(
-       data => {
-          console.log('UserInfo', data);
-          this.userInformation = data;
-        }
-    );
   }
 
   logout() {

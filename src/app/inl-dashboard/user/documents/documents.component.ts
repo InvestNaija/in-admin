@@ -2,7 +2,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '@app/_shared/services/api.service';
+import { ApplicationContextService } from '@app/_shared/services/application-context.service';
 import { AuthService } from '@app/_shared/services/auth.service';
+import { CommonService } from '@app/_shared/services/common.service';
+import { switchMap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { FormErrors, ValidationMessages } from './documents.validators';
 
@@ -51,28 +54,45 @@ export class DocumentsComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private auth: AuthService,
-    private http: HttpClient
+    private http: HttpClient,
+    private appContext: ApplicationContextService,
+    public commonServices: CommonService
     ) { }
 
   ngOnInit(): void {
-    this.loading = true;
-    this.apiService.get('/api/v1/customers/documents/fetch')
-      .subscribe(response => {
-        this.loading = false;
-        console.log(response);
-        this.documents.map(doc => {
-          if(response.data[doc.storeIn]) {
-            doc.IdType = {label: doc.title};
-            doc.id == 'signature'? doc.IdType.code = 'signature' : ''
-            response.data[doc.storeIn] ? doc.pondFile.push(response.data[doc.storeIn]) : 0;
-            doc.idNumber = response.data[doc.storeIn + 'No'];
-          }
-        })
-      },
-      errResp => {
-        this.loading = false;
-        Swal.fire('Oops...', errResp?.error?.error?.message, 'error')
+    this.commonServices.isLoading$.pipe(
+      switchMap(loading => {
+        return this.appContext.userInformationObs();
+      })
+    ).subscribe(user => {
+      this.documents.map(doc => {
+        if(user[doc.storeIn]) {
+          doc.IdType = {label: doc.title};
+          doc.id == 'signature'? doc.IdType.code = 'signature' : ''
+          user[doc.storeIn] ? doc.pondFile.push(user[doc.storeIn]) : 0;
+          doc.idNumber = user[doc.storeIn + 'No'];
+        }
       });
+    })
+
+    // this.loading = true;
+    // this.apiService.get('/api/v1/customers/documents/fetch')
+    //   .subscribe(response => {
+    //     this.loading = false;
+    //     this.appContext.userInformation = response.data
+    //     this.documents.map(doc => {
+    //       if(response.data[doc.storeIn]) {
+    //         doc.IdType = {label: doc.title};
+    //         doc.id == 'signature'? doc.IdType.code = 'signature' : ''
+    //         response.data[doc.storeIn] ? doc.pondFile.push(response.data[doc.storeIn]) : 0;
+    //         doc.idNumber = response.data[doc.storeIn + 'No'];
+    //       }
+    //     })
+    //   },
+    //   errResp => {
+    //     this.loading = false;
+    //     Swal.fire('Oops...', errResp?.error?.error?.message, 'error')
+    //   });
   }
   DataURIToBlob(dataURI: string) {
     const splitDataURI = dataURI.split(',')

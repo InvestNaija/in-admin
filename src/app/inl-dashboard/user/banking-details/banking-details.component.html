@@ -1,5 +1,7 @@
-<mat-spinner *ngIf="container['loading']" [diameter]="60"></mat-spinner>
-<div class="row m-2" *ngIf="!container['loading']">
+<ng-template #loading>
+  <mat-spinner [diameter]="60"></mat-spinner>
+</ng-template>
+<div class="row m-2" *ngIf="!(commonServices.isLoading$ | async); else loading">
   <div class="bank-form-container col-9">
     <form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off">
       <input autocomplete="off" name="hidden" type="text" style="display:none;">
