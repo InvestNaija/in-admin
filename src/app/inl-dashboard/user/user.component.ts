@@ -10,6 +10,7 @@ export class UserComponent implements OnInit {
 
   tabbedPages = [
     { page: 'page', url: '/dashboard/user' },
+    { page: 'nok', url: '/dashboard/user/nok' },
     { page: 'password', url: '/dashboard/user/password' },
     { page: 'socials', url: '/dashboard/user/socials' },
     { page: 'documents', url: '/dashboard/user/documents' },

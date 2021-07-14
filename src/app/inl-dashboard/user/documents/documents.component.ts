@@ -56,7 +56,6 @@ export class DocumentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-
     this.apiService.get('/api/v1/customers/documents/fetch')
       .subscribe(response => {
         this.loading = false;

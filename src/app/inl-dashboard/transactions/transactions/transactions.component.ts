@@ -75,7 +75,7 @@ export class TransactionsComponent implements OnInit, AfterViewInit  {
       });
   }
   onMakePayment(element: any) {
-    this.appService.checkCSCS(element);
+    this.router.navigateByUrl(`/dashboard/transactions/${element.id}/${element.asset.id}/make-payment`)
   }
 
   deleting=false;
