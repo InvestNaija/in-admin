@@ -11,6 +11,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
@@ -31,6 +33,7 @@ import { SharedModule } from '@app/_shared/shared.module';
     MatProgressSpinnerModule,
     MatTabsModule,
     MatButtonModule,
+    MatRadioModule, MatCheckboxModule,
     MatIconModule,
     MatCardModule,
     MatMenuModule,

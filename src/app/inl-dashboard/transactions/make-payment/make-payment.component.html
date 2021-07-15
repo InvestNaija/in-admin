@@ -44,10 +44,17 @@
               <p class="text-dark font-weight-bold">{{ asset?.type }}</p>
             </div>
           </div>
-          <div class="row term-and-agreement my-2">
+          <div class="row border-bottom my-4">
+            <div class="col-12">
+              <mat-radio-group name="opList" aria-label="Select an option" fxLayout="column" [(ngModel)]="container['reinvest']">
+                <mat-radio-button class="mr-3" *ngFor="let op of reinvestList" [value]="op.checked" [checked]="op.checked">{{ op.name}}</mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+          <div class="row my-4">
             <div class="col-1">
               <label class="checkbox-container">
-                <input type="checkbox" #terms checked="checked">
+                <mat-checkbox #terms checked="checked"></mat-checkbox>
                 <span class="checkmark"></span>
               </label>
             </div>

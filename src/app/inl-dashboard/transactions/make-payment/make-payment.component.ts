@@ -17,6 +17,11 @@ import { CommonService } from '@app/_shared/services/common.service';
 })
 export class MakePaymentComponent implements OnInit {
 
+  container = {'reinvest':true};
+  reinvestList = [
+    {"name": "Script", ID: "D1", "checked": true},
+    {"name": "Cash distribution", ID: "D2", "checked": false}
+  ]
   paying = false;
   share: IShare;
   asset: any;
@@ -58,7 +63,8 @@ export class MakePaymentComponent implements OnInit {
     const payload = {
       gateway: environment.gateway,
       reservationId: this.transaction.id,
-      currency: this.asset.currency
+      currency: this.asset.currency,
+      reinvest: this.container['reinvest']
     }
     this.apiService.post('/api/v1/reservations/make-payment', payload)
       .subscribe(response => {
