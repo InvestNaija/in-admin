@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { TransactionsRoutingComponent } from './transactions-routing.module';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { MakePaymentComponent } from './make-payment/make-payment.component';
-
+import { BankPaymentComponent } from './make-payment/bank-payment.component';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -19,11 +19,11 @@ import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { SharedModule } from '@app/_shared/shared.module';
-
+import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
   declarations: [
     TransactionsComponent,
-    MakePaymentComponent
+    MakePaymentComponent, BankPaymentComponent
   ],
   imports: [
     TransactionsRoutingComponent,
@@ -40,6 +40,7 @@ import { SharedModule } from '@app/_shared/shared.module';
     MatDividerModule,
     MatListModule,
     MatTableModule,
+    MatDialogModule,
     MatPaginatorModule
   ]
 })

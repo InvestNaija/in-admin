@@ -6,9 +6,12 @@ import { combineLatest } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { environment } from '@environments/environment';
 
+import {MatDialog} from '@angular/material/dialog';
+
 import { IShare } from '../../_models/share.model';
 import { ApiService } from '@app/_shared/services/api.service';
 import { CommonService } from '@app/_shared/services/common.service';
+import { BankPaymentComponent } from './bank-payment.component';
 
 @Component({
   selector: 'in-make-payment',
@@ -31,6 +34,7 @@ export class MakePaymentComponent implements OnInit {
     private aRoute: ActivatedRoute,
     private apiService: ApiService,
     public commonServices: CommonService,
+    public dialog: MatDialog,
     @Inject(DOCUMENT) private document: Document
     ) { }
 
@@ -52,6 +56,13 @@ export class MakePaymentComponent implements OnInit {
         this.asset = asset.data;
         this.transaction = transaction.data;
     })
+  }
+  openDialog() {
+    const dialogRef = this.dialog.open(BankPaymentComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
   onMakePayment(terms) {
     this.paying = true;
