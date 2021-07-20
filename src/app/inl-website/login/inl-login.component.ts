@@ -38,10 +38,7 @@ export class InlLoginComponent implements OnInit {
       email: [null, [Validators.required, Validators.pattern(this.commonServices.email)]],
       password: [null, [
           Validators.required,
-          Validators.minLength(6),
-          this.commonServices.regexValidator(new RegExp(this.commonServices.oneDigit), {'oneDigit': ''}),
-          this.commonServices.regexValidator(new RegExp(this.commonServices.oneLowerCase), {'oneLowerCase': ''}),
-          this.commonServices.regexValidator(new RegExp(this.commonServices.oneUpperCase), {'oneUpperCase': ''}),
+          Validators.minLength(6)
         ]
       ],
     });
