@@ -20,6 +20,7 @@ export class InlDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   resizeObservable$: Observable<Event>;
   loadObservable$: Observable<Event>;
   sidenavSubscription$: Subscription;
+  notifications$: Subscription;
   allSideNavEventsObservable$: Observable<Event>;
   userInformation: any;
   sidenavClickSubscription$: Subscription;
@@ -33,28 +34,36 @@ export class InlDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     private apiService: ApiService,
     private appContext: ApplicationContextService
   ) {
-    this.router.events
-    .pipe(
-      filter((rs): rs is NavigationEnd => rs instanceof NavigationEnd),
-      switchMap((event) => {
-        if (event.id === 1 && event.url === event.urlAfterRedirects) {
-          return this.apiService.get('/api/v1/customers/profile/fetch');
-        }
-        return of({status:'Refreshed', data: this.appContext.userInformation});
-      })
-    )
-    .subscribe((response) => {
-      this.userInformation = response.data;
-      this.appContext.userInformation = response.data
-        const user = this.appContext.userInformation;
-        if((!user.driverLicense || !user.utility || !user.passport) && this.router.url != '/dashboard/user/documents' ) {
-          this.toastr.warning(`<p>Your KYC documents are not complete</p><p>Click here to complete.</p>`, 'Notice', {timeOut: 3000, enableHtml: true, closeButton: true, tapToDismiss: true})
-            .onTap.pipe(take(1)).subscribe(() => this.toasterClickedHandler('/dashboard/user/documents'));
-        }else if((!user.nextOfKinName || !user.nextOfKinPhoneNumber || !user.nextOfKinRelationship) && this.router.url != '/dashboard/user/nok' ) {
-          this.toastr.warning(`<p>Your KYC documents are not complete</p><p>Click here to complete.</p>`, 'Notice', {timeOut: 3000, enableHtml: true, closeButton: true, tapToDismiss: true})
-            .onTap.pipe(take(1)).subscribe(() => this.toasterClickedHandler('/dashboard/user/nok'));
-        }
-    });
+    this.notifications$ = this.router.events
+        .pipe(
+          filter((rs): rs is NavigationEnd => rs instanceof NavigationEnd),
+          switchMap((event) => {
+            if (event.id === 1 && event.url === event.urlAfterRedirects) {
+              return this.apiService.get('/api/v1/customers/profile/fetch');
+            }
+            return of({status:'Refreshed', data: this.appContext.userInformation});
+          })
+        )
+        .subscribe((response) => {
+            this.userInformation = response.data;
+            this.appContext.userInformation = response.data
+            const user = this.appContext.userInformation;
+            // if((!user.driverLicense || !user.utility || !user.passport) && this.router.url != '/dashboard/user/documents' ) {
+            //   this.toastr.warning(`<p>Your KYC documents are not complete</p><p>Click here to complete.</p>`, 'Notice', {timeOut: 3000, enableHtml: true, closeButton: true, tapToDismiss: true})
+            //     .onTap.pipe(take(1)).subscribe(() => this.toasterClickedHandler('/dashboard/user/documents'));
+            // }
+            console.log(user, user.mothersMaidenName, user.placeOfBirth)
+            if((!user.mothersMaidenName || !user.placeOfBirth) && this.router.url != '/dashboard/user/others' ) {
+              this.toastr.warning(`<p>Some regulatory information are required</p><p>Click here to complete.</p>`, 'Notice', {timeOut: 3000, enableHtml: true, closeButton: true, tapToDismiss: true})
+                .onTap.pipe(take(1)).subscribe(() => this.toasterClickedHandler('/dashboard/user/others'));
+            }else if((!user.nextOfKinName || !user.nextOfKinPhoneNumber || !user.nextOfKinRelationship) && this.router.url != '/dashboard/user/nok' ) {
+              this.toastr.warning(`<p>Your next of kin information is required</p><p>Click here to complete.</p>`, 'Notice', {timeOut: 3000, enableHtml: true, closeButton: true, tapToDismiss: true})
+                .onTap.pipe(take(1)).subscribe(() => this.toasterClickedHandler('/dashboard/user/nok'));
+            }else if((!user.bankCode || !user.nuban) && this.router.url != '/dashboard/user/banks' ) {
+              this.toastr.warning(`<p>Your settlement bank information is not available</p><p>Click here to complete.</p>`, 'Notice', {timeOut: 3000, enableHtml: true, closeButton: true, tapToDismiss: true})
+                .onTap.pipe(take(1)).subscribe(() => this.toasterClickedHandler('/dashboard/user/banks'));
+            }
+        });
   }
   toasterClickedHandler(url: string): void {
     this.router.navigateByUrl(url)
@@ -111,7 +120,7 @@ export class InlDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     //   .subscribe(() => {
     //     this.auth.logout();
     //   });
-
+    this.notifications$.unsubscribe();
     this.auth.logout();
   }
 
