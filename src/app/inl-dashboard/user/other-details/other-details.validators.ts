@@ -12,7 +12,7 @@ export const ValidationMessages  = {
       'required': 'Password is required',
       'minlength': 'Password must be at least 6 characters',
   },
-  'mothersMaidenName' : {
+  'motherMaidenName' : {
     'required': 'Enter your mother maiden name',
   },
   'placeOfBirth' : {
@@ -25,7 +25,7 @@ export let FormErrors = {
   bankName: '',
   bankAccountName: '',
   password: '',
-  mothersMaidenName: '',
+  motherMaidenName: '',
   placeOfBirth: '',
 };
 
@@ -35,6 +35,6 @@ export interface User {
   bankName: string,
   bankAccountName: string,
   password: string,
-  mothersMaidenName: string,
+  motherMaidenName: string,
   placeOfBirth: string,
 }

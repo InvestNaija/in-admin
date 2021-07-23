@@ -44,8 +44,8 @@ export class OtherDetailsComponent implements OnInit {
       })
     ).subscribe(user => {
       this.myForm = this.fb.group({
-        mothersMaidenName: [null, [Validators.required]],
-        placeOfBirth: [null, [Validators.required]],
+        motherMaidenName: [user.mothersMaidenName, [Validators.required]],
+        placeOfBirth: [user.placeOfBirth, [Validators.required]],
       });
     });
   }
