@@ -58,7 +58,7 @@ export class InlDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
               this.notifications$ = this.toastr.warning(`<p>Some regulatory information are required</p><p>Click here to complete.</p>`, 'Notice', options)
                 .onTap.pipe(take(1)).subscribe(() => this.toasterClickedHandler('/dashboard/user/others'));
             }else if((!user.nextOfKinName || !user.nextOfKinPhoneNumber || !user.nextOfKinRelationship) && this.router.url != '/dashboard/user/nok' ) {
-              this.notifications$ = this.toastr.warning(`<p>Your next of kin information is required</p><p>Click here to complete.</p>`, 'Notice', options)
+              this.notifications$ = this.toastr.warning(`<p>Your next of kin information is not available   </p><p>Click here to complete.</p>`, 'Notice', options)
                 .onTap.pipe(take(1)).subscribe(() => this.toasterClickedHandler('/dashboard/user/nok'));
             }else if((!user.bankCode || !user.nuban) && this.router.url != '/dashboard/user/banks' ) {
               this.notifications$ = this.toastr.warning(`<p>Your settlement bank information is not available</p><p>Click here to complete.</p>`, 'Notice', options)
@@ -115,7 +115,9 @@ export class InlDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     // const payload = { username: 'admin',  password: 'admin' };
 
     // this.api.post('/auth/logout', payload).subscribe(() => { this.auth.logout(); });
-    this.notifications$.unsubscribe();
+    if (this.notifications$) {
+      this.notifications$.unsubscribe();
+    }
     this.auth.logout();
   }
 
