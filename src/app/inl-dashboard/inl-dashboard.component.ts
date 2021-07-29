@@ -20,10 +20,10 @@ export class InlDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   resizeObservable$: Observable<Event>;
   loadObservable$: Observable<Event>;
   sidenavSubscription$: Subscription;
-  notifications$: Subscription;
   allSideNavEventsObservable$: Observable<Event>;
   userInformation: any;
   sidenavClickSubscription$: Subscription;
+  generalToast$: Subscription;
 
   // @ViewChild(ToastContainerDirective, { static: true }) toastContainer: ToastContainerDirective;
 
@@ -34,7 +34,7 @@ export class InlDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     private apiService: ApiService,
     private appContext: ApplicationContextService
   ) {
-    this.router.events
+    this.generalToast$ = this.router.events
         .pipe(
           filter((rs): rs is NavigationEnd => rs instanceof NavigationEnd),
           switchMap((event) => {
@@ -55,13 +55,13 @@ export class InlDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             const options = {timeOut: 5000, enableHtml: true, closeButton: true, tapToDismiss: true};
 
             if((!user.mothersMaidenName || !user.placeOfBirth) && this.router.url != '/dashboard/user/others' ) {
-              this.notifications$ = this.toastr.warning(`<p>Some regulatory information are required</p><p>Click here to complete.</p>`, 'Notice', options)
+              this.toastr.warning(`<p>Some regulatory information are required</p><p>Click here to complete.</p>`, 'Notice', options)
                 .onTap.pipe(take(1)).subscribe(() => this.toasterClickedHandler('/dashboard/user/others'));
             }else if((!user.nextOfKinName || !user.nextOfKinPhoneNumber || !user.nextOfKinRelationship) && this.router.url != '/dashboard/user/nok' ) {
-              this.notifications$ = this.toastr.warning(`<p>Your next of kin information is not available   </p><p>Click here to complete.</p>`, 'Notice', options)
+              this.toastr.warning(`<p>Your next of kin information is not available   </p><p>Click here to complete.</p>`, 'Notice', options)
                 .onTap.pipe(take(1)).subscribe(() => this.toasterClickedHandler('/dashboard/user/nok'));
             }else if((!user.bankCode || !user.nuban) && this.router.url != '/dashboard/user/banks' ) {
-              this.notifications$ = this.toastr.warning(`<p>Your settlement bank information is not available</p><p>Click here to complete.</p>`, 'Notice', options)
+              this.toastr.warning(`<p>Your settlement bank information is not available</p><p>Click here to complete.</p>`, 'Notice', options)
                 .onTap.pipe(take(1)).subscribe(() => this.toasterClickedHandler('/dashboard/user/banks'));
             }
         });
@@ -115,8 +115,8 @@ export class InlDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     // const payload = { username: 'admin',  password: 'admin' };
 
     // this.api.post('/auth/logout', payload).subscribe(() => { this.auth.logout(); });
-    if (this.notifications$) {
-      this.notifications$.unsubscribe();
+    if (this.generalToast$) {
+      this.generalToast$.unsubscribe();
     }
     this.auth.logout();
   }
