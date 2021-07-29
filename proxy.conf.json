@@ -5,7 +5,7 @@
     "changeOrigin": true
   },
   "/api2": {
-    "target": "https://chapel-hill-be.herokuapp.com",
+    "target": "https://dollarfund.azurewebsites.net",
     "secure": false,
     "changeOrigin": true
   }
