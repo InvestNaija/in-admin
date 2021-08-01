@@ -22,8 +22,8 @@ export class MakePaymentComponent implements OnInit {
 
   container = {'reinvest':true};
   reinvestList = [
-    {"name": "Script", ID: "D1", "checked": true},
-    {"name": "Cash distribution", ID: "D2", "checked": false}
+    {"name": "Script (Reinvest your dividend)", ID: "D1", "checked": true},
+    {"name": "Cash distribution (Collect your dividend)", ID: "D2", "checked": false}
   ]
   paying = false;
   share: IShare;
