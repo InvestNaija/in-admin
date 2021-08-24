@@ -4,8 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CustomersRoutingComponent } from './customers-routing.module';
 import { CustomersComponent } from './customers/customers.component';
 import { CustomerDetailComponent } from './customer-detail/customer-detail.component';
-import { CustomerTransactionsComponent} from './customer-detail/customer-transactions/customer-transactions.component';
-import { CustomerDocumentsComponent } from './customer-detail/customer-documents/customer-documents.component';
+import { CustomerDocumentsComponent } from './customer-documents/customer-documents.component';
 
 
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -25,7 +24,7 @@ import { TransactionsModule } from '../transactions/transactions.module';
 @NgModule({
   declarations: [
     CustomersComponent,CustomerDetailComponent,
-    CustomerTransactionsComponent, CustomerDocumentsComponent
+    CustomerDocumentsComponent
   ],
   imports: [
     CommonModule,
