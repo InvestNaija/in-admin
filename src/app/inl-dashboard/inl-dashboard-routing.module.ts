@@ -15,16 +15,12 @@ const routes: Routes = [
         component: DashboardComponent
       },
       {
-        path: 'shares',
-        loadChildren: () => import('./shares/shares.module').then(m => m.SharesModule),
+        path: 'customers',
+        loadChildren: () => import('./customers/customers.module').then(m => m.CustomersModule),
       },
       {
         path: 'transactions',
         loadChildren: () => import('./transactions/transactions.module').then(m => m.TransactionsModule),
-      },
-      {
-        path: 'portfolio',
-        loadChildren: () => import('./portfolio/portfolio.module').then(m => m.PortfolioModule),
       },
       {
         path: 'user',

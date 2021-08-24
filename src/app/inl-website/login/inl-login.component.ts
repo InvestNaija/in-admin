@@ -60,7 +60,7 @@ export class InlLoginComponent implements OnInit {
       return;
     }
     const fd = JSON.parse(JSON.stringify(this.myForm.value));
-    this.api.post('/api/v1/auth/customers/login', fd, false)
+    this.api.post('/auth/admins/login', fd, false)
       .subscribe(response => {
         this.APIResponse = false; this.submitting = false;
         this.appContext.userInformation = response.data;

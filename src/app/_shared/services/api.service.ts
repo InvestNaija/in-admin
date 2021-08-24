@@ -4,7 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, retry, map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { environment } from '@environments/environment';
-// import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class ApiService {
   constructor(
     private http: HttpClient,
     private auth: AuthService,
-    // private toastr: ToastrService
+    private toastr: ToastrService
     ) { }
 
   get(url: string, useToken: boolean = true): Observable<any> {
@@ -38,11 +38,10 @@ export class ApiService {
 
   request(method: string, url: string, useToken: boolean, body?: Object) {
     let headers = new HttpHeaders()
-      .append('Content-Type', 'application/json')
-      .append('Authorization', `${this.auth.getToken()}`);
+      .append('Content-Type', 'application/json');
 
-    if (!useToken) {
-      headers = headers.delete('Authorization');
+    if (useToken) {
+      headers = headers.append('Authorization', `${this.auth.getToken()}`);
     }
 
     const options = {
@@ -67,6 +66,10 @@ export class ApiService {
 
     if (error.status === 401) {
       // this.toastr.error('Your session has timed out', 'Authentication Error');
+      // this.auth.logout();
+    }
+    if (error.status >= 500 && error.status < 600 && this.auth.getToken()) {
+      this.toastr.error(error.error.error.message, error.status+': '+ error.statusText);
       // this.auth.logout();
     }
 

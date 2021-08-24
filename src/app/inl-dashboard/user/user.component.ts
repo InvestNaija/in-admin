@@ -37,7 +37,7 @@ export class UserComponent implements OnInit {
         switchMap(params => {
           this.selectedIndex = this.tabbedPages.map(p=> p.page).indexOf(params.get('page'));
           this.commonServices.loading().next(true);
-          return this.apiService.get('/api/v1/customers/profile/fetch');
+          return this.apiService.get('/customers/profile/fetch');
         })
       ).subscribe(response => {
             this.appContext.userInformation = response.data;

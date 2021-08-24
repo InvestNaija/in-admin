@@ -50,7 +50,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    this.apiService.get('/api/v1/customers/profile/fetch')
+    this.apiService.get('/customers/profile/fetch')
       .subscribe(response => {
         this.loading = false;
 

@@ -1,7 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
-import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, of } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
@@ -28,7 +27,7 @@ export interface PeriodicElement {
 })
 export class TransactionsComponent implements OnInit, AfterViewInit  {
 
-  displayedColumns: string[] = ['asset', 'price', 'unitsExpressed', 'unitsAlloted', 'amount', 'status', 'action'];
+  displayedColumns: string[] = ['asset', 'description', 'amount', 'status', 'action'];
   dataSource: any = null;
   total_count = 0;
   pageSize = 10;
@@ -36,6 +35,7 @@ export class TransactionsComponent implements OnInit, AfterViewInit  {
 
   constructor(
     private router: Router,
+    private aRoute: ActivatedRoute,
     private toastr: ToastrService,
     private api: ApiService,
     private appService: ApplicationContextService
@@ -44,63 +44,41 @@ export class TransactionsComponent implements OnInit, AfterViewInit  {
   private loadingSubject = new BehaviorSubject<boolean>(true);
   isLoading$ = this.loadingSubject.asObservable();
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    // console.log(custId);
+  }
   ngAfterViewInit() {
-    this.getTransactions();
+    this.getTransactions(null);
   }
 
-  getTransactions() {
+  getTransactions(search) {
     this.paginator.page
       .pipe(
         startWith({}),
         switchMap(() => {
+          const custId = this.aRoute.snapshot.paramMap.get('id');
           this.dataSource = null;
-          return this.api.get(`/api/v1/reservations/my-reservations`);
+          if(custId)
+            return this.api.get(`/transactions/customer/${custId}/?page=${this.paginator.pageIndex+1}&size=${this.paginator.pageSize}&search`);
+          return this.api.get(`/transactions?page=${this.paginator.pageIndex+1}&size=${this.paginator.pageSize}`);
         }),
-        map((response: any) => {
-          // this.total_count = data.response.totalItems;
-          return response.data.filter(o => o.asset.currency.includes('USD'));
-        }),
+        // map((response: any) => {
+        //   return response.data.filter(o => o.asset.currency.includes('USD'));
+        // }),
         catchError(() => {
+          this.loadingSubject.next(false);
           return of([]);
         })
       )
       .subscribe(response => {
         this.loadingSubject.next(false);
-        this.dataSource = new MatTableDataSource(response);
-
-        this.dataSource.filterPredicate = (data: PeriodicElement, filter: string) => {
-          return data.status.trim().toLowerCase() == filter;
-        };
+        this.dataSource = new MatTableDataSource(response.data);
+        this.total_count = response.totalItems;
       });
   }
-  onMakePayment(element: any) {
-    this.router.navigateByUrl(`/dashboard/transactions/${element.id}/${element.asset.id}/make-payment`)
-  }
 
-  deleting=false;
-  onDeleteTransaction(element: any) {
-    Swal.fire({
-      title: 'Delete transaction',
-      text: "Deleting transaction is irreversible action",
-      icon: 'info',
-      showCancelButton: true,
-      confirmButtonColor: '#06262D',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Proceed!',
-      cancelButtonText: 'Cancel'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.deleting=true;
-        this.api.delete(`/api/v1/reservations/cancel/${element.id}`)
-          .subscribe(response => {
-            this.toastr.success(response.message);
-            this.deleting=false;
-            this.getTransactions();
-          },errResp => {
-            this.deleting=false;
-          });
-      }
-    });
+  onSearch(search) {
+    // console.log(search);
+    this.getTransactions(search);
   }
 }

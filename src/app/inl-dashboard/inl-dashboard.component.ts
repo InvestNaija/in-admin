@@ -38,9 +38,9 @@ export class InlDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         .pipe(
           filter((rs): rs is NavigationEnd => rs instanceof NavigationEnd),
           switchMap((event) => {
-            if (event.id === 1 && event.url === event.urlAfterRedirects) {
-              return this.apiService.get('/api/v1/customers/profile/fetch');
-            }
+            // if (event.id === 1 && event.url === event.urlAfterRedirects) {
+            //   return this.apiService.get('/customers/profile/fetch');
+            // }
             return of({status:'Refreshed', data: this.appContext.userInformation});
           })
         )
@@ -52,18 +52,6 @@ export class InlDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             //   this.toastr.warning(`<p>Your KYC documents are not complete</p><p>Click here to complete.</p>`, 'Notice', {timeOut: 3000, enableHtml: true, closeButton: true, tapToDismiss: true})
             //     .onTap.pipe(take(1)).subscribe(() => this.toasterClickedHandler('/dashboard/user/documents'));
             // }
-            const options = {timeOut: 5000, enableHtml: true, closeButton: true, tapToDismiss: true};
-
-            if((!user.mothersMaidenName || !user.placeOfBirth) && this.router.url != '/dashboard/user/others' ) {
-              this.toastr.warning(`<p>Some regulatory information are required</p><p>Click here to complete.</p>`, 'Notice', options)
-                .onTap.pipe(take(1)).subscribe(() => this.toasterClickedHandler('/dashboard/user/others'));
-            }else if((!user.nextOfKinName || !user.nextOfKinPhoneNumber || !user.nextOfKinRelationship) && this.router.url != '/dashboard/user/nok' ) {
-              this.toastr.warning(`<p>Your next of kin information is not available   </p><p>Click here to complete.</p>`, 'Notice', options)
-                .onTap.pipe(take(1)).subscribe(() => this.toasterClickedHandler('/dashboard/user/nok'));
-            }else if((!user.bankCode || !user.nuban) && this.router.url != '/dashboard/user/banks' ) {
-              this.toastr.warning(`<p>Your settlement bank information is not available</p><p>Click here to complete.</p>`, 'Notice', options)
-                .onTap.pipe(take(1)).subscribe(() => this.toasterClickedHandler('/dashboard/user/banks'));
-            }
         });
   }
   toasterClickedHandler(url: string): void {

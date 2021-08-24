@@ -25,7 +25,9 @@
   align-items: center;
   background-color: #fafafa;
 }
-
+.cursor-pointer {
+  cursor: pointer;
+}
 // For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
 // Plus imports for other components in your app.

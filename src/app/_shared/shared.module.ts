@@ -6,15 +6,24 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ToastrModule } from 'ngx-toastr';
+import { MatIconModule } from '@angular/material/icon';
+import { BackbuttonComponent } from './components/backbutton/backbutton.component';
 
 @NgModule({
-  declarations: [PageNotFoundComponent],
+  declarations: [
+    PageNotFoundComponent,
+    BackbuttonComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule,
+    MatIconModule,
     ToastrModule.forRoot(),
   ],
-  exports: [ CommonModule, RouterModule, ToastrModule, FormsModule, ReactiveFormsModule,
-    NgSelectModule ]
+  exports: [ CommonModule, RouterModule,
+    MatIconModule, BackbuttonComponent,
+    ToastrModule, FormsModule, ReactiveFormsModule,
+    NgSelectModule
+  ]
 })
 export class SharedModule { }
