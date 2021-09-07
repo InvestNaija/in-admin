@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { KYCComponent } from './kyc.component';
+import { AssetDetailComponent } from './asset-detail.component';
 
-describe('KYCComponent', () => {
-  let component: KYCComponent;
-  let fixture: ComponentFixture<KYCComponent>;
+describe('AssetDetailComponent', () => {
+  let component: AssetDetailComponent;
+  let fixture: ComponentFixture<AssetDetailComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ KYCComponent ]
+      declarations: [ AssetDetailComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(KYCComponent);
+    fixture = TestBed.createComponent(AssetDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

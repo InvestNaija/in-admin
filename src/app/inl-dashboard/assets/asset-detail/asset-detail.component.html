@@ -1,0 +1,146 @@
+<div class="container-fluid p-4">
+  <div class="row">
+    <div class="col-12">
+      <in-backbutton></in-backbutton>
+      <div class="page-title">
+        <h1>Asset Details</h1>
+      </div>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row m-3">
+            <div class="col-md-12">
+    <mat-spinner [diameter]="60" *ngIf="container['loading']"></mat-spinner>
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off" *ngIf="!container['loading']">
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="type">Asset Type</label>
+          <ng-select [searchable]="false" [clearable]="false" labelForId="type" formControlName="type" placeholder="Select Asset type">
+            <ng-option value="ipo">Offering</ng-option>
+            <ng-option value="fund">Fund</ng-option>
+          </ng-select>
+          <span *ngIf="uiErrors.type" class="text-danger">{{uiErrors.type}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="name">Asset Name</label>
+          <input formControlName="name" type="text" class="form-control" placeholder="Enter Asset name">
+          <span *ngIf="uiErrors.name" class="text-danger">{{uiErrors.name}}</span>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="name">Asset Logo</label>
+          <div class="row">
+            <div class="form-group col-md-4 offset-md-4">
+              <file-pond class="filepond" #imagePond (oninit)="oninit('image', $event)"
+                  [files]="container.imagePondFiles" [options]="pondOptions" (onaddfile)="pondHandleAddFile('image', $event)"
+              ></file-pond>
+              <!-- {{container.imagePondFiles |json}} -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="description">Description</label>
+          <ckeditor [editor]="Editor" name="description" formControlName="description"></ckeditor>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="bankName">Bank Account Details</label>
+          <ckeditor [editor]="Editor" name="bankName" formControlName="bankName"></ckeditor>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="sharePrice">Shares Price</label>
+          <input formControlName="sharePrice" id="sharePrice" type="number" class="form-control" placeholder="Enter Shares Price">
+          <span *ngIf="uiErrors.sharePrice" class="text-danger">{{uiErrors.sharePrice}}</span>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="availableShares">Units Available for Sale</label>
+          <input formControlName="availableShares" id="availableShares" type="number" class="form-control" placeholder="Enter Units Available for Sale">
+          <span *ngIf="uiErrors.availableShares" class="text-danger">{{uiErrors.availableShares}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="anticipatedMinPrice">Minimum Price</label>
+          <input formControlName="anticipatedMinPrice" id="anticipatedMinPrice" type="number" class="form-control" placeholder="Enter Minimum Price">
+          <span *ngIf="uiErrors.anticipatedMinPrice" class="text-danger">{{uiErrors.anticipatedMinPrice}}</span>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="anticipatedMaxPrice">Maximum Price</label>
+          <input formControlName="anticipatedMaxPrice" id="anticipatedMaxPrice" type="number" class="form-control" placeholder="Enter Maximum Price">
+          <span *ngIf="uiErrors.anticipatedMaxPrice" class="text-danger">{{uiErrors.anticipatedMaxPrice}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="openingDate">Opening Date</label>
+          <input id="openingDate" formControlName="openingDate" class="form-control" type="datetime-local" placeholder="Opening Date"
+            [max]="myForm.get('closingDate').value" (keyup)="controlChanged('openingDate')" />
+          <span *ngIf="uiErrors.openingDate != ''" class="text-danger">{{uiErrors.openingDate }}</span>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="closingDate">Closing Date</label>
+          <input id="closingDate" formControlName="closingDate" class="form-control" type="datetime-local" placeholder="Closing Date"
+            [min]="myForm.get('openingDate').value" (keyup)="controlChanged('closingDate')" />
+          <span *ngIf="uiErrors.closingDate != ''" class="text-danger">{{uiErrors.closingDate }}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="currency">Currency</label>
+          <ng-select [searchable]="false" [clearable]="false" labelForId="currency" formControlName="currency" placeholder="Select Currency">
+            <ng-option value="NGN">NGN</ng-option>
+            <ng-option value="USD">USD</ng-option>
+            <ng-option value="GBP">GBP</ng-option>
+          </ng-select>
+          <span *ngIf="uiErrors.type" class="text-danger">{{uiErrors.type}}</span>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="subaccountId">Subaccount ID</label>
+          <input formControlName="subaccountId" type="text" class="form-control" placeholder="Enter Subaccount ID">
+          <span *ngIf="uiErrors.subaccountId" class="text-danger">{{uiErrors.subaccountId}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="paymentLabel">Payment Label</label>
+          <input formControlName="paymentLabel" type="text" class="form-control" placeholder="Label to show on payment gateway">
+          <span *ngIf="uiErrors.paymentLabel" class="text-danger">{{uiErrors.paymentLabel}}</span>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="paymentLogo">Payment Logo</label>
+          <div class="row">
+            <div class="form-group col-md-4 offset-md-4">
+              <file-pond #myPond class="filepond" (oninit)="oninit('paymentLogo', $event)"
+                  [files]="container.paymentLogoPondFiles" [options]="pondOptions" (onaddfile)="pondHandleAddFile('paymentLogo', $event)"
+              ></file-pond>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-6">
+          &nbsp;
+        </div>
+        <div class="form-group col-md-6">
+          <button mat-flat-button type="submit" class="auth-button pull-right" [disabled]="submitting || disableButton">
+            <span *ngIf="!submitting">Save Details</span>
+            <mat-spinner *ngIf="submitting" [diameter]="30"></mat-spinner>
+          </button>
+        </div>
+      </div>
+    </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

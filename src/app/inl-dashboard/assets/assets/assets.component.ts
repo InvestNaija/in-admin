@@ -22,13 +22,13 @@ export interface PeriodicElement {
 }
 
 @Component({
-  selector: 'in-customers',
-  templateUrl: './customers.component.html',
-  styleUrls: ['./customers.component.scss']
+  selector: 'in-assets',
+  templateUrl: './assets.component.html',
+  styleUrls: ['./assets.component.scss']
 })
-export class CustomersComponent implements OnInit, AfterViewInit  {
+export class AssetsComponent implements OnInit, AfterViewInit  {
 
-  displayedColumns: string[] = ['firstName', 'lastName', 'email', 'phone', 'status', 'action'];
+  displayedColumns: string[] = ['name', 'type', 'sharePrice', 'anticipatedMinPrice', 'openingDate', 'closingDate', 'openForPurchase', 'action'];
   dataSource: any = null;
   total_count = 0;
   pageSize = 10;
@@ -55,7 +55,7 @@ export class CustomersComponent implements OnInit, AfterViewInit  {
         startWith({}),
         switchMap(() => {
           this.dataSource = null;
-          return this.api.get(`/customers?page=${this.paginator.pageIndex+1}&size=${this.paginator.pageSize}` + (search?`&search=${search}`:''));
+          return this.api.get(`/assets?page=${this.paginator.pageIndex+1}&size=${this.paginator.pageSize}` + (search?`&search=${search}`:''));
         }),
         catchError(() => {
           return of([]);
@@ -73,13 +73,17 @@ export class CustomersComponent implements OnInit, AfterViewInit  {
       });
   }
   onClickRow(row) {
-    this.router.navigateByUrl(`/dashboard/customers/${row.id}`)
+    this.router.navigateByUrl(`/dashboard/assets/${row.id}`)
   }
 
   onSearch(search) {
     // console.log(search);
     this.getTransactions(search);
   }
+  onAssetDetail(asset) {
+    this.router.navigateByUrl(`/dashboard/assets/detail/${asset.id}`)
+  }
+
   deleting=false;
   onDeleteTransaction(element: any) {
     Swal.fire({

@@ -52,7 +52,11 @@ export class CustomerDocumentsComponent implements OnInit {
   pondOptions = {
     class: 'my-filepond',
     labelIdle: 'Drop files here',
-    acceptedFileTypes: 'image/png, image/jpeg, image/gif'
+    acceptedFileTypes: 'image/png, image/jpeg, image/gif',
+    // imageCropAspectRatio: 1,
+    // imageResizeTargetWidth: 200,
+    // // open editor on image drop
+    // imageEditInstantEdit: true,
   };
   constructor(
     private apiService: ApiService,
@@ -85,6 +89,8 @@ export class CustomerDocumentsComponent implements OnInit {
           }
         });
       })
+      console.log(this.documents);
+
     })
   }
   DataURIToBlob(dataURI: string) {

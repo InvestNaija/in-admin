@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   gateway: 'flutterwave',
-  apiUrl: 'https://dollarfund.azurewebsites.net/api/v1'
+  apiUrl: 'https://learningmicrosite.azurewebsites.net/api/v1',
+  // apiUrl: 'https://dollarfund.azurewebsites.net/api/v1',
 };
 
 /*

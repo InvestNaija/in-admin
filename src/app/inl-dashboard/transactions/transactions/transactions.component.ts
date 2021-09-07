@@ -59,7 +59,7 @@ export class TransactionsComponent implements OnInit, AfterViewInit  {
           const custId = this.aRoute.snapshot.paramMap.get('id');
           this.dataSource = null;
           if(custId)
-            return this.api.get(`/transactions/customer/${custId}/?page=${this.paginator.pageIndex+1}&size=${this.paginator.pageSize}&search`);
+            return this.api.get(`/transactions/customer/${custId}/?page=${this.paginator.pageIndex+1}&size=${this.paginator.pageSize}` + (search?`&search=${search}`:''));
           return this.api.get(`/transactions?page=${this.paginator.pageIndex+1}&size=${this.paginator.pageSize}`);
         }),
         // map((response: any) => {
