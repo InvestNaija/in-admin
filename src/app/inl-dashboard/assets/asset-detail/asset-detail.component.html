@@ -21,6 +21,7 @@
           <ng-select [searchable]="false" [clearable]="false" labelForId="type" formControlName="type" placeholder="Select Asset type">
             <ng-option value="ipo">Offering</ng-option>
             <ng-option value="fund">Fund</ng-option>
+            <ng-option value="bond">Bond</ng-option>
           </ng-select>
           <span *ngIf="uiErrors.type" class="text-danger">{{uiErrors.type}}</span>
         </div>
@@ -55,26 +56,33 @@
       </div>
       <div class="row">
         <div class="form-group col-md-6">
-          <label for="sharePrice">Shares Price</label>
-          <input formControlName="sharePrice" id="sharePrice" type="number" class="form-control" placeholder="Enter Shares Price">
+          <label for="sharePrice">{{myForm.get('type').value == 'bond'?'Discount Rate (%)':'Shares Price'}}</label>
+          <input formControlName="sharePrice" id="sharePrice" type="number" class="form-control" [placeholder]="myForm.get('type').value == 'bond'?'Discount Rate (%)':'Enter Shares Price'">
           <span *ngIf="uiErrors.sharePrice" class="text-danger">{{uiErrors.sharePrice}}</span>
         </div>
         <div class="form-group col-md-6">
-          <label for="availableShares">Units Available for Sale</label>
-          <input formControlName="availableShares" id="availableShares" type="number" class="form-control" placeholder="Enter Units Available for Sale">
+          <label for="availableShares">{{myForm.get('type').value == 'bond'?'Tenor (Days)':'Units Available for Sale'}}</label>
+          <input formControlName="availableShares" id="availableShares" type="number" class="form-control" [placeholder]="myForm.get('type').value == 'bond'?'Tenor (Days)':'Enter Units Available for Sale'">
           <span *ngIf="uiErrors.availableShares" class="text-danger">{{uiErrors.availableShares}}</span>
         </div>
       </div>
       <div class="row">
         <div class="form-group col-md-6">
-          <label for="anticipatedMinPrice">Minimum Price</label>
-          <input formControlName="anticipatedMinPrice" id="anticipatedMinPrice" type="number" class="form-control" placeholder="Enter Minimum Price">
+          <label for="anticipatedMinPrice">{{myForm.get('type').value == 'bond'?'Minimum Amount':'Minimum Price'}}</label>
+          <input formControlName="anticipatedMinPrice" id="anticipatedMinPrice" type="number" class="form-control" [placeholder]="myForm.get('type').value == 'bond'?'Minimum Amount':'Enter Minimum Price'">
           <span *ngIf="uiErrors.anticipatedMinPrice" class="text-danger">{{uiErrors.anticipatedMinPrice}}</span>
         </div>
         <div class="form-group col-md-6">
-          <label for="anticipatedMaxPrice">Maximum Price</label>
-          <input formControlName="anticipatedMaxPrice" id="anticipatedMaxPrice" type="number" class="form-control" placeholder="Enter Maximum Price">
+          <label for="anticipatedMaxPrice">{{myForm.get('type').value == 'bond'?'Yield (%)':'Maximum Price'}}</label>
+          <input formControlName="anticipatedMaxPrice" id="anticipatedMaxPrice" type="number" class="form-control" [placeholder]="myForm.get('type').value == 'bond'?'Yield (%)':'Enter Maximum Price'">
           <span *ngIf="uiErrors.anticipatedMaxPrice" class="text-danger">{{uiErrors.anticipatedMaxPrice}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-6" *ngIf="myForm.get('type').value == 'bond'">
+          <label for="subsequentMinAmount">Subsequent Minimum Amount</label>
+          <input formControlName="subsequentMinAmount" id="subsequentMinAmount" type="number" class="form-control" placeholder="Subsequent Minimum Amount">
+          <span *ngIf="uiErrors.subsequentMinAmount" class="text-danger">{{uiErrors.subsequentMinAmount}}</span>
         </div>
       </div>
       <div class="row">
@@ -89,6 +97,18 @@
           <input id="closingDate" formControlName="closingDate" class="form-control" type="datetime-local" placeholder="Closing Date"
             [min]="myForm.get('openingDate').value" (keyup)="controlChanged('closingDate')" />
           <span *ngIf="uiErrors.closingDate != ''" class="text-danger">{{uiErrors.closingDate }}</span>
+        </div>
+      </div>
+      <div class="row" *ngIf="myForm.get('type').value == 'bond'">
+        <div class="form-group col-md-6">
+          <label for="allocationDate">Allocation Date</label>
+          <input id="allocationDate" formControlName="allocationDate" class="form-control" type="datetime-local" placeholder="Allocation Date" />
+          <span *ngIf="uiErrors.allocationDate != ''" class="text-danger">{{uiErrors.allocationDate }}</span>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="fundingDate">Funding Date</label>
+          <input id="fundingDate" formControlName="fundingDate" class="form-control" type="datetime-local" placeholder="Funding Date"/>
+          <span *ngIf="uiErrors.fundingDate != ''" class="text-danger">{{uiErrors.fundingDate }}</span>
         </div>
       </div>
       <div class="row">

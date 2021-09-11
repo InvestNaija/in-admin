@@ -1,0 +1,80 @@
+<div class="container-fluid p-4">
+  <div class="row">
+    <div class="col-12">
+      <in-backbutton></in-backbutton>
+      <div class="page-title">
+        <h1>Customers</h1>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row mt-3">
+            <div class="col-md-12">
+              <input type="text" placeholder="Enter search term, then hit enter to search" class="form-control" (keydown.enter)="onSearch($event.target.value)">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource" fixedLayout="false" class="leaderboard-table">
+
+                  <ng-container matColumnDef="firstName">
+                    <th mat-header-cell *matHeaderCellDef>First Name</th>
+                    <td mat-cell *matCellDef="let element">{{element.firstName}}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="lastName">
+                    <th mat-header-cell *matHeaderCellDef>Last Name</th>
+                    <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef>Email</th>
+                    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="phone">
+                    <th mat-header-cell *matHeaderCellDef>Phone</th>
+                    <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef>Status</th>
+                    <td mat-cell *matCellDef="let element"> {{element.status}}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef>Action</th>
+                    <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation();">
+                      <span class="header-menu">
+                        <button mat-icon-button [matMenuTriggerFor]="historylistmenu">
+                          <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #historylistmenu="matMenu">
+                          <a href="javascript:;" (click)="onMakePayment(element)" mat-menu-item>
+                            <mat-icon>drive_file_rename_outline</mat-icon> View Details
+                          </a>
+                        </mat-menu>
+                      </span>
+                      <!-- <mat-spinner *ngIf="deleting" [diameter]="20"></mat-spinner> -->
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onClickRow(row)" class="cursor-pointer"></tr>
+                </table>
+              </div>
+              <div *ngIf="isLoading$ | async" class="mat-spinner-container">
+                <mat-spinner></mat-spinner>
+              </div>
+              <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+              <mat-paginator [length]="total_count" [showFirstLastButtons]="true" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

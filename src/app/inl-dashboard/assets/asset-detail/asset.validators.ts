@@ -29,6 +29,12 @@ export const ValidationMessages  = {
   'closingDate' : {
     'required': 'Closing Date is required',
   },
+  'allocationDate' : {
+    'required': 'Allocation Date is required',
+  },
+  'fundingDate' : {
+    'required': 'Funding Date is required',
+  },
   'image' : {
     'required': 'Asset image is required',
   },
@@ -44,6 +50,9 @@ export const ValidationMessages  = {
   'paymentLabel' : {
     'required': 'Payment label are required',
   },
+  'subsequentMinAmount' : {
+    'required': 'Subsequent Min Amount are required',
+  },
 };
 export let FormErrors = {
   type: '',
@@ -55,12 +64,15 @@ export let FormErrors = {
   description: '',
   openingDate: '',
   closingDate: '',
+  allocationDate: '',
+  fundingDate: '',
   image: '',
   currency: '',
   subaccountId: '',
   minimumNoOfUnits: '',
   bankName: '',
   paymentLabel: '',
+  subsequentMinAmount: '',
 };
 
 export interface Asset {
@@ -75,6 +87,8 @@ export interface Asset {
   description: string,
   openingDate: string,
   closingDate: string,
+  allocationDate: string,
+  fundingDate: string,
   maturityDate: string,
   image: string,
   currency: string,
@@ -82,4 +96,5 @@ export interface Asset {
   bankName: string,
   paymentLabel: string,
   paymentLogo: string
+  subsequentMinAmount: string
 }
