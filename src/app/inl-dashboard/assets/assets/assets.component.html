@@ -51,8 +51,8 @@
                   </ng-container>
                   <ng-container matColumnDef="openForPurchase">
                     <th mat-header-cell *matHeaderCellDef>Status</th>
-                    <td mat-cell *matCellDef="let element" [ngClass]="!element.openForPurchase ? 'text-danger' : 'text-success'">
-                      {{element.openForPurchase ? 'Open': 'Closed'}}
+                    <td mat-cell *matCellDef="let element" [ngClass]="!isOpenForPurchase(element) ? 'text-danger' : 'text-success'">
+                      {{isOpenForPurchase(element) ? 'Open': 'Closed'}}
                     </td>
                   </ng-container>
 

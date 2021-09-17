@@ -11,15 +11,15 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ApplicationContextService } from '@app/_shared/services/application-context.service';
 
 
-export interface PeriodicElement {
-  position: number;
-  course: string;
-  courseFee: number;
-  category: string;
-  scheduled: string;
-  published: string;
-  status: string;
-}
+// export interface PeriodicElement {
+//   position: number;
+//   course: string;
+//   courseFee: number;
+//   category: string;
+//   scheduled: string;
+//   published: string;
+//   status: string;
+// }
 
 @Component({
   selector: 'in-assets',
@@ -67,10 +67,20 @@ export class AssetsComponent implements OnInit, AfterViewInit  {
         this.total_count = response.totalItems;
         // this.pageSize = response.totalPages
 
-        this.dataSource.filterPredicate = (data: PeriodicElement, filter: string) => {
-          return data.status.trim().toLowerCase() == filter;
-        };
+        // this.dataSource.filterPredicate = (data: PeriodicElement, filter: string) => {
+        //   return data.status.trim().toLowerCase() == filter;
+        // };
       });
+  }
+  isOpenForPurchase(asset): boolean{
+    const today = new Date();
+    const closingDate = new Date(asset.closingDate);
+
+    // console.log(asset.name, closingDate, today);
+
+    if(today >= closingDate) asset.openForPurchase = false;
+    else asset.openForPurchase = true;
+    return asset.openForPurchase;
   }
   onClickRow(row) {
     this.router.navigateByUrl(`/dashboard/assets/${row.id}`)
