@@ -6,7 +6,7 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ApiService } from '@app/_shared/services/api.service';
 import { CommonService } from '@app/_shared/services/common.service';
 import { Asset, FormErrors, ValidationMessages } from './asset.validators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationContextService } from '@app/_shared/services/application-context.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -42,6 +42,7 @@ export class AssetDetailComponent implements OnInit  {
   };
   constructor(
     private fb: FormBuilder,
+    private router: Router,
     private aRouter: ActivatedRoute,
     private toastr: ToastrService,
     public apiService: ApiService,
@@ -135,7 +136,8 @@ export class AssetDetailComponent implements OnInit  {
     this.submitAsset(this.container['formChanges'])
       .subscribe(response => {
         this.submitting = false;
-          this.toastr.success('Update successful!', 'success')
+          this.toastr.success('Update successful!', 'success');
+          this.router.navigateByUrl('/dashboard/assets/list');
       },
       errResp => {
         this.submitting = false;
