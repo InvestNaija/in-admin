@@ -56,8 +56,8 @@
       </div>
       <div class="row">
         <div class="form-group col-md-6">
-          <label for="sharePrice">{{myForm.get('type').value == 'bond'?'Discount Rate (%)':'Shares Price'}}</label>
-          <input formControlName="sharePrice" id="sharePrice" type="number" class="form-control" [placeholder]="myForm.get('type').value == 'bond'?'Discount Rate (%)':'Enter Shares Price'">
+          <label for="sharePrice">{{myForm.get('type').value == 'bond'?'Discount Rate (%)':(myForm.get('type').value == 'fund'?'Fund': 'Shares') +' Price'}}</label>
+          <input formControlName="sharePrice" id="sharePrice" type="number" class="form-control" [placeholder]="myForm.get('type').value == 'bond'?'Discount Rate (%)':'Enter Price'">
           <span *ngIf="uiErrors.sharePrice" class="text-danger">{{uiErrors.sharePrice}}</span>
         </div>
         <div class="form-group col-md-6">

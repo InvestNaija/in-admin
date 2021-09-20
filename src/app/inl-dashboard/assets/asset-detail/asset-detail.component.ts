@@ -35,9 +35,9 @@ export class AssetDetailComponent implements OnInit  {
 
   pondOptions = {
     class: 'my-filepond',
-    labelIdle: 'Drag Drop file ',
+    labelIdle: 'Drag Drop file <br><small>Max size: 200KB</small> ',
     acceptedFileTypes: 'image/jpg, image/jpeg, image/png',
-    maxFileSize: '1MB',
+    maxFileSize: '200KB',
     credits: ''
   };
   constructor(
