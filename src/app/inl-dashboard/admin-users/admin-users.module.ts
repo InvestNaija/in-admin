@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AdminUsersRoutingComponent } from './admin-users-routing.module';
 import { AdminUsersComponent } from './admin-users/admin-users.component';
+import { AdminUserDetailComponent } from './admin-detail/admin-detail.component';
 
 
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -21,7 +22,7 @@ import { TransactionsModule } from '../transactions/transactions.module';
 
 @NgModule({
   declarations: [
-    AdminUsersComponent
+    AdminUsersComponent,AdminUserDetailComponent
   ],
   imports: [
     CommonModule,

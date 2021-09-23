@@ -1,12 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { CustomersRoutingComponent } from './customers-routing.module';
-import { CustomersComponent } from './customers/customers.component';
-import { CustomerDetailComponent } from './customer-detail/customer-detail.component';
-import { CustomerDocumentsComponent } from './customer-documents/customer-documents.component';
-
-
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -21,10 +15,17 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { SharedModule } from '@app/_shared/shared.module';
 import { TransactionsModule } from '../transactions/transactions.module';
 
+import { BankingDetailsComponent } from './banking-details/banking-details.component';
+import { CustomersRoutingComponent } from './customers-routing.module';
+import { CustomersComponent } from './customers/customers.component';
+import { CustomerDetailComponent } from './customer-detail/customer-detail.component';
+import { CustomerDocumentsComponent } from './customer-documents/customer-documents.component';
+
 @NgModule({
   declarations: [
     CustomersComponent,CustomerDetailComponent,
-    CustomerDocumentsComponent
+    CustomerDocumentsComponent,
+    BankingDetailsComponent
   ],
   imports: [
     CommonModule,

@@ -11,54 +11,122 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-body">
-          <div class="row m-3">
-            <div class="col-md-12">
-              <fieldset class="mt-3">
-                <legend>General</legend>
-                <div class="row mt-3">
-                  <div class="col-md-2 text-right text-uppercase font-weight-bold">First Name:</div>
-                  <div class="col-md-2">{{customer?.firstName}}</div>
-                  <div class="col-md-2 text-right text-uppercase font-weight-bold">Middle Name:</div>
-                  <div class="col-md-2">{{customer?.middleName}}</div>
-                  <div class="col-md-2 text-right text-uppercase font-weight-bold">Last Name:</div>
-                  <div class="col-md-2">{{customer?.lastName}}</div>
-                </div>
-                <div class="row mt-3">
-                  <div class="col-md-2 text-right text-uppercase font-weight-bold">BVN:</div>
-                  <div class="col-md-2">{{customer?.bvn}}</div>
-                  <div class="col-md-2 text-right text-uppercase font-weight-bold">Gender:</div>
-                  <div class="col-md-2">{{customer?.gender | titlecase}}</div>
-                  <div class="col-md-2 text-right text-uppercase font-weight-bold">DoB:</div>
-                  <div class="col-md-2">{{customer?.dob | date}}</div>
-                </div>
-                <div class="row mt-3">
-                  <div class="col-md-2 text-right text-uppercase font-weight-bold">Phone:</div>
-                  <div class="col-md-2">{{customer?.phone}}</div>
-                  <div class="col-md-2 text-right text-uppercase font-weight-bold">Email:</div>
-                  <div class="col-md-2">{{customer?.email}}</div>
-                  <div class="col-md-2 text-right text-uppercase font-weight-bold">Zanibal Id:</div>
-                  <div class="col-md-2">{{customer?.zanibalId}}</div>
-                </div>
-                <div class="row mt-3">
-                  <div class="col-md-2 text-right text-uppercase font-weight-bold">Address:</div>
-                  <div class="col-md-10">{{customer?.address}}</div>
-                </div>
-              </fieldset>
+          <mat-spinner [diameter]="60" *ngIf="container['loading']"></mat-spinner>
+          <form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off" *ngIf="!container['loading']">
+            <div class="row m-3">
+              <div class="col-md-12">
+                <fieldset class="mt-3">
+                  <legend>General</legend>
+                  <div class="row mt-3">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="dob">BVN</label>
+                        <input class="form-control" formControlName="bvn" type="text" placeholder="BVN" readonly (keyup)="onBVNChanged()" />
+                        <span *ngIf="uiErrors.bvn" class="text-danger">{{uiErrors.bvn}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="dob">First Name</label>
+                        <input class="form-control" formControlName="firstName" type="text" placeholder="First Name" readonly />
+                        <span *ngIf="uiErrors.firstName" class="text-danger">{{uiErrors.firstName}}</span>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="dob">Middle Name</label>
+                        <input class="form-control" formControlName="middleName" type="text" placeholder="Middle Name" readonly />
+                        <span *ngIf="uiErrors.middleName" class="text-danger">{{uiErrors.middleName}}</span>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="dob">Surname</label>
+                        <input class="form-control" formControlName="lastName" type="text" placeholder="Surname" readonly />
+                        <span *ngIf="uiErrors.lastName" class="text-danger">{{uiErrors.lastName}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="dob">Gender</label>
+                        <ng-select [items]="gender" placeholder="Gender" bindLabel="name" formControlName="gender" readonly>
+                        </ng-select>
+                        <span *ngIf="uiErrors.gender" class="text-danger">{{uiErrors.gender}}</span>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group has-search">
+                        <label for="dob">Date Of Birth (DD/MM/YYYY)</label>
+                        <mat-datepicker-toggle matSuffix [for]="picker" class="form-control-feedback"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <input formControlName="dob" class="form-control" placeholder="Date Of Birth (DD/MM/YYYY)" matInput [matDatepicker]="picker" (click)="picker.open()" />
+                        <span *ngIf="uiErrors.dob">{{uiErrors.dob }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="dob">Phone:</label>
+                        <input class="form-control" formControlName="phone" type="text" placeholder="Phone" readonly />
+                        <span *ngIf="uiErrors.phone" class="text-danger">{{uiErrors.phone}}</span>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="dob">Email:</label>
+                        <input class="form-control" formControlName="email" type="text" placeholder="Email" readonly />
+                        <span *ngIf="uiErrors.email" class="text-danger">{{uiErrors.email}}</span>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="dob">Zanibal Id:</label>
+                        <input class="form-control" formControlName="zanibalId" type="text" placeholder="Zanibal Id" readonly />
+                        <span *ngIf="uiErrors.zanibalId" class="text-danger">{{uiErrors.zanibalId}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="address">Address:</label>
+                        <textarea class="form-control" formControlName="address" rows="3" readonly></textarea>
+                        <span *ngIf="uiErrors.address" class="text-danger">{{uiErrors.address}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
             </div>
-          </div>
-          <div class="row m-3 border-top ">
-            <div class="col-md-12">
-              <fieldset class="mt-3">
-                <legend>KYC</legend>
-                <div class="row">
-                  <div class="col-md-3 text-right text-uppercase font-weight-bold">Mother's Maiden Name:</div>
-                  <div class="col-md-3">{{customer?.mothersMaidenName}}</div>
-                  <div class="col-md-3 text-right text-uppercase font-weight-bold">Place of birth:</div>
-                  <div class="col-md-3">{{customer?.placeOfBirth}}</div>
-                </div>
-              </fieldset>
+            <div class="row m-3 border-top ">
+              <div class="col-md-12">
+                <fieldset class="mt-3">
+                  <legend>KYC</legend>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="mothersMaidenName">Mother's Maiden Name:</label>
+                        <input class="form-control" formControlName="mothersMaidenName" type="text" placeholder="Mother's Maiden Name" readonly />
+                        <span *ngIf="uiErrors.mothersMaidenName" class="text-danger">{{uiErrors.mothersMaidenName}}</span>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="placeOfBirth">Place of birth:</label>
+                        <input class="form-control" formControlName="placeOfBirth" type="text" placeholder="Place of birth" readonly />
+                        <span *ngIf="uiErrors.placeOfBirth" class="text-danger">{{uiErrors.placeOfBirth}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
@@ -68,11 +136,14 @@
       <div class="card">
         <div class="card-body">
           <mat-tab-group>
-            <mat-tab label="Transactions">
-              <in-transactions *matTabContent></in-transactions>
-            </mat-tab>
             <mat-tab label="Documents">
               <in-customer-documents *matTabContent></in-customer-documents>
+            </mat-tab>
+            <mat-tab label="Bank Details">
+              <in-banking-details *matTabContent></in-banking-details>
+            </mat-tab>
+            <mat-tab label="Transactions">
+              <in-transactions *matTabContent></in-transactions>
             </mat-tab>
           </mat-tab-group>
         </div>

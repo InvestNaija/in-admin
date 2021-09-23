@@ -7,6 +7,9 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ToastrModule } from 'ngx-toastr';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+// import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material/core';
 import { BackbuttonComponent } from './components/backbutton/backbutton.component';
 
 import { FilePondModule, registerPlugin } from 'ngx-filepond';
@@ -47,10 +50,15 @@ registerPlugin(
     FilePondModule,
   ],
   exports: [ CommonModule, RouterModule,
-    MatIconModule, BackbuttonComponent,
-    ToastrModule, FormsModule, ReactiveFormsModule,
+    MatIconModule, BackbuttonComponent
+    , MatDatepickerModule, MatNativeDateModule//, MatMomentDateModule
+    , ToastrModule, FormsModule, ReactiveFormsModule,
     NgSelectModule,
     FilePondModule,
-  ]
+  ],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+    // { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
+  ],
 })
 export class SharedModule { }

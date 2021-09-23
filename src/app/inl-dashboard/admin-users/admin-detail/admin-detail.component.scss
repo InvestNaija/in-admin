@@ -8,3 +8,9 @@
   text-align: center;
   padding: 5px;
 }
+
+.filepond--root,
+.filepond--root .filepond--drop-label {
+  height: 100px !important;
+  width: 100px !important;
+}

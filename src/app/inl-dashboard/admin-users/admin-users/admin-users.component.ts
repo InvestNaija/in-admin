@@ -80,29 +80,8 @@ export class AdminUsersComponent implements OnInit, AfterViewInit  {
     // console.log(search);
     this.getTransactions(search);
   }
-  deleting=false;
-  onDeleteTransaction(element: any) {
-    Swal.fire({
-      title: 'Delete transaction',
-      text: "Deleting transaction is irreversible action",
-      icon: 'info',
-      showCancelButton: true,
-      confirmButtonColor: '#06262D',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Proceed!',
-      cancelButtonText: 'Cancel'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.deleting=true;
-        this.api.delete(`/api/v1/reservations/cancel/${element.id}`)
-          .subscribe(response => {
-            this.toastr.success(response.message);
-            this.deleting=false;
-            this.getTransactions(null);
-          },errResp => {
-            this.deleting=false;
-          });
-      }
-    });
+
+  onCreateAdminUser(user) {
+    this.router.navigateByUrl(`/dashboard/admin-users/detail/${user.id}`)
   }
 }

@@ -7,7 +7,6 @@ import { AssetDetailComponent } from './asset-detail/asset-detail.component';
 const routes: Routes = [
   {
     path: '',
-    // component: AssetsComponent,
     children: [
       {path: 'list',component: AssetsComponent},
       {path: 'detail/:id',component: AssetDetailComponent,},
@@ -17,10 +16,6 @@ const routes: Routes = [
   },
 
   { path: '', redirectTo: '/list', pathMatch: 'full'}
-  // {
-  //   path: ':id',
-  //   component: AssetDetailComponent,
-  // },
 ];
 
 @NgModule({
