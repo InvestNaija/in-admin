@@ -2,6 +2,8 @@
   <div class="row">
     <div class="col-12">
       <in-backbutton></in-backbutton>
+      <!-- <button class="btn btn-danger text-white pull-right" (click)="onCreateDetail({id:''})">New Customers</button> -->
+      <a [routerLink]="['/dashboard/customers/detail/']" class="btn btn-danger text-white pull-right">New Customers </a>
       <div class="page-title">
         <h1>Customers</h1>
       </div>
@@ -11,6 +13,22 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-body">
+          <div class="row" *ngIf="!container['loading']">
+            <fieldset>
+                <legend class="cursor-pointer" (click)="container['reports']=!container['reports']">
+                    <span>Download Report</span>
+                    <i class="fa fa-2x fa-question-circle-o text-warning"
+                        matTooltip="Click to download reports"
+                        aria-label="Button that displays a tooltip when focused or hovered over"></i>
+                </legend>
+                <span *ngIf="container['reports']">
+                  <button class="btn btn-danger text-white pull-right" (click)="onDownload('CSCS')">
+                    <span *ngIf="!container['downloading']">Pending CSCS creation</span>
+                    <mat-spinner *ngIf="container['downloading']" [diameter]="30"></mat-spinner>
+                  </button>
+                </span>
+            </fieldset>
+          </div>
           <div class="row mt-3">
             <div class="col-md-12">
               <input type="text" placeholder="Enter search term, then hit enter to search" class="form-control" (keydown.enter)="onSearch($event.target.value)">

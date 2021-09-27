@@ -33,5 +33,5 @@ export interface User {
   email: string,
   phone: string,
   dob: string,
-  roles: '',
+  roles: any
 }

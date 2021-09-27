@@ -6,6 +6,7 @@ import { ApiService } from '@app/_shared/services/api.service';
 import { ApplicationContextService } from '@app/_shared/services/application-context.service';
 import { AuthService } from '@app/_shared/services/auth.service';
 import { CommonService } from '@app/_shared/services/common.service';
+import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { FormErrors, ValidationMessages } from './customer-documents.validators';
@@ -74,11 +75,11 @@ export class CustomerDocumentsComponent implements OnInit {
         return this.appContext.userInformationObs();
       }),
       switchMap(loading => {
-        return this.apiService.get(`/auth/admins/documents/kyc/customer/${custId}`);
+        return (custId ? this.apiService.get(`/auth/admins/documents/kyc/customer/${custId}`) : of({data: {}}) );
       }),
     ).subscribe(documents => {
       this.documents.map(doc => {
-        documents.data.forEach(uploaded => {
+        documents.data??documents.data.forEach(uploaded => {
           const fType = uploaded.name.split(";");
           if(fType[0] === doc.id) {
             doc.IdType =  doc.types.find(type => type.code == fType[1])

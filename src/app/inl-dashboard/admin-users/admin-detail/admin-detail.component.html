@@ -49,10 +49,29 @@
       <div class="row">
         <div class="form-group col-md-12">
           <label for="roles">Roles</label>
-          <div class="row border-bottom py-4" *ngFor="let module of objectKey(roles);">
-            <h3 class="font-weight-bold">{{module | uppercase}}</h3>
-            <div class="card nigerian-shares-card" *ngFor="let uRole of roles[module]">
-              {{uRole | json}}
+
+          <div class="row" formArrayName="roles">
+            <div class="col-md-12">
+              <div class="row border-bottom py-4" *ngFor="let module of objectKey(roles);">
+                <div class="col-md-12">
+                  <h3 class="font-weight-bold">{{module | uppercase}}</h3>
+                  <div class="row">
+                    <div [formGroupName]="j" *ngFor="let userRole of myForm.get('roles').controls; let j = index" class="col-sm-3">
+                      <label class="switch" *ngIf="userRole.get('module').value == module">
+                          <div class="toggle">
+                              <input type="checkbox" class="toggle-state"
+                                      (change)="studentControlChange(myForm, userRole.get('id').value,  selected.checked)" #selected />
+                              <div class="toggle-inner"><div class="indicator"></div></div>
+                              <div class="active-bg"></div>
+                          </div>
+                          <div class="switch-text">
+                              {{userRole.get('permission').value}}
+                          </div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

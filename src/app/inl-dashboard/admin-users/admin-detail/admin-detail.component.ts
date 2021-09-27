@@ -1,6 +1,6 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 import { ApiService } from '@app/_shared/services/api.service';
@@ -20,8 +20,9 @@ import { switchMap } from 'rxjs/operators';
 export class AdminUserDetailComponent implements OnInit  {
   public Editor = ClassicEditor;
 
+  user: User;
   userId: string;
-  roles: any;
+  roles = [];
   myForm: FormGroup;
   errors = [];
   formErrors = FormErrors;
@@ -67,20 +68,18 @@ export class AdminUserDetailComponent implements OnInit  {
       console.log(user, roles);
 
       this.container['loading'] = false;
+      this.roles = roles.data;
+      let theRoles = [];
 
-      this.roles = roles.data.sort((a, b) => (a.module > b.module ? 1 : -1));
-      this.roles = this.roles.reduce((prev, now) => {
-        if (!prev[now.module]) {
-          prev[now.module] = [];
-        }
-        prev[now.module].push(now);
-        return prev;
-      }, {});
-      // console.log(this.roles);
+      this.objectKey( this.roles).forEach(module => {
+        this.roles[module].forEach(role => {
+          theRoles.push(role)
+        });
+      });
+      // console.log(theRoles);
 
-      this.populateMyForm(user?.data, this.roles);
-      // this.container['originalForm'] = this.myForm.value;
 
+      this.populateMyForm(user?.data, theRoles);
     })
   }
 
@@ -95,9 +94,18 @@ export class AdminUserDetailComponent implements OnInit  {
       lastname: [user?.lastname, Validators.required],
       email: [user?.email],
       phone: [user?.phone],
-      dob: [user?.dob, Validators.required],
-      // roles: [user?.roles],
+      dob: [user?.dob, Validators.required]
     });
+
+    const roleArray = new FormArray([]);
+    (<Array<any>>roles).forEach(role => {
+      roleArray.push(this.fb.group({
+        id: role['id'], module: role['module'], permission: role['permission']
+      }));
+    });
+    this.myForm.setControl( 'roles', roleArray )
+
+    console.log(this.myForm.get('roles'));
 
   }
 

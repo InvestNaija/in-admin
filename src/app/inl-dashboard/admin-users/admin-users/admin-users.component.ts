@@ -55,7 +55,7 @@ export class AdminUsersComponent implements OnInit, AfterViewInit  {
         startWith({}),
         switchMap(() => {
           this.dataSource = null;
-          return this.api.get(`/customers?page=${this.paginator.pageIndex+1}&size=${this.paginator.pageSize}` + (search?`&search=${search}`:''));
+          return this.api.get(`/auth/admins/fetch?page=${this.paginator.pageIndex+1}&size=${this.paginator.pageSize}` + (search?`&search=${search}`:''));
         }),
         catchError(() => {
           return of([]);
@@ -72,16 +72,12 @@ export class AdminUsersComponent implements OnInit, AfterViewInit  {
         };
       });
   }
-  onClickRow(row) {
-    this.router.navigateByUrl(`/dashboard/customers/${row.id}`)
-  }
-
   onSearch(search) {
     // console.log(search);
     this.getTransactions(search);
   }
 
-  onCreateAdminUser(user) {
+  onClickRow(user) {
     this.router.navigateByUrl(`/dashboard/admin-users/detail/${user.id}`)
   }
 }

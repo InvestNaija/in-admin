@@ -60,40 +60,37 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit  {
   ) { }
 
   ngOnInit(): void {
-    // console.log('Called');
-  }
-  ngAfterViewInit() {
-
     this.aRouter.paramMap.pipe(
       switchMap(params => {
         this.custId = params.get('id');
-        return (this.custId ? this.api.get(`/customers/${this.custId}`) : of({}) )
+
+        return (this.custId ? this.api.get(`/customers/${this.custId}`) : of({data: {}}) )
       })
     ).subscribe(customer => {
       this.container['loading'] = false;
-
-        this.customer = customer.data;
-        this.customer.dob = new Date(this.customer.dob)
         this.populateMyForm(customer?.data);
       });
   }
+  ngAfterViewInit() {
+
+  }
   populateMyForm(customer: Customer) {
-    console.log(customer?.address);
 
     this.myForm = this.fb.group({
-      firstName: [customer?.firstName, Validators.required],
-      middleName: [customer?.middleName],
-      lastName: [customer?.lastName, Validators.required],
-      email: [customer?.email, [Validators.required, Validators.pattern(this.commonServices.email)]],
-      phone: [customer?.phone],
-      dob: [ customer?.dob, Validators.required],
-      gender: [this.gender.find(g => g.id === customer?.gender), Validators.required],
-      photo: [customer?.photo],
-      address: [customer?.address],
-      nin: [customer?.nin],
-      bvn: [customer?.bvn, [Validators.required, Validators.maxLength(10), Validators.pattern(/[0-9]+$/), Validators.minLength(11)]],
-      mothersMaidenName: [customer?.mothersMaidenName, [Validators.required]], placeOfBirth: [customer?.placeOfBirth, [Validators.required]],
-      zanibalId: [customer?.zanibalId]
+      firstName: [customer?.firstName ?? null, Validators.required],
+      middleName: [customer?.middleName ?? null],
+      lastName: [customer?.lastName ?? null, Validators.required],
+      email: [customer?.email ?? null, [Validators.required, Validators.pattern(this.commonServices.email)]],
+      phone: [customer?.phone ?? null],
+      dob: [ customer.dob??(new Date(customer.dob)), Validators.required],
+      gender: [(customer?.gender?this.gender.find(g => g.id === customer?.gender):null), Validators.required],
+      photo: [customer?.photo ?? null],
+      address: [customer?.address ?? null],
+      nin: [customer?.nin ?? null],
+      bvn: [customer?.bvn ?? null, [Validators.required, Validators.maxLength(10), Validators.pattern(/[0-9]+$/), Validators.minLength(11)]],
+      mothersMaidenName: [customer?.mothersMaidenName ?? null, [Validators.required]],
+      placeOfBirth: [customer?.placeOfBirth ?? null, [Validators.required]],
+      zanibalId: [customer?.zanibalId ?? null]
     });
   }
   onBVNChanged() {

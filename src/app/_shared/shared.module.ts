@@ -23,6 +23,7 @@ import FilePondPluginFileEncode from 'filepond-plugin-file-encode/dist/filepond-
 // import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size';
 import FilePondPluginImageEdit from 'filepond-plugin-image-edit/dist/filepond-plugin-image-edit';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 registerPlugin(
   FilePondPluginImagePreview,
@@ -49,8 +50,9 @@ registerPlugin(
 
     FilePondModule,
   ],
-  exports: [ CommonModule, RouterModule,
-    MatIconModule, BackbuttonComponent
+  exports: [ CommonModule, RouterModule
+    , BackbuttonComponent
+    , MatIconModule, MatTooltipModule
     , MatDatepickerModule, MatNativeDateModule//, MatMomentDateModule
     , ToastrModule, FormsModule, ReactiveFormsModule,
     NgSelectModule,

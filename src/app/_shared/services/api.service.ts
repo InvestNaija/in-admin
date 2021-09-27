@@ -21,6 +21,9 @@ export class ApiService {
     return this.request('GET', url, useToken);
   }
 
+  getWtHeader(url: string, useToken: boolean = true, header?: HttpHeaders): Observable<any> {
+    return this.request('GET', url, useToken, null, header);
+  }
   post(url: string, body: Object, useToken: boolean = true): Observable<any> {
     return this.request('POST', url, useToken, body);
   }
@@ -36,9 +39,9 @@ export class ApiService {
     return this.request('DELETE', url, useToken);
   }
 
-  request(method: string, url: string, useToken: boolean, body?: Object) {
-    let headers = new HttpHeaders()
-      .append('Content-Type', 'application/json');
+  request(method: string, url: string, useToken: boolean, body?: Object, header?: HttpHeaders) {
+    let headers = header ?? new HttpHeaders()
+                    .append('Content-Type', 'application/json');
 
     if (useToken) {
       headers = headers.append('Authorization', `${this.auth.getToken()}`);
