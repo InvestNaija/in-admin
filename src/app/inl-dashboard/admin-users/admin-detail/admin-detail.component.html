@@ -34,16 +34,18 @@
           <span *ngIf="uiErrors.email" class="text-danger">{{uiErrors.email}}</span>
         </div>
         <div class="form-group col-md-6">
-          <label for="phone">Email</label>
-          <input formControlName="phone" type="text" class="form-control" placeholder="Enter Email">
+          <label for="phone">Phone</label>
+          <input formControlName="phone" type="text" class="form-control" placeholder="Enter Phone">
           <span *ngIf="uiErrors.phone" class="text-danger">{{uiErrors.phone}}</span>
         </div>
       </div>
       <div class="row">
-        <div class="form-group col-md-6">
-          <label for="dob">DoB</label>
-          <input formControlName="dob" type="text" class="form-control" placeholder="Enter DoB">
-          <span *ngIf="uiErrors.dob" class="text-danger">{{uiErrors.dob}}</span>
+        <div class="form-group has-search col-md-6">
+          <label for="dob" *ngIf="myForm.get('dob')?.value">Date Of Birth (DD/MM/YYYY)</label>
+          <mat-datepicker-toggle matSuffix [for]="picker" class="form-control-feedback"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <input formControlName="dob" class="form-control" placeholder="Date Of Birth (DD/MM/YYYY)" matInput [matDatepicker]="picker" (keyup)="controlChanged('dob')" (click)="picker.open()" />
+          <span *ngIf="uiErrors.dob">{{uiErrors.dob }}</span>
         </div>
       </div>
       <div class="row">
@@ -56,11 +58,11 @@
                 <div class="col-md-12">
                   <h3 class="font-weight-bold">{{module | uppercase}}</h3>
                   <div class="row">
-                    <div [formGroupName]="j" *ngFor="let userRole of myForm.get('roles').controls; let j = index" class="col-sm-3">
+                    <div [formGroupName]="j" *ngFor="let userRole of myForm.get('roles').controls; let j = index;" class="col-sm-3">
                       <label class="switch" *ngIf="userRole.get('module').value == module">
                           <div class="toggle">
-                              <input type="checkbox" class="toggle-state"
-                                      (change)="studentControlChange(myForm, userRole.get('id').value,  selected.checked)" #selected />
+                              <input type="checkbox" class="toggle-state" formControlName="selected"
+                                       #selected />
                               <div class="toggle-inner"><div class="indicator"></div></div>
                               <div class="active-bg"></div>
                           </div>

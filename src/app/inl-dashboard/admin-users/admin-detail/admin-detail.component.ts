@@ -60,25 +60,24 @@ export class AdminUserDetailComponent implements OnInit  {
       switchMap(params => {
         this.userId = params.get('id');
         return combineLatest([
-          (this.userId ? this.apiService.get(`/users/${this.userId}`) : of({}) ),
+          (this.userId ? this.apiService.get(`/auth/admins/fetch` + (this.userId?`?id=${this.userId}`:'')) : of({}) ),
           this.apiService.get(`/auth/roles`)
         ]);
       })
     ).subscribe(([user, roles]) => {
-      console.log(user, roles);
 
       this.container['loading'] = false;
       this.roles = roles.data;
       let theRoles = [];
-
       this.objectKey( this.roles).forEach(module => {
         this.roles[module].forEach(role => {
+          user?.data?.roles.forEach(uRole => {
+            if(uRole.id == role.id) role['selected'] = true;
+            else role['selected'] = false;
+          });
           theRoles.push(role)
         });
       });
-      // console.log(theRoles);
-
-
       this.populateMyForm(user?.data, theRoles);
     })
   }
@@ -92,21 +91,18 @@ export class AdminUserDetailComponent implements OnInit  {
     this.myForm = this.fb.group({
       firstname: [user?.firstname, Validators.required],
       lastname: [user?.lastname, Validators.required],
-      email: [user?.email],
-      phone: [user?.phone],
+      email: [user?.email, [Validators.required, Validators.pattern(this.commonServices.email)]],
+      phone: [user?.phone, Validators.required],
       dob: [user?.dob, Validators.required]
     });
 
     const roleArray = new FormArray([]);
     (<Array<any>>roles).forEach(role => {
       roleArray.push(this.fb.group({
-        id: role['id'], module: role['module'], permission: role['permission']
+        id: role['id'], module: role['module'], permission: role['permission'], selected: role['selected']
       }));
     });
     this.myForm.setControl( 'roles', roleArray )
-
-    console.log(this.myForm.get('roles'));
-
   }
 
   pondHandleAddFile(imgType,event) {
@@ -122,31 +118,21 @@ export class AdminUserDetailComponent implements OnInit  {
   }
 
   onSubmit() {
+    console.log((this.myForm.value)); return;
+
     this.submitting = true;
     if (this.myForm.invalid) {
       this.uiErrors = JSON.parse(JSON.stringify(this.formErrors))
       this.errors = this.commonServices.findInvalidControlsRecursive(this.myForm);
-      console.log(this.uiErrors);
-      console.log(this.errors);
-
-
       this.displayErrors();
       this.submitting = false;
       return;
     }
     const fd = JSON.parse(JSON.stringify(this.myForm.value));
-    // changes
-    this.container['formChanges'] = {};
-    Object.keys(fd).forEach((key) => {
-      if(fd[key] != this.container['originalForm'][key]){
-        this.container['formChanges'][key] = fd[key];
-      }
+    const dRoles = [];
+    fd.roles.filter(element => {
+      return element.selected
     });
-    this.container['originalimageloaded'] != this.container['imageloaded'] ?
-          this.container['formChanges']['image'] = this.container['image'] : 0;
-    this.container['originalpaymentLogoloaded'] != this.container['paymentLogoloaded'] ?
-          this.container['formChanges']['paymentLogo'] = this.container['paymentLogo'] : 0;
-
     this.submituser(this.container['formChanges'])
       .subscribe(response => {
         this.submitting = false;
