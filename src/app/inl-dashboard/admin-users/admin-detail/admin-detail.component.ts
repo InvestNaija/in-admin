@@ -118,8 +118,6 @@ export class AdminUserDetailComponent implements OnInit  {
   }
 
   onSubmit() {
-    console.log((this.myForm.value)); return;
-
     this.submitting = true;
     if (this.myForm.invalid) {
       this.uiErrors = JSON.parse(JSON.stringify(this.formErrors))
@@ -129,11 +127,13 @@ export class AdminUserDetailComponent implements OnInit  {
       return;
     }
     const fd = JSON.parse(JSON.stringify(this.myForm.value));
-    const dRoles = [];
-    fd.roles.filter(element => {
-      return element.selected
-    });
-    this.submituser(this.container['formChanges'])
+    fd.roles.map(o => delete Object.assign(o, {['roleId']: o['id'] })['id'])
+    fd.addRoles = fd.roles.filter(element => element.selected );
+    fd.removeRoles = fd.roles.filter(element => !element.selected );
+    delete fd.roles;
+    console.log(fd);
+
+    this.submituser(fd)
       .subscribe(response => {
         this.submitting = false;
           this.toastr.success('Update successful!', 'success');
@@ -145,7 +145,7 @@ export class AdminUserDetailComponent implements OnInit  {
       });
   }
   submituser(fd){
-    return this.userId ? this.apiService.patch(`/users/${this.userId}`, fd) : this.apiService.post(`/users`, fd);
+    return this.userId ? this.apiService.patch(`/admin/create-user/${this.userId}`, fd) : this.apiService.post(`/admin/create-user`, fd);
   }
   controlChanged(ctrlName: string) {
     this.errors = this.commonServices.controlnvalid(this.myForm.get(ctrlName) as FormControl);
