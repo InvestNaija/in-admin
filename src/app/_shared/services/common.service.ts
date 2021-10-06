@@ -31,9 +31,9 @@ export class CommonService {
     return this.loadingSubject;
   }
 
-  getLOVs(endpoint: string, selectScope: string, options: any) {
-    if (this.container[selectScope] == null) {
-      this.container[options['loading']] = 'Loading, please wait...';
+  getLOVs(endpoint: string, selectScope: string, container: any, options: any) {
+    if (container[selectScope] == null) {
+      container[options['loading']] = 'Loading, please wait...';
       return this.api.get(endpoint).pipe(
         map(response => {
             return of(response.data);
@@ -42,11 +42,11 @@ export class CommonService {
       )
           .subscribe(
             (response) => {
-              this.container[options['loading']] = null;
-              this.container[selectScope] = response;
+              container[options['loading']] = null;
+              container[selectScope] = response;
             },
             (err) => {
-              this.container[options['loading']] = null;
+              container[options['loading']] = null;
               console.log(err);
             }
           );

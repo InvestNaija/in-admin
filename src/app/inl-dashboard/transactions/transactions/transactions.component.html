@@ -9,6 +9,10 @@
     <div class="table-responsive">
       <table mat-table [dataSource]="dataSource" fixedLayout="false" class="leaderboard-table">
 
+        <ng-container matColumnDef="custName">
+          <th mat-header-cell *matHeaderCellDef>Customer Name</th>
+          <td mat-cell *matCellDef="let element"> {{element?.customer}} </td>
+        </ng-container>
         <ng-container matColumnDef="asset">
           <th mat-header-cell *matHeaderCellDef>Asset</th>
           <td mat-cell *matCellDef="let element">{{element?.asset.name}}</td>
@@ -22,6 +26,11 @@
           <th mat-header-cell *matHeaderCellDef class="text-right">Amount</th>
           <td mat-cell *matCellDef="let element" class="text-right"> {{element.amount | currency:element?.asset.currency:'symbol-narrow'}} </td>
         </ng-container>
+
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef class="text-center">Date</th>
+          <td mat-cell *matCellDef="let element" class="text-center"> {{element.createdAt | date}} </td>
+        </ng-container>
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef class="text-center">Status</th>
           <td mat-cell *matCellDef="let element" class="text-center" [ngClass]="element.status=='success' ? 'text-success' : 'text-danger'"> {{element.status}}</td>
@@ -30,7 +39,7 @@
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let element">
-            <span class="header-menu">
+            <span class="header-menu" *ngIf="false">
               <button mat-icon-button [matMenuTriggerFor]="historylistmenu">
                 <mat-icon>more_vert</mat-icon>
               </button>

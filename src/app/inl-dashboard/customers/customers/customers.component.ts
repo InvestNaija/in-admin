@@ -14,6 +14,8 @@ import { ApplicationContextService } from '@app/_shared/services/application-con
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '@environments/environment';
 import { AuthService } from '@app/_shared/services/auth.service';
+import { CommonService } from '@app/_shared/services/common.service';
+import { DatePipe } from '@angular/common';
 
 
 export interface PeriodicElement {
@@ -32,7 +34,20 @@ export interface PeriodicElement {
   styleUrls: ['./customers.component.scss']
 })
 export class CustomersComponent implements OnInit, AfterViewInit  {
-  container: any = {};
+  filters = [
+    {name: 'Pending CSCS creation', filetype: 'csv', endpoint: '/customers/download/cscs',
+        types: null,
+        children: []},
+    {name: 'Pre-allotment List', filetype: 'csv', endpoint: '/transactions/asset/{{asset}}',
+        types: [{name:'Period', type: 'range', answer: {}}, {name:'Status', type: 'boolean', answer: {}}],
+        children: [
+          {name: 'Asset Type', source: '/assets', required: true}
+        ]
+    },
+  ]
+  container: any = {
+    filterType: []
+  };
 
   displayedColumns: string[] = ['firstName', 'lastName', 'email', 'phone', 'status', 'action'];
   dataSource: any = null;
@@ -46,6 +61,8 @@ export class CustomersComponent implements OnInit, AfterViewInit  {
     private api: ApiService,
     private http: HttpClient,
     private auth: AuthService,
+    public commonServices: CommonService,
+    public datepipe: DatePipe,
   ) { }
 
   private loadingSubject = new BehaviorSubject<boolean>(true);
@@ -82,14 +99,55 @@ export class CustomersComponent implements OnInit, AfterViewInit  {
   onClickRow(row) {
     this.router.navigateByUrl(`/dashboard/customers/detail/${row.id}`)
   }
-  onDownload(type) {
+
+  assetChange(filter, changedModel) {
+    if(changedModel) {
+      filter['endpoint'] = this.container['endpoint'];
+      filter['endpoint'] = filter['endpoint'].replace("{{asset}}", changedModel['id']);
+    }
+  }
+
+  onDownload(filter) {
+
+    console.log(filter);
+
     this.container['downloading'] = true;
+    if(this.container['filterType'].length > 0){
+
+    }
+    if(filter['children'].length > 0) {
+      let errors = [];
+      filter['children'].forEach(child => {
+        if(!child.selected && child.required) {
+          errors.push(`${child.name} is required`);
+        }
+      });
+      if(errors.length) {
+        this.toastr.error(...errors);
+        this.container['downloading'] = false;
+        return;
+      }
+    }
+    let searchTerms = '?';
+    filter.types.forEach(type => {
+      if(type.type == 'range'){
+        if(type.answer['from'] && type.answer['to']) {
+          searchTerms += 'start='+this.datepipe.transform(type.answer['from'], 'yyyy-MM-dd');
+          searchTerms += '&end='+this.datepipe.transform(type.answer['to'], 'yyyy-MM-dd');
+        }
+      }
+      if(type.type == 'boolean'){
+        if(type.answer['selected']) {
+          searchTerms += (searchTerms != '?'? '&' :'') + `status=${type.answer['selected']}`;
+        }
+      }
+    });
     let headers = new HttpHeaders().append('Authorization', `${this.auth.getToken()}`)//.append('Content-Type', undefined);
-    this.http.get(`${environment.apiUrl}/customers/download/cscs`,{
+    this.http.get(`${environment.apiUrl}${filter['endpoint']}${(searchTerms != '?' ? searchTerms : '') }`,{
       responseType: 'arraybuffer', observe: 'response', headers:headers}
      ).subscribe(response => {
       let blob = new Blob([response.body], { type: response.headers.get('content-type')});
-      saveAs(blob, 'sample.csv');
+      saveAs(blob, `${filter['name']}.${filter['filetype']}`);
       this.container['downloading'] = false;
     })
   }

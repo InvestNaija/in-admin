@@ -27,7 +27,8 @@ export interface PeriodicElement {
 })
 export class TransactionsComponent implements OnInit, AfterViewInit  {
 
-  displayedColumns: string[] = ['asset', 'description', 'amount', 'status', 'action'];
+  custId: string;
+  displayedColumns: string[] = ['custName', 'asset', 'description', 'amount', 'date', 'status', 'action'];
   dataSource: any = null;
   total_count = 0;
   pageSize = 10;
@@ -45,7 +46,10 @@ export class TransactionsComponent implements OnInit, AfterViewInit  {
   isLoading$ = this.loadingSubject.asObservable();
 
   ngOnInit(): void {
-    // console.log(custId);
+    this.custId = this.aRoute.snapshot.paramMap.get('id');
+    if(this.custId){
+      this.displayedColumns = ['asset', 'description', 'amount', 'date', 'status', 'action'];
+    }
   }
   ngAfterViewInit() {
     this.getTransactions(null);
@@ -56,15 +60,11 @@ export class TransactionsComponent implements OnInit, AfterViewInit  {
       .pipe(
         startWith({}),
         switchMap(() => {
-          const custId = this.aRoute.snapshot.paramMap.get('id');
           this.dataSource = null;
-          if(custId)
-            return this.api.get(`/transactions/customer/${custId}/?page=${this.paginator.pageIndex+1}&size=${this.paginator.pageSize}` + (search?`&search=${search}`:''));
+          if(this.custId)
+            return this.api.get(`/transactions/customer/${this.custId}/?page=${this.paginator.pageIndex+1}&size=${this.paginator.pageSize}` + (search?`&search=${search}`:''));
           return this.api.get(`/transactions?page=${this.paginator.pageIndex+1}&size=${this.paginator.pageSize}`);
         }),
-        // map((response: any) => {
-        //   return response.data.filter(o => o.asset.currency.includes('USD'));
-        // }),
         catchError(() => {
           this.loadingSubject.next(false);
           return of([]);
